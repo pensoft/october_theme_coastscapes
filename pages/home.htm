@@ -1,0 +1,28 @@
+url = "/"
+layout = "default"
+title = "Coast-Scapes"
+is_hidden = 0
+meta_title = "Coast-Scapes"
+meta_description = "Coast-Scapes"
+robot_index = "index"
+robot_follow = "follow"
+
+==
+<?php
+use Pensoft\Articles\Models\Article;
+use Carbon\Carbon;
+use Pensoft\Partners\Models\Partners as Partner;
+
+function onStart(){
+
+    $this['highlights'] = Article::news()->where('published', 'true')->orderBy('published_at', 'desc')->take(10)->get()->map(function($item){
+        $item->content = str_limit(strip_tags($item->content), 90);
+        $item->href = $item->slug;
+        return $item;
+    });
+
+    $this['consortium_partners'] = Partner::where('type', 3)->get();
+}
+?>
+==
+

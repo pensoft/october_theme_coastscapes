@@ -1,0 +1,634 @@
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled),
+button:not(:disabled) {
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    box-sizing: border-box;
+    font-weight: 400;
+    color: #6CDDB4;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: @padding-base-space * 0.75 @padding-base-space;
+    .font-size();
+    .line-height();
+    .rounded();
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    .breakpoint-small-down({
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    });
+    word-break: break-all;
+    &.no-margin {
+        margin: 0px !important;
+    }
+    &.search {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 0 !important;
+        line-height: unset!important;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        .border-bottom();
+        .border-top();
+        .border-right();
+        padding: 0;
+        height: 32px;
+        .breakpoint-small-down({
+          height: 45px;
+          text-align: end;
+          padding-right: 10px;
+          margin-right: 10px;
+          width: 20%;
+        });
+    }
+
+    &.no-padding {
+        padding: 0!important;
+    }
+
+    // Size variants handled below
+    &.small {
+      .line-height(0.8);
+    }
+    &.large {
+      .line-height(2.5);
+    }
+    &.huge {
+      .line-height(3);
+    }
+
+    &.btn-bold {
+        font-weight: 800;
+    }
+}
+
+.btn.fluid {
+    //width: 100%;
+    margin-top: @margin-base-space;
+}
+
+.btn.disabled, .btn:disabled {
+    .opacity()
+}
+
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.btn-primary {
+    border-radius: 10px;
+    background: #E3F2F6;
+    color: #0F2F2A;
+    padding: 8px 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    
+    &::after {
+        content: '';
+        background: url("../../assets/images/green-arrow-btn.svg") center no-repeat;
+        background-size: contain;
+        width: 10px;
+        height: 11px;
+        transition: all 0.3s ease-in-out;
+        transform: translateX(0);
+    }
+    
+    &:hover {
+        background: #d1e8ed;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(227, 242, 246, 0.3);
+        
+        &::after {
+            transform: translateX(4px);
+        }
+    }
+    
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(227, 242, 246, 0.2);
+    }
+}
+
+.btn-secondary {
+    color: @white-color;
+    font-size: 17px;
+    background: @button-background-color-secondary url("../../assets/images/subscribe-button-arrow.svg") center no-repeat;
+    background-position: center right 15px;
+    border-color: @button-background-color-secondary;
+    cursor: pointer;
+    .rounded(10px);
+    padding: 9px 35px 9px 25px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-secondary:hover{
+    background: @button-background-color-secondary url("../../assets/images/subscribe-button-arrow.svg") center no-repeat;
+    background-position: center right 20px;
+}
+
+.btn-success {
+    color: @white-color;
+    background-color: @success-color;
+    border-color: @success-color;
+}
+
+.btn-danger {
+    color: @white-color;
+    background-color: @danger-color;
+    border-color: @danger-color;
+}
+
+.btn-warning {
+    color: @white-color;
+    background-color: @warning-color;
+    border-color: @warning-color;
+}
+
+.btn-info {
+    color: @white-color;
+    background-color: @info-color;
+    border-color: @info-color;
+}
+
+.btn-light {
+    color: @dark-color;
+    background-color: @light-color;
+    border-color: @light-color;
+}
+
+.btn-dark {
+    color: @white-color;
+    background-color: @dark-color;
+    border-color: @dark-color;
+}
+
+.btn-yellow {
+    color: @white-color;
+    background-color: @yellow-color;
+    border-color: @yellow-color;
+}
+
+.btn-yellow:hover {
+    color: @yellow-color;
+    background-color: @secondary-color;
+    border-color: @secondary-color;
+}
+
+.btn-link {
+    color: @link-color;
+}
+
+.btn-intro {
+    border-radius: 10px;
+    background: #20A683;
+    color: #fff;
+    padding: 8px 30px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    text-decoration: none;
+
+    &:hover {
+        background: #1a8f6f;
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(32, 166, 131, 0.3);
+    }
+}
+
+.btn-involved,
+a.btn-involved {
+    border-radius: 10px;
+    // background: #fff !important;
+    color: #FFF !important;
+    border-radius: 10px;
+    border: 1px solid #FFF;
+    padding: 8px 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    text-decoration: none;
+
+    &::after {
+        content: '';
+        background: url("../../assets/images/white-arrow-btn.svg") center no-repeat;
+        background-size: contain;
+        width: 10px;
+        height: 11px;
+        transition: all 0.3s ease-in-out;
+        transform: translateX(0);
+    }
+
+    &:hover {
+        background: #f8f8f8;
+        transform: translateY(-2px);
+        color: #0F2F2A !important;
+
+        &::after {
+            transform: translateX(4px);
+            background: url("../../assets/images/green-arrow-btn.svg") center no-repeat;
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(15, 47, 42, 0.3);
+    }
+}
+
+// Global button hover improvements
+.btn {
+    &:hover {
+        transform: translateY(-1px);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    &:active {
+        transform: translateY(0);
+        transition: all 0.1s ease;
+    }
+}
+
+// Ensure download buttons work consistently
+.btn-download,
+button.btn-download,
+a.btn-download {
+    .btn(); // Inherit base button styles
+    border-radius: 10px;
+    background: #20A683;
+    color: #fff;
+    padding: 8px 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-flex;
+    text-decoration: none;
+    
+    // Responsive breakpoints for different screen sizes
+    .breakpoint-small-down({
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+    });
+    
+    .breakpoint-medium-down({
+        padding: 10px 25px;
+    });
+    
+    .breakpoint-large-down({
+        padding: 9px 22px;
+    });
+    
+    &::after {
+        content: '';
+        background: url("../../assets/images/download-white.svg") center no-repeat;
+        background-size: contain;
+        width: 18px;
+        height: 17px;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateY(0) rotate(0deg);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        position: relative;
+        z-index: 2;
+    }
+    
+    &:hover {
+        background: #1a8f6f;
+        transform: scale(1.02);
+        box-shadow: 
+            0 4px 12px rgba(32, 166, 131, 0.2),
+            0 2px 6px rgba(32, 166, 131, 0.15);
+        
+        &::after {
+            transform: translateY(-2px) rotate(-3deg) scale(1.1);
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
+        }
+        
+        // Magnetic pull effect on text and icon
+        span, i, .pr {
+            transform: translateY(-1px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        // Ensure all text content gets the hover effect
+        * {
+            transform: translateY(-1px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    }
+    
+    &:active {
+        transform: scale(0.98);
+        box-shadow: 
+            0 6px 20px rgba(32, 166, 131, 0.3),
+            0 3px 10px rgba(32, 166, 131, 0.2);
+        transition: all 0.1s ease;
+        
+        &::after {
+            transform: translateY(-1px) rotate(-2deg) scale(1.1);
+        }
+    }
+    
+    // Focus state for accessibility
+    &:focus {
+        outline: none;
+        box-shadow: 
+            0 0 0 3px rgba(32, 166, 131, 0.3),
+            0 2px 8px rgba(32, 166, 131, 0.2);
+    }
+    
+    // Add magnetic effect to all child elements
+    span, i, .pr, * {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: inline-block;
+    }
+    
+    // Specific styles for larger download buttons (like "Download all")
+    &.btn-large, &.large {
+        padding: 12px 35px;
+        font-size: 16px;
+        
+        &::after {
+            width: 20px;
+            height: 19px;
+        }
+        
+        .breakpoint-small-down({
+            padding: 15px 25px;
+            font-size: 16px;
+        });
+        
+        .breakpoint-medium-down({
+            padding: 13px 30px;
+            font-size: 17px;
+        });
+    }
+}
+
+.btn-subscribe{
+    border-radius: 10px;
+    background: #20A683;
+    color: #fff;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 200px;
+    animation: fade-in 1s ease-out 0.2s backwards;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    .breakpoint-large-down({
+        max-width: 100%;
+    });
+    
+    &:hover {
+        background-color: #1a8f6f;
+        border-color: #1a8f6f;
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    // CSS for bell icon
+    .bell-icon {
+        position: relative;
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        background-image: url('../../assets/images/subscribe.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 10px;
+        transform-origin: top center;
+    }
+    
+    // Remove the original before pseudo-element as we're using a span now
+    &:before {
+        display: none;
+    }
+
+    // Trigger bell ring on interaction
+    &:hover .bell-icon,
+    &:focus .bell-icon,
+    &:active .bell-icon {
+        animation: bell-ring 0.9s ease-in-out;
+    }
+}
+
+// Bell ring keyframes (top-center pivot is set on .bell-icon)
+@keyframes bell-ring {
+    0%   { transform: rotate(0deg); }
+    15%  { transform: rotate(14deg); }
+    30%  { transform: rotate(-12deg); }
+    45%  { transform: rotate(9deg); }
+    60%  { transform: rotate(-6deg); }
+    75%  { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+    .btn-subscribe:hover .bell-icon,
+    .btn-subscribe:focus .bell-icon,
+    .btn-subscribe:active .bell-icon {
+        animation: none !important;
+    }
+}
+
+// Social/external buttons
+.btn-zenodo,
+.btn-github {
+    border-radius: 8px;
+    background: #20A683;
+    color: #fff;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-flex;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+
+    .btn-icon {
+        width: 22px;
+        height: 22px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(1);
+    }
+
+    .btn-text {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &:hover {
+        background: #1a8f6f;
+        transform: translateY(-3px) scale(1.02);
+
+        .btn-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .btn-text {
+            transform: translateX(2px);
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px) scale(0.98);
+        transition: all 0.1s ease;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(32, 166, 131, 0.3);
+    }
+}
+
+.btn-zenodo {
+    &::before {
+        content: '';
+        width: 22px;
+        height: 22px;
+        background-image: url("../../assets/images/zenodo-white.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 2px;
+        display: inline-block;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(1);
+    }
+
+    &:hover::before {
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+.btn-github {
+    &::before {
+        content: '';
+        width: 22px;
+        height: 22px;
+        background-image: url("../../assets/images/github-white.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 2px;
+        display: inline-block;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(1);
+    }
+
+    &:hover::before {
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+.btn-rio {
+    border-radius: 8px;
+    background: #20A683;
+    color: #fff;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-flex
+;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    min-width: 140px;
+    height: 48.5px;
+
+    &::before {
+        content: '';
+        width: 65%;
+        height: 65%;
+        background-image: url("../../assets/images/rio-btn.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(1);
+    }
+
+    .btn-text {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &:hover {
+        background: #1a8f6f;
+        transform: translateY(-3px) scale(1.02);
+
+        &::before {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .btn-text {
+            transform: translateX(2px);
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px) scale(0.98);
+        transition: all 0.1s ease;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(32, 166, 131, 0.3);
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "october/pensoft-coastscapes-theme",
+    "type": "october-theme",
+    "description": "Pensoft Coastscapes October CMS theme",
+    "keywords": ["october", "cms", "coastscapes", "theme"],
+    "authors": [
+        {
+            "name": "Pensoft Publishers",
+            "email": "preprint@pensoft.net",
+            "role": "Dev"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

@@ -1,0 +1,86 @@
+url = "/our-work"
+layout = "default"
+title = "Our Work"
+is_hidden = 0
+meta_description = "our work page"
+seo_keywords = "keywords"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+[jumbotron our-approach]
+jumbotron = "our-approach"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+==
+==
+
+{% component 'siteSearchInclude' %}
+
+<section class="circular-tabs-section container-dynamic">
+    <div class="circular-tabs-container">
+        <!-- Tab Navigation -->
+        <div class="circular-tabs-nav" role="tablist" aria-label="Our Work Navigation">
+            <button class="circular-tab"
+                    data-tab="panel-work-packages"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-work-packages"
+                    tabindex="-1">
+                <span class="tab-text">Work<br>packages</span>
+            </button>
+            <button class="circular-tab active"
+                    data-tab="panel-our-approach"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="panel-our-approach"
+                    tabindex="0">
+                <span class="tab-text">Our<br>approach</span>
+            </button>
+            <button class="circular-tab"
+                    data-tab="panel-our-scope"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-our-scope"
+                    tabindex="-1">
+                <span class="tab-text">Our<br>scope</span>
+            </button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="tab-panels">
+            <!-- Work Packages Panel -->
+            <div class="tab-panel"
+                 id="panel-work-packages"
+                 role="tabpanel"
+                 aria-labelledby="panel-work-packages">
+                <div class="tab-panel-content">
+
+                </div>
+            </div>
+
+            <!-- Our Approach Panel -->
+            <div class="tab-panel active"
+                 id="panel-our-approach"
+                 role="tabpanel"
+                 aria-labelledby="panel-our-approach">
+                <div class="tab-panel-content">
+                    {% component 'our-approach' %}
+                    {% partial 'timeline' %}
+                </div>
+            </div>
+
+            <!-- Our Scope Panel -->
+            <div class="tab-panel"
+                 id="panel-our-scope"
+                 role="tabpanel"
+                 aria-labelledby="panel-our-scope">
+                <div class="tab-panel-content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,122 @@
+url = "/about"
+layout = "default"
+title = "About"
+is_hidden = 0
+meta_description = "about page"
+seo_keywords = "keywords"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Accordions\Models\Item;
+use Pensoft\Accordions\Models\Category;
+
+function onStart() {
+    $this['mission_title'] = Category::where('slug', 'objectives')->first();
+    $this['mission_records'] = Item::whereHas('accordion', function($query) {
+        $query->where('slug', 'objectives');
+    })->get();
+}
+?>
+==
+
+{% component 'siteSearchInclude' %}
+
+{# About The Project Section #}
+<section class="about-project-section container-dynamic">
+    {# Background Image #}
+    <div class="about-project-background">
+        <img src="{{ 'assets/images/about-img.png' | theme }}" alt="" aria-hidden="true">
+    </div>
+
+    {# Content #}
+    <div class="about-project-content">
+        <div class="about-grid-layout">
+
+            {# What We Do - Top Left #}
+            <div class="about-section-what about-text-block">
+                <h2 class="about-title">What we do</h2>
+                <p class="about-description">
+                    COAST-SCAPES aims to strengthen climate resilience by developing sustainable solutions that increase the environmental benefits across socioeconomic sectors, different geographical regions and timeframes. The project's overarching focus is to reduce the climate resilience deficit. These measures will support coastal communities, providing them with integrated early warning systems, NbS and proactive maintenance strategies to boost the resilience of coastal areas.
+                </p>
+            </div>
+
+            {# Resilience Circle - Top Right #}
+            <div class="about-circle circle-resilience">
+                <span class="circle-text">Resilience</span>
+            </div>
+
+            {# Connector Line 1 #}
+            <div class="about-connector connector-1">
+                <svg viewBox="0 0 325 215" preserveAspectRatio="none">
+                    <path d="M325,0 C250,50 75,165 0,215" />
+                </svg>
+            </div>
+
+            {# Adaptation Circle - Middle Left #}
+            <div class="about-circle circle-adaptation">
+                <span class="circle-text">Adaptation</span>
+            </div>
+
+            {# How We Do It - Middle Right #}
+            <div class="about-section-how about-text-block">
+                <h2 class="about-title">How we do it</h2>
+                <p class="about-description">
+                    COAST-SCAPES addresses the climate resilience deficit by implementing resilience-through-adaptation plans. These plans use nature-based solutions (NbS) that both mitigate climate risks, enhance welfare and improve the community well-being. COAST-SCAPES envisions improvement of infrastructure and land use compatibility to strengthen adaptation capacity.
+                </p>
+            </div>
+
+            {# Connector Line 2 #}
+            <div class="about-connector connector-2">
+                <svg viewBox="0 0 308 228" preserveAspectRatio="none">
+                    <path d="M0,0 C75,50 233,178 308,228" />
+                </svg>
+            </div>
+
+            {# Looking Ahead - Bottom Left #}
+            <div class="about-section-ahead about-text-block">
+                <h2 class="about-title">Looking ahead</h2>
+                <p class="about-description">
+                    COAST-SCAPES envisions increased transdisciplinary collaboration to foster the implementation of NbS into the resilience plans. This includes ensuring that different sectors work together to integrate NbS into planning, as well as applying shared knowledge and coordinated strategies across regions.
+                </p>
+            </div>
+
+            {# Collaboration Circle - Bottom Right #}
+            <div class="about-circle circle-collaboration">
+                <span class="circle-text">Collaboration</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{# Objectives Section #}
+<section class="objectives-section">
+    <div class="container">
+        <div class="objectives-header">
+            <span class="section-label">OUR OBJECTIVES</span>
+            <h2 class="section-title">What guides our work</h2>
+        </div>
+
+        <div class="objectives-accordion">
+            {% for item in mission_records %}
+                <div class="objective-item">
+                    <div class="objective-toggle">
+                        <span class="objective-title">{{ item.prefix }} {{ item.title }}</span>
+                        <button class="objective-btn" aria-expanded="false">
+                            <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+                                <path d="M7 0L7 14M7 14L1 8M7 14L13 8" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="objective-content">
+                        {{ item.body | raw }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

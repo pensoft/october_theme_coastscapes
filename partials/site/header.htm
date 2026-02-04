@@ -5,79 +5,140 @@ listItemClasses = "nav-item"
 primaryClasses = "navbar-nav"
 secondaryClasses = "dropdown-menu"
 numberOfLevels = 2
-
 ==
-
-<nav class="navbar fixed" id="headernavbar" {% if user %} style="margin-top:69px;"{% endif %}>
-    <div class="container">
-        <a href="{{'home'|page}}" class="navbar-brand">
-            <img src="{{ this.theme.site_logo.getPath() }}" alt="{{ this.theme.site_name }}">
+{# Header Navigation #}
+<nav class="navbar fixed{% if user %} user-logged-in{% endif %}" id="headernavbar" aria-label="Main navigation">
+    <div class="container navbar-container">
+        {# Logo/Brand #}
+        <a href="{{ 'home'|page }}" class="navbar-brand">
+            <img src="{{ 'assets/images/logo-white.svg'|theme }}" alt="{{ this.theme.site_name }} - Home">
         </a>
 
-        <!-- Desktop header elements -->
+        {# Desktop Navigation Menu (Centered) #}
+        <div class="navbar-menu-desktop" id="desktopNav">
+            {% component 'menu' %}
+        </div>
+
+        {# Desktop Header Elements (Right side) #}
         <div class="desktop-header-elements">
-            <div id="google_translate_element"></div>
-            <div class="search-container">
-                <button class="btn search-btn" id="searchToggle" aria-label="Open search" type="button">
-                    <span class="search-icon"></span>
-                </button>
-            </div>
-            <button id="desktopMenuToggle" aria-label="Toggle navigation">
+            {# Login Button #}
+            <a href="/login" class="btn-login">
+                <span class="btn-login-text">Log in</span>
+                <span class="btn-login-icon" aria-hidden="true">
+                    <img src="{{ 'assets/images/login-arrow.svg'|theme }}" alt="" width="16" height="16">
+                </span>
+            </a>
+
+            {# Mobile Menu Toggle (Hidden on Desktop) #}
+            <button id="desktopMenuToggle"
+                    type="button"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false"
+                    aria-controls="headerNavbarNav">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
     </div>
-    
-    <div class="navbar-collapse" id="headerNavbarNav">
-        <button id="closeMenuBtn" aria-label="Close navigation">
-            <span>&times;</span>
+
+    {# Mobile Slide-out Navigation Menu #}
+    <div class="navbar-collapse" id="headerNavbarNav" aria-hidden="true">
+        <button id="closeMenuBtn" type="button" aria-label="Close navigation">
+            <span aria-hidden="true">&times;</span>
         </button>
 
         {% component 'menu' %}
-        
+
+        {# Mobile Login Link #}
+        <div class="mobile-login">
+            <a href="/login" class="btn-login">
+                <span class="btn-login-text">Log in</span>
+                <span class="btn-login-icon" aria-hidden="true">
+                    <img src="{{ 'assets/images/login-arrow.svg'|theme }}" alt="" width="16" height="16">
+                </span>
+            </a>
+        </div>
+
+        {# Social Networks #}
         <div class="navbar-bottom-elements">
-            <div class="social-networks">
+            <nav class="social-networks" aria-label="Social media links">
                 {% if this.theme.linkedin %}
-                <a href="{{this.theme.linkedin_url}}" class="linkedin" target="_blank" aria-label="LinkedIn"></a>
+                    <a href="{{ this.theme.linkedin_url }}"
+                       class="linkedin"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Follow us on LinkedIn">
+                    </a>
                 {% endif %}
 
                 {% if this.theme.bluesky %}
-                <a href="{{this.theme.bluesky_url}}" class="bluesky" target="_blank" aria-label="Bluesky"></a>
+                    <a href="{{ this.theme.bluesky_url }}"
+                       class="bluesky"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Follow us on Bluesky">
+                    </a>
                 {% endif %}
 
                 {% if this.theme.youtube %}
-                <a href="{{this.theme.youtube_url}}" class="youtube" target="_blank" aria-label="YouTube"></a>
+                    <a href="{{ this.theme.youtube_url }}"
+                       class="youtube"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Subscribe to our YouTube channel">
+                    </a>
                 {% endif %}
-            </div>
-            
-
+            </nav>
         </div>
     </div>
-    
-    <!-- Search overlay - positioned outside hamburger menu for proper z-index layering -->
-    <div id="search" class="search" style="display: none;">
+
+    {# Search Overlay #}
+    <div id="search" class="search" aria-hidden="true" role="dialog" aria-label="Site search">
         <div class="container">
-            <form class="input-group align-items-start" action="{{ url('search')}}" method="get" role="search">
+            <form class="input-group align-items-start"
+                  action="{{ url('search') }}"
+                  method="get"
+                  role="search">
                 <label for="searchInput" class="sr-only">Search</label>
-                <input id="searchInput" class="form-control search_input" style="color: #000;" name="q" type="text" autocomplete="on" placeholder="Search here..." aria-label="Search">
-                <button class="btn btn-link pr p-search big text-grey-search-btn" type="submit" aria-label="Submit search"></button>
-                <button type="button" class="close-search" onclick="hideSearchForm();" aria-label="Close search">&#10006;</button>
+                <input id="searchInput"
+                       class="form-control search_input"
+                       name="q"
+                       type="search"
+                       autocomplete="on"
+                       placeholder="Search here..."
+                       aria-label="Search query">
+                <button class="btn btn-link pr p-search big text-grey-search-btn"
+                        type="submit"
+                        aria-label="Submit search">
+                </button>
+                <button type="button"
+                        class="close-search"
+                        onclick="hideSearchForm();"
+                        aria-label="Close search">
+                    <span aria-hidden="true">&#10006;</span>
+                </button>
             </form>
         </div>
     </div>
 </nav>
 
+{# Page Header Image (Non-Home Pages) #}
 {% if this.theme.header_image %}
-<div class="header-image {{page_id}} hero">
-    {% if page_id == 'home' %}
-    ARARA
-    <!-- {% partial 'components/hero' carousel_images=carousel_images %} -->
-    {% else %}
-            <div class="header-image-bar" style="background-image: url({{this.theme.header_image.getPath()}});">
-            <h1 class="page-header">{%if page_title%} {{page_title}} {%else%} {{site_name}} {%endif%}</h1>
-        </div>
-    {%endif%}
-</div>
+    {% if page_id != 'home' %}
+        <section class="page-header-section{% if page_id == 'about' %} page-header-about{% endif %}" role="banner" aria-labelledby="pageHeaderTitle">
+            <div class="page-header-background container-dynamic" style="background-image: url({{ this.theme.header_image.getPath() }});">
+                <h1 id="pageHeaderTitle" class="page-header-title">
+                    {% if page_title %}
+                        {{ page_title }}
+                    {% else %}
+                        {{ site_name }}
+                    {% endif %}
+                </h1>
+            </div>
+        </section>
+    {% endif %}
 {% endif %}
+
+{# Homepage Hero Section #}
+{% partial 'site/hero' page_id=page_id %}

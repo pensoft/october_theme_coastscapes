@@ -1,0 +1,627 @@
+// ==========================================================================
+// Page - About
+// ==========================================================================
+
+// About page color variables
+@about-bg-color: #122E47;
+@about-text-white: #FEFFFD;
+@about-circle-border: rgba(254, 255, 253, 0.55);
+
+// ==========================================================================
+// About Page Header Section
+// ==========================================================================
+
+.about-header-section {
+    position: relative;
+    width: 100%;
+
+    &.container-dynamic {
+        max-width: 98vw !important;
+    }
+
+    .about-header-background {
+        background: url('../../images/about-img.png') center top / cover no-repeat;
+        border-radius: 35px 35px 0 0; // Only top corners rounded
+        min-height: 50vh;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        // Gradient overlay for better text readability
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(181deg, @about-bg-color 12%, rgba(18, 46, 71, 0) 113%),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border-radius: 35px 35px 0 0;
+            pointer-events: none;
+        }
+
+        .breakpoint-large-down({
+            border-radius: 25px 25px 0 0;
+            min-height: 45vh;
+
+            &::before {
+                border-radius: 25px 25px 0 0;
+            }
+        });
+
+        .breakpoint-medium-down({
+            border-radius: 20px 20px 0 0;
+            min-height: 40vh;
+
+            &::before {
+                border-radius: 20px 20px 0 0;
+            }
+        });
+
+        .breakpoint-small-down({
+            border-radius: 15px 15px 0 0;
+            min-height: 35vh;
+
+            &::before {
+                border-radius: 15px 15px 0 0;
+            }
+        });
+    }
+
+    .about-header-title {
+        position: relative;
+        z-index: 1;
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 56px;
+        font-weight: 400;
+        color: @about-text-white;
+        margin: 0;
+        line-height: 1.2;
+        text-align: center;
+        padding: 0 20px;
+
+        .breakpoint-large-down({
+            font-size: 44px;
+        });
+
+        .breakpoint-medium-down({
+            font-size: 36px;
+        });
+
+        .breakpoint-small-down({
+            font-size: 28px;
+        });
+    }
+}
+
+// ==========================================================================
+// About The Project Section
+// ==========================================================================
+
+.about-project-section {
+    background-color: @about-bg-color;
+    position: relative;
+    overflow: hidden;
+    padding: 50px 0 80px;
+    border-radius: 0 0 35px 35px; // Only bottom corners rounded
+    margin: 0 auto;
+
+    &.container-dynamic {
+        max-width: 98vw !important;
+    }
+
+    .breakpoint-large-down({
+        border-radius: 0 0 25px 25px;
+        padding: 40px 0 60px;
+    });
+
+    .breakpoint-medium-down({
+        border-radius: 0 0 20px 20px;
+        padding: 30px 0 50px;
+    });
+
+    .breakpoint-small-down({
+        border-radius: 0 0 20px 20px;
+        padding: 20px 0 40px;
+    });
+}
+
+// Background image
+.about-project-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+// Content container
+.about-project-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+// ==========================================================================
+// Content Blocks Layout
+// ==========================================================================
+
+.about-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    position: relative;
+
+    .breakpoint-large-down({
+        grid-template-columns: 1fr;
+        gap: 60px;
+    });
+}
+
+// Text blocks shared styles
+.about-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    color: @about-text-white;
+    max-width: 624px;
+
+    .breakpoint-large-down({
+        max-width: 100%;
+    });
+
+    .breakpoint-small-down({
+        gap: 14px;
+        max-width: 100%;
+    });
+
+    .about-title {
+        color: #FFFFFF;
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 145%;
+        letter-spacing: -0.96px;
+        margin: 0;
+
+        .breakpoint-large-down({
+            font-size: 40px;
+        });
+
+        .breakpoint-medium-down({
+            font-size: 34px;
+        });
+
+        .breakpoint-small-down({
+            font-size: 22px;
+            letter-spacing: -0.44px;
+        });
+    }
+
+    .about-description {
+        color: #FFFFFF;
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 155%;
+        margin: 0;
+
+        .breakpoint-large-down({
+            font-size: 20px;
+        });
+
+        .breakpoint-medium-down({
+            font-size: 18px;
+        });
+
+        .breakpoint-small-down({
+            font-size: 14px;
+            line-height: 155%;
+        });
+    }
+}
+
+// ==========================================================================
+// Circle Layout
+// ==========================================================================
+
+.about-circles-container {
+    position: relative;
+    min-height: 1400px;
+
+    .breakpoint-large-down({
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 80px;
+        padding: 40px 0;
+    });
+}
+
+// Individual circle
+.about-circle {
+    width: 400px;
+    height: 397px;
+    border: 2px solid @about-circle-border;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    .breakpoint-huge-down({
+        width: 340px;
+        height: 337px;
+    });
+
+    .breakpoint-large-down({
+        position: relative;
+        width: 320px;
+        height: 317px;
+        left: auto !important;
+        top: auto !important;
+    });
+
+    .breakpoint-medium-down({
+        width: 280px;
+        height: 277px;
+    });
+
+    .breakpoint-small-down({
+        width: 173px;
+        height: 172px;
+        border-width: 1px;
+    });
+
+    .circle-text {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 48px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: -0.96px;
+        color: @about-text-white;
+        text-align: center;
+
+        .breakpoint-huge-down({
+            font-size: 40px;
+        });
+
+        .breakpoint-large-down({
+            font-size: 36px;
+        });
+
+        .breakpoint-medium-down({
+            font-size: 32px;
+        });
+
+        .breakpoint-small-down({
+            font-size: 21px;
+            letter-spacing: -0.42px;
+        });
+    }
+}
+
+// Circle positions (desktop)
+.circle-resilience {
+    top: 0;
+    right: 0;
+}
+
+.circle-adaptation {
+    top: 475px;
+    left: 0;
+}
+
+.circle-collaboration {
+    top: 950px;
+    right: 0;
+}
+
+// ==========================================================================
+// Connectors (SVG lines between circles)
+// ==========================================================================
+
+.about-connector {
+    position: absolute;
+    pointer-events: none;
+
+    .breakpoint-large-down({
+        display: none;
+    });
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    path {
+        stroke: @about-circle-border;
+        stroke-width: 2;
+        fill: none;
+    }
+}
+
+.connector-1 {
+    width: 325px;
+    height: 215px;
+    top: 347px;
+    left: ~"calc(50% + 16px)";
+    transform: translateX(-50%);
+}
+
+.connector-2 {
+    width: 308px;
+    height: 228px;
+    top: 840px;
+    left: ~"calc(50% - 50px)";
+    transform: translateX(-50%);
+}
+
+// ==========================================================================
+// Section Content Positions (Desktop)
+// ==========================================================================
+
+.about-section-what {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    max-width: 624px;
+    z-index: 2;
+
+    .breakpoint-large-down({
+        position: relative;
+        top: auto;
+        left: auto;
+        max-width: 100%;
+    });
+}
+
+.about-section-how {
+    position: absolute;
+    top: 573px;
+    right: 0;
+    max-width: 624px;
+    z-index: 2;
+
+    .breakpoint-large-down({
+        position: relative;
+        top: auto;
+        right: auto;
+        max-width: 100%;
+    });
+}
+
+.about-section-ahead {
+    position: absolute;
+    top: 1120px;
+    left: 0;
+    max-width: 572px;
+    z-index: 2;
+
+    .breakpoint-large-down({
+        position: relative;
+        top: auto;
+        left: auto;
+        max-width: 100%;
+    });
+}
+
+// ==========================================================================
+// Grid Layout for Desktop
+// ==========================================================================
+
+.about-grid-layout {
+    position: relative;
+    min-height: 1500px;
+    max-width: 1100px;
+    margin: 0 auto;
+
+    .breakpoint-large-down({
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+    });
+
+    .breakpoint-small-down({
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 0 18px;
+
+        // Reorder for mobile layout flow - circles alternate left/right
+        .circle-resilience { order: 0; align-self: flex-end; margin-right: 20px; }
+        .about-section-what { order: 1; }
+        .circle-adaptation { order: 2; align-self: flex-start; }
+        .about-section-how { order: 3; }
+        .circle-collaboration { order: 4; align-self: flex-end; margin-right: 20px; }
+        .about-section-ahead { order: 5; }
+    });
+}
+
+// Row wrapper for alternating layout
+.about-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+
+    .breakpoint-large-down({
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    });
+
+    &.row-reverse {
+        flex-direction: row-reverse;
+
+        .breakpoint-large-down({
+            flex-direction: column;
+        });
+    }
+}
+
+// ==========================================================================
+// Objectives Section
+// ==========================================================================
+
+@objectives-dark: #122E47;
+
+.objectives-section {
+    background-color: #FEFFFD;
+    padding: 80px 0;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+}
+
+.objectives-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 55px;
+
+    .section-label {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 145%;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: @objectives-dark;
+        text-align: center;
+
+        .breakpoint-medium-down({ font-size: 18px; });
+        .breakpoint-small-down({ font-size: 16px; });
+    }
+
+    .section-title {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 145%;
+        color: @objectives-dark;
+        text-align: center;
+        margin: 0;
+
+        .breakpoint-large-down({ font-size: 32px; });
+        .breakpoint-medium-down({ font-size: 26px; });
+        .breakpoint-small-down({ font-size: 22px; });
+    }
+}
+
+.objectives-accordion {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 65px;
+
+    .breakpoint-medium-down({ gap: 40px; });
+}
+
+.objective-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        height: 1px;
+        background-color: rgba(18, 46, 71, 0.2);
+    }
+}
+
+.objective-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.objective-title {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+    letter-spacing: -0.8px;
+    color: @objectives-dark;
+
+    .breakpoint-large-down({ font-size: 32px; });
+    .breakpoint-medium-down({ font-size: 24px; });
+    .breakpoint-small-down({ font-size: 20px; });
+}
+
+.objective-btn {
+    width: 33px;
+    height: 33px;
+    border-radius: 70px;
+    background-color: @objectives-dark;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    .transition(all 0.3s ease);
+
+    svg {
+        .transition(transform 0.3s ease);
+    }
+
+    .breakpoint-small-down({
+        width: 28px;
+        height: 28px;
+    });
+}
+
+// Active/expanded state
+.objective-item.active {
+    .objective-btn {
+        background: linear-gradient(135deg, #35B956 0%, #3984C6 100%);
+        transform: rotate(180deg);
+    }
+}
+
+.objective-content {
+    display: none;
+    padding: 0 0 10px 0;
+
+    p {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 155%;
+        color: @objectives-dark;
+        margin: 0;
+
+        .breakpoint-small-down({ font-size: 16px; });
+    }
+}

@@ -8,8 +8,33 @@ $(function() {
     initDesktopDropdownToggle();
     sanitizeNavDropdowns();
     initFooterDropdowns();
+    initNavbarScroll();
+    initLatestNewsCarousel();
+    initConsortiumCarousel();
+    initObjectivesAccordion();
     $('nav').removeClass('no-transition');
 });
+
+// ---------- Navbar Scroll ----------
+
+function initNavbarScroll() {
+    var $navbar = $('#headernavbar');
+
+    if (!$navbar.length) return;
+
+    function handleScroll() {
+        var scrollTop = $(window).scrollTop();
+
+        if (scrollTop > 50) {
+            $navbar.addClass('navbar-scrolled');
+        } else {
+            $navbar.removeClass('navbar-scrolled');
+        }
+    }
+
+    $(window).on('scroll.navbarScroll', handleScroll);
+    handleScroll();
+}
 
 // ---------- Search ----------
 
@@ -74,11 +99,7 @@ function initDesktopMenuToggle() {
     $desktopToggle.on('click.desktopMenu', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        $navbarNav.addClass('show').css({
-            right: '0',
-            opacity: '1',
-            visibility: 'visible'
-        });
+        $navbarNav.addClass('show');
         $desktopToggle.hide();
         $('body').addClass('menu-open');
     });
@@ -86,11 +107,7 @@ function initDesktopMenuToggle() {
     $closeBtn.on('click.desktopMenu', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        $navbarNav.removeClass('show').css({
-            right: '-300px',
-            opacity: '0',
-            visibility: 'hidden'
-        });
+        $navbarNav.removeClass('show');
         $desktopToggle.show();
         $('body').removeClass('menu-open');
     });
@@ -105,11 +122,7 @@ function initDesktopMenuToggle() {
             !$closeBtn.is(event.target) &&
             $closeBtn.has(event.target).length === 0
         ) {
-            $navbarNav.removeClass('show').css({
-                right: '-300px',
-                opacity: '0',
-                visibility: 'hidden'
-            });
+            $navbarNav.removeClass('show');
             $desktopToggle.show();
             $('body').removeClass('menu-open');
         }
@@ -120,24 +133,27 @@ function initDesktopMenuToggle() {
 }
 
 function initDesktopDropdownToggle() {
-    $('.nav-item.dropdown > a').on('click.desktopDropdown', function(e) {
+    // Only apply click-based dropdown toggle for mobile slide-out menu
+    // Desktop menu uses CSS hover states
+    $('.navbar-collapse .nav-item.dropdown > a').on('click.desktopDropdown', function(e) {
         e.preventDefault();
         var $dropdownMenu = $(this).siblings('.dropdown-menu');
         if ($dropdownMenu.hasClass('show')) {
             $dropdownMenu.removeClass('show');
+            $(this).parent().removeClass('active');
         } else {
-            $('.dropdown-menu.show').removeClass('show');
+            $('.navbar-collapse .dropdown-menu.show').removeClass('show');
+            $('.navbar-collapse .nav-item.dropdown').removeClass('active');
             $dropdownMenu.addClass('show');
+            $(this).parent().addClass('active');
         }
     });
 }
 
 function sanitizeNavDropdowns() {
-    $('.nav-item').children('a').each(function() {
+    // Only sanitize dropdowns in mobile menu and footer, not desktop nav
+    $('.navbar-collapse .nav-item, .footer-navigation .nav-item').children('a').each(function() {
         var $link = $(this);
-        if ($link.closest('.footer-navigation').length) {
-            return;
-        }
         if ($link.attr('data-toggle') === 'dropdown') {
             $link
                 .removeAttr('data-toggle')
@@ -151,8 +167,11 @@ function sanitizeNavDropdowns() {
 }
 
 function initHamburgerMenuDropdowns() {
+    // This function handles the mobile slide-out menu dropdowns only
+    var $mobileMenu = $('#headerNavbarNav');
+
     function autoExpandActiveDropdowns() {
-        var activeSubItems = $('#headerNavbarNav .dropdown-menu .nav-item.active');
+        var activeSubItems = $mobileMenu.find('.dropdown-menu .nav-item.active');
         activeSubItems.each(function() {
             var parentDropdown = $(this).closest('.nav-item.dropdown');
             if (parentDropdown.length) {
@@ -167,7 +186,8 @@ function initHamburgerMenuDropdowns() {
 
     autoExpandActiveDropdowns();
 
-    var dropdownItems = $('#headerNavbarNav .nav-item.dropdown > a');
+    // Only bind click handlers for dropdowns inside the mobile slide-out menu
+    var dropdownItems = $mobileMenu.find('.nav-item.dropdown > a');
     dropdownItems.each(function() {
         $(this).off('click.dropdown').on('click.dropdown', function(e) {
             e.preventDefault();
@@ -176,7 +196,7 @@ function initHamburgerMenuDropdowns() {
             if (dropdownMenu.length) {
                 parentItem.toggleClass('active');
                 dropdownMenu.toggleClass('show');
-                var otherDropdowns = $('#headerNavbarNav .nav-item.dropdown');
+                var otherDropdowns = $mobileMenu.find('.nav-item.dropdown');
                 otherDropdowns.each(function() {
                     if (this !== parentItem[0]) {
                         $(this).removeClass('active');
@@ -191,7 +211,7 @@ function initHamburgerMenuDropdowns() {
     });
 
     function closeAllDropdowns() {
-        var activeDropdowns = $('#headerNavbarNav .nav-item.dropdown.active');
+        var activeDropdowns = $mobileMenu.find('.nav-item.dropdown.active');
         activeDropdowns.each(function() {
             $(this).removeClass('active');
             var menu = $(this).find('.dropdown-menu');
@@ -218,9 +238,8 @@ function initHamburgerMenuDropdowns() {
     }
 
     $(document).off('click.dropdownOutside').on('click.dropdownOutside', function(e) {
-        var navbar = $('#headerNavbarNav');
         var menuToggle = $('#desktopMenuToggle');
-        if (navbar.length && !navbar.is(e.target) && navbar.has(e.target).length === 0 &&
+        if ($mobileMenu.length && !$mobileMenu.is(e.target) && $mobileMenu.has(e.target).length === 0 &&
             !menuToggle.is(e.target) && menuToggle.has(e.target).length === 0) {
             closeAllDropdowns();
         }
@@ -285,5 +304,131 @@ function initFooterDropdowns() {
             $('.footer-navigation .nav-item.dropdown').removeClass('active');
             $('.footer-navigation .dropdown-menu').removeClass('show');
         }, 100);
+    });
+}
+
+// ---------- Latest News Carousel ----------
+
+function initLatestNewsCarousel() {
+    var $carousel = $('.news-carousel');
+    if (!$carousel.length) return;
+
+    $carousel.slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        pauseOnHover: true,
+        arrows: false,
+        dots: false,
+        infinite: true,
+        centerMode: true,
+        centerPadding: '10%',
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    centerPadding: '5%'
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2,
+                    centerPadding: '8%'
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                    centerPadding: '20px'
+                }
+            }
+        ]
+    });
+}
+
+// ---------- Consortium Carousel ----------
+
+function initConsortiumCarousel() {
+    var $carousel = $('.consortium-carousel');
+    if (!$carousel.length) return;
+
+    $carousel.slick({
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: true,
+        arrows: false,
+        dots: false,
+        infinite: true,
+        centerMode: true,
+        centerPadding: '5%',
+        responsive: [
+            {
+                breakpoint: 1400,
+                settings: {
+                    slidesToShow: 5,
+                    centerPadding: '3%'
+                }
+            },
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 4,
+                    centerPadding: '3%'
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    centerPadding: '5%'
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    centerPadding: '10%'
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    centerPadding: '20%'
+                }
+            }
+        ]
+    });
+}
+
+// ---------- Objectives Accordion ----------
+
+function initObjectivesAccordion() {
+    $('.objective-toggle').on('click', function() {
+        var $item = $(this).closest('.objective-item');
+        var $content = $item.find('.objective-content');
+        var $btn = $item.find('.objective-btn');
+
+        if ($item.hasClass('active')) {
+            // Close this item
+            $item.removeClass('active');
+            $content.slideUp(300);
+            $btn.attr('aria-expanded', 'false');
+        } else {
+            // Close other items and open this one
+            $('.objective-item.active').removeClass('active')
+                .find('.objective-content').slideUp(300);
+            $('.objective-item .objective-btn').attr('aria-expanded', 'false');
+
+            $item.addClass('active');
+            $content.slideDown(300);
+            $btn.attr('aria-expanded', 'true');
+        }
     });
 }

@@ -1,334 +1,263 @@
+// ==========================================================================
+// Hero Section - Homepage
+// ==========================================================================
+
+// Hero color variables
+@hero-gradient-green: #35B956;
+@hero-gradient-blue: #3984C6;
+@hero-btn-bg: #D8EDFE;
+@hero-btn-text: #122E47;
+@hero-text-white: #FEFFFD;
+
 .hero-section {
-    width: 100%;
-    height: 100vh;
-    background-color: #0F2F2A;
     position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70%;
-        background: linear-gradient(180deg, rgba(20, 47, 43, 0.00) 0%, #142F2B 100%);
-        pointer-events: none;
-        z-index: 2;
-    }
-    
-    // Floating radial glow shadows (left/right) - smooth circular orbits
-    .shadows {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;   
+    width: 100%;
 
-        // orbit centers
-        .left-shadow,
-        .right-shadow {
-            position: absolute;
-            width: 0;
-            height: 0;
-            will-change: transform;
-        }
+    .hero-background {
+        background: url('../../assets/images/hero-image.png') center center / cover no-repeat;
+        .rounded(35px);
+        min-height: 90vh;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        position: relative;
 
-        // Left glow anchor: start bottom-left
-        .left-shadow {
-            left: 0%;
-            top: 30%;
-        }
-
-        // Right glow anchor: start top-right
-        .right-shadow {
-            right: 0%;
-            top: 30%;
-        }
-
-        // The actual glow bodies
-        .left-shadow::before,
-        .right-shadow::before {
+        // Overlay for better text readability
+        &::before {
             content: '';
             position: absolute;
-            width: 800px;
-            height: 800px;
-            border-radius: 1000px;
-            background: radial-gradient(50% 50% at 50% 50%, rgba(41, 180, 115, 0.28) 0%, rgba(255, 255, 255, 0.00) 100%);
-            left: 0;
             top: 0;
-            filter: blur(0.5px);
-
-            .breakpoint-large-down({
-                width: 480px;
-                height: 480px;
-            });
-        }
-
-        .left-shadow::before {
-            animation: leftUpDown 6s ease-in-out 0s infinite alternate;
-        }
-
-        .right-shadow::before {
-            animation: rightUpDown 6s ease-in-out 0s infinite alternate;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.45) 0%,
+                rgba(0, 0, 0, 0.25) 40%,
+                rgba(0, 0, 0, 0) 70%
+            );
+            .rounded(35px);
+            pointer-events: none;
         }
     }
 
-    .text-container {
-        height: 35vh;
-        min-height: 300px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 3;
-        padding-top: 80px;
-        
-        .breakpoint-large-down({
-            height: 40vh;
-            min-height: 250px;
-            padding-top: 140px;
-            margin-bottom: 40px;
-        });
-    }
-    
-    .hero-text {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        text-align: center;
-        
-        h1, p, a {
-            color: #F2F2F2;
-        }
-
-        h1{
-            font-size: 80px;
-            font-weight: 494;
-            line-height: 1.2;   
-            margin-bottom: 0;
-            text-transform: uppercase;
-            
-            .breakpoint-large-down({
-                font-size: 32px;
-            });
-        }
-
-        p{
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 1.4;
-            margin-bottom: 10px;
-            width: 75%;
-            max-width: 800px;
-            color: #F2F2F2;
-            .breakpoint-large-down({
-                font-size: 16px;
-                width: 90%;
-            });
-        }
-
-        // Hero buttons container
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            
-            .breakpoint-large-down({
-                flex-direction: column;
-                gap: 15px;
-                width: 100%;
-            });
-        }
-
-        // Initial hidden states for staged reveal
-        p,
-        a.btn,
-        .btn-intro,
-        .btn-involved {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        // When typing completes, reveal paragraph
-        &.is-paragraph-visible {
-            p {
-                animation: heroFadeInUp 800ms ease-out forwards;
-                animation-delay: 150ms;
-            }
-        }
-
-        // After paragraph reveal, bounce the buttons and make them visible
-        &.is-button-bounce {
-            a.btn,
-            .btn-intro,
-            .btn-involved {
-                animation: heroBounceIntro 900ms ease-out forwards;
-            }
-            
-            // Stagger the button animations
-            .btn-intro {
-                animation-delay: 200ms;
-            }
-            
-            .btn-involved {
-                animation-delay: 400ms;
-            }
-        }
-    }
-
-    // Carousel container takes remaining space
-    .carousel-container {
-        flex: 1;
-        height: 70vh;
+    .hero-content {
         position: relative;
         z-index: 1;
-        
+        padding-left: 20px;
+        width: 60%;
+        max-width: 60%;
+    }
+
+    .hero-headline {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 70px;
+        font-weight: 500;
+        line-height: 1.15;
+        margin: 0 0 20px 0;
+
+        .text-white {
+            color: @hero-text-white;
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, @hero-gradient-green, @hero-gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    }
+
+    .hero-subtitle {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 34px;
+        font-weight: 300;
+        line-height: 1.3;
+        color: @hero-text-white;
+        margin: 0 0 40px 0;
+    }
+
+    // ==========================================================================
+    // Responsive Breakpoints
+    // ==========================================================================
+
+    // Laptop (< 1370px)
+    .breakpoint-laptop-down({
+        .hero-headline {
+            font-size: 60px;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+        }
+    });
+
+    // Large (< 992px)
+    .breakpoint-large-down({
+        .hero-background {
+            .rounded(25px);
+
+            &::before {
+                .rounded(25px);
+            }
+        }
+
+        .hero-content {
+            padding-left: 60px;
+            width: 70%;
+            max-width: 70%;
+        }
+
+        .hero-headline {
+            font-size: 50px;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+    });
+
+    // Medium (< 768px)
+    .breakpoint-medium-down({
+        .hero-background {
+            min-height: 100vh;
+            .rounded(20px);
+
+            &::before {
+                .rounded(20px);
+            }
+        }
+
+        .hero-content {
+            padding-left: 40px;
+            width: 80%;
+            max-width: 80%;
+        }
+
+        .hero-headline {
+            font-size: 40px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .btn-primary {
+            font-size: 15px;
+            padding: 10px 20px;
+        }
+    });
+
+    // Small (< 576px)
+    .breakpoint-small-down({
+        .hero-background {
+            min-height: 100vh;
+            .rounded(15px);
+
+            &::before {
+                .rounded(15px);
+            }
+        }
+
+        .hero-content {
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .hero-headline {
+            font-size: 32px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            justify-content: center;
+            font-size: 14px;
+            padding: 12px 20px;
+        }
+    });
+}
+
+// ==========================================================================
+// Page Header Section (Non-Home Pages)
+// ==========================================================================
+
+.page-header-section {
+    position: relative;
+    width: 100%;
+
+    .page-header-background {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        .rounded(35px);
+        height: 50vh;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         .breakpoint-large-down({
+            .rounded(25px);
             height: 45vh;
+        });
+
+        .breakpoint-medium-down({
+            .rounded(20px);
+            height: 40vh;
+        });
+
+        .breakpoint-small-down({
+            .rounded(15px);
+            height: 35vh;
         });
     }
 
-    // Hero carousel styles (custom continuous track)
-    #hero-carousel {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+    // About page - no bottom rounding to connect with about-project-section
+    &.page-header-about .page-header-background {
+        border-radius: 35px 35px 0 0;
 
-        .carousel-track {
-            display: flex;
-            align-items: flex-end;
-            height: 100%;
-            will-change: transform;
-            margin: 0;
-            padding: 0;
-        }
+        .breakpoint-large-down({
+            border-radius: 25px 25px 0 0;
+        });
 
-        .slide {
-            outline: none;
-            padding: 0 8px;
-            height: 100%;
-            max-height: 568px;
-            display: flex;
-            align-items: flex-end;
-            box-sizing: border-box;
+        .breakpoint-medium-down({
+            border-radius: 20px 20px 0 0;
+        });
 
-            > div {
-                height: 100%;
-                display: flex;
-                align-items: flex-end;
-            }
-
-            .hero-carousel-image {
-                border-radius: 50px 50px 0 0;
-                overflow: hidden;
-                background: transparent;
-                position: relative;
-                width: 100%;
-
-                img {
-                    width: 100%;
-                    object-fit: cover;
-                    display: block;
-                    border-radius: 50px 50px 0 0;
-                    border: none;
-                    margin: 0;
-                    padding: 0;
-                    background: transparent;
-                }
-
-                // Small height images (first, third, fifth...)
-                &.small-height img {
-                    height: 45vh;
-                    min-height: 400px;
-                    max-height: 500px;
-
-                    .breakpoint-large-down({
-                        height: 35vh;
-                        min-height: 250px;
-                    });
-
-                    // Large screens - maintain proportion
-                    @media (min-width: 1400px) {
-                        height: 40vh;
-                        min-height: 450px;
-                        max-height: 600px;
-                    }
-
-                    @media (min-width: 1920px) {
-                        height: 38vh;
-                        min-height: 500px;
-                        max-height: 700px;
-                    }
-                }
-
-                // Large height images (second, fourth, sixth...)
-                &.large-height img {
-                    height: 55vh;
-                    min-height: 500px;
-                    max-height: 650px;
-
-                    .breakpoint-large-down({
-                        height: 45vh;
-                        min-height: 350px;
-                    });
-
-                    // Large screens - maintain proportion
-                    @media (min-width: 1400px) {
-                        height: 50vh;
-                        min-height: 550px;
-                        max-height: 750px;
-                    }
-
-                    @media (min-width: 1920px) {
-                        height: 48vh;
-                        min-height: 600px;
-                        max-height: 850px;
-                    }
-                }
-            }
-        }
-
-        // Ensure seamless image rendering and transparent backgrounds
-        * {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
+        .breakpoint-small-down({
+            border-radius: 15px 15px 0 0;
+        });
     }
 }
 
-@keyframes leftUpDown {
-    0%   { transform: translate(-50%, -50%) translateX(260px) translateY(200px); }
-    100% { transform: translate(-50%, -50%) translateX(260px) translateY(-200px); }
+.page-header-title {
+    font-family: @font-family, 'Funnel Sans', sans-serif;
+    font-size: 56px;
+    font-weight: 400;
+    color: #FEFFFD;
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    padding: 0 20px;
+
+    .breakpoint-large-down({
+        font-size: 44px;
+    });
+
+    .breakpoint-medium-down({
+        font-size: 36px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 28px;
+    });
 }
-
-@keyframes rightUpDown {
-    0%   { transform: translate(-50%, -50%) translateX(-260px) translateY(-200px); }
-    100% { transform: translate(-50%, -50%) translateX(-260px) translateY(200px); }
-}
-
-// Fade in and slide up for paragraph
-@keyframes heroFadeInUp {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-// Subtle bounce for the button
-@keyframes heroBounceIntro {
-    0% { opacity: 0; transform: translateY(16px) scale(0.98); }
-    50% { opacity: 1; transform: translateY(-6px) scale(1.02); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-

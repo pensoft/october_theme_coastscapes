@@ -1,19 +1,12 @@
 [menu]
 start = "id-1"
 activeNode = 0
-listItemClasses = "nav-item"
-primaryClasses = "navbar-nav"
-secondaryClasses = "dropdown-menu"
-numberOfLevels = 2
+listItemClasses = "footer-nav-item"
+primaryClasses = "footer-nav-list"
+numberOfLevels = 1
 
-[jumbotron footer_disclimer]
-jumbotron = "footer"
-background = "transperant"
-templates = "template3"
-description_limit = 0
-
-[jumbotron footer_funds]
-jumbotron = "funding-text"
+[jumbotron footer-funds]
+jumbotron = "footer-funds"
 background = "transperant"
 templates = "template3"
 description_limit = 0
@@ -21,3 +14,79 @@ description_limit = 0
 ==
 ==
 
+{# Footer Wrapper #}
+<section class="footer-wrapper container-dynamic">
+    {# Newsletter CTA Section #}
+    <section class="footer-newsletter" aria-labelledby="newsletter-heading">
+        <div class="footer-newsletter-image" aria-hidden="true"></div>
+        <div class="footer-newsletter-content">
+            <h2 id="newsletter-heading">Keep track of<br>our progress</h2>
+            <a href="{{ 'newsletter'|page }}" class="btn-newsletter">
+                <span>Subscribe to our newsletter</span>
+                <span class="btn-newsletter-icon" aria-hidden="true">
+                    <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
+                </span>
+            </a>
+        </div>
+    </section>
+
+    {# Main Footer Section #}
+    <section class="footer-main">
+        <div class="container">
+            {# Footer Header: Logo + Social #}
+            <div class="footer-header">
+                <a href="{{ 'home'|page }}" class="footer-logo" aria-label="{{ this.theme.site_name }} - Home">
+                    <img src="{{ 'assets/images/footer-logo.svg'|theme }}" alt="{{ this.theme.site_name }}">
+                </a>
+
+                <nav class="footer-social" aria-label="Social media links">
+                    {% if enable_linkedin %}
+                        <a href="{{ linkedin_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Follow us on LinkedIn">
+                            <img src="{{ 'assets/images/linkedin-white.svg'|theme }}" alt="" width="28" height="28">
+                        </a>
+                    {% endif %}
+
+                    {% if enable_bluesky %}
+                        <a href="{{ bluesky_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Follow us on Bluesky">
+                            <img src="{{ 'assets/images/bluesky.svg'|theme }}" alt="" width="24" height="24">
+                        </a>
+                    {% endif %}
+
+                    {% if enable_instagram %}
+                        <a href="{{ instagram_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Follow us on Instagram">
+                            <img src="{{ 'assets/images/instagram-white.svg'|theme }}" alt="" width="22" height="22">
+                        </a>
+                    {% endif %}
+                </nav>
+            </div>
+
+            {# Footer Navigation #}
+            <nav class="footer-navigation" aria-label="Footer navigation">
+                {% component 'menu' %}
+            </nav>
+
+            {# Funding Section #}
+            <div class="footer-funding">
+                <div class="row">
+                    {% if footer_funds_flag %}
+                        <div class="col-md-3 col-xs-12 footer-funding-logo">
+                            <img src="{{ footer_funds_flag }}" alt="European Union funding logo">
+                        </div>
+                    {% endif %}
+                    <div class="col-md-9 col-xs-12 footer-funding-text">
+                        {% component 'footer-funds' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

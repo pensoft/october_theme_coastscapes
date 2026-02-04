@@ -1,0 +1,504 @@
+// ==========================================================================
+// Page - Home
+// ==========================================================================
+
+// Plan & Perspectives Section
+.plan-perspectives-section {
+    background-color: #FEFFFD;
+    padding: 80px 0;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section-label {
+        display: block;
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #122E47;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .section-description {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: -0.8px;
+        color: #122E47;
+        text-align: center;
+        max-width: 915px;
+        margin-bottom: 60px;
+
+        .breakpoint-large-down({
+            font-size: 32px;
+        });
+
+        .breakpoint-medium-down({
+            font-size: 26px;
+        });
+
+        .breakpoint-small-down({
+            font-size: 22px;
+        });
+    }
+
+    .perspective-cards {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+        max-width: 927px;
+
+        .breakpoint-medium-down({
+            flex-direction: column;
+            align-items: center;
+        });
+    }
+
+    .perspective-card {
+        position: relative;
+        width: 456px;
+        height: 591px;
+        cursor: pointer;
+
+        .breakpoint-large-down({
+            width: 380px;
+            height: 500px;
+        });
+
+        .breakpoint-medium-down({
+            width: 100%;
+            max-width: 456px;
+            height: 500px;
+        });
+
+        .breakpoint-small-down({
+            height: 420px;
+        });
+
+        .card-body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            .rounded(15px);
+            overflow: hidden;
+            background-color: #FEFFFD;
+        }
+
+        .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 44px;
+            left: 44px;
+            z-index: 2;
+            .transition(opacity 0.4s ease);
+
+            .breakpoint-small-down({
+                bottom: 30px;
+                left: 30px;
+            });
+        }
+
+        .card-title {
+            font-family: 'Funnel Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 400;
+            line-height: 1.45;
+            color: #FEFFFD;
+            margin: 0;
+
+            .breakpoint-small-down({
+                font-size: 32px;
+            });
+        }
+
+        .card-hover-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            z-index: 2;
+            opacity: 0;
+            .rounded(15px);
+            box-sizing: border-box;
+            .transition(opacity 0.4s ease);
+
+            .breakpoint-small-down({
+                padding: 25px;
+            });
+
+            p {
+                font-family: 'Funnel Sans', sans-serif;
+                font-size: 20px;
+                line-height: 1.6;
+                color: #FEFFFD;
+                margin: 0;
+                text-align: center;
+
+                .breakpoint-small-down({
+                    font-size: 18px;
+                });
+            }
+        }
+
+        .card-arrow {
+            position: absolute;
+            bottom: -7px;
+            right: -7px;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background-color: #FEFFFD;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+
+            .breakpoint-small-down({
+                width: 50px;
+                height: 50px;
+                bottom: -5px;
+                right: -5px;
+            });
+
+            .arrow-inner {
+                width: 33px;
+                height: 33px;
+                border-radius: 50%;
+                transform: rotate(60deg);
+                .transition(transform 0.4s ease);
+                background-image: url('../images/white-arrow.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 14px 12px;
+
+                .breakpoint-small-down({
+                    width: 28px;
+                    height: 28px;
+                });
+            }
+        }
+
+        // Hover state
+        &:hover {
+            .card-content {
+                opacity: 0;
+            }
+
+            .card-hover-content {
+                opacity: 1;
+            }
+
+            .card-arrow .arrow-inner {
+                transform: rotate(240deg);
+            }
+        }
+    }
+
+    // Mission Card Specific Styles
+    .mission-card {
+        .card-overlay {
+            background: linear-gradient(197deg, rgba(18, 46, 71, 0) 42%, #122E47 96%);
+        }
+
+        .card-arrow .arrow-inner {
+            background-color: #122E47;
+        }
+
+        .card-hover-content {
+            background-color: rgba(18, 46, 71, 0.95);
+        }
+    }
+
+    // Vision Card Specific Styles
+    .vision-card {
+        margin-top: 98px;
+
+        .breakpoint-medium-down({
+            margin-top: 0;
+        });
+
+        .card-overlay {
+            background: linear-gradient(197deg, rgba(53, 185, 86, 0) 50%, #35B956 96%);
+        }
+
+        .card-arrow .arrow-inner {
+            background-color: #122E47;
+        }
+
+        .card-hover-content {
+            background-color: rgba(53, 185, 86, 0.95);
+        }
+    }
+}
+
+// Latest News Section
+.latest-news-section {
+    background-color: #FEFFFD;
+    padding: 80px 0;
+    overflow: hidden;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+
+    .section-label {
+        display: block;
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #122E47;
+        text-align: center;
+    }
+
+    .news-carousel-wrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 60px;
+    }
+
+    .news-carousel {
+        .slick-list {
+            overflow: visible;
+        }
+
+        .slick-track {
+            display: flex;
+        }
+
+        .slick-slide {
+            padding: 0 10px;
+            height: auto;
+
+            > div {
+                height: 100%;
+            }
+        }
+    }
+
+    .news-slide {
+        height: 100%;
+    }
+
+    .news-card {
+        display: block;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+
+            .card-arrow .arrow-inner {
+                transform: rotate(240deg);
+            }
+        }
+    }
+
+    .card-image-container {
+        position: relative;
+    }
+
+    .card-image-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 388 / 442;
+        .rounded(15px);
+        overflow: hidden;
+    }
+
+    .card-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .card-gradient-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at 30% 110%, #35B956 0%, #379F8E 40%, #3984C6 80%);
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .card-arrow {
+        position: absolute;
+        bottom: -7px;
+        right: -7px;
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background-color: #FEFFFD;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3;
+
+        .breakpoint-small-down({
+            width: 50px;
+            height: 50px;
+            bottom: -5px;
+            right: -5px;
+        });
+
+        .arrow-inner {
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+            background-color: #122E47;
+            transform: rotate(60deg);
+            .transition(transform 0.4s ease);
+            background-image: url('../images/white-arrow.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 14px 12px;
+
+            .breakpoint-small-down({
+                width: 28px;
+                height: 28px;
+            });
+        }
+    }
+
+    .card-info {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card-date {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: #122E47;
+        opacity: 0.35;
+    }
+
+    .card-title {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1.25;
+        color: #122E47;
+        margin: 0;
+
+        .breakpoint-small-down({
+            font-size: 18px;
+        });
+    }
+
+}
+
+// Consortium Section
+.consortium-section {
+    background-color: #FEFFFD;
+    padding: 80px 0 180px; // Extra bottom padding to account for footer -100px overlap
+    overflow: hidden;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section-label {
+        display: block;
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #122E47;
+        text-align: center;
+    }
+
+    .consortium-carousel-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .consortium-carousel {
+        .slick-track {
+            display: flex;
+            gap: 29px;
+        }
+        .slick-slide {
+            padding: 0 14.5px;
+        }
+    }
+
+    .consortium-slide {
+        height: 100%;
+    }
+
+    .consortium-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 205px;
+        height: 85px;
+        background-color: #f6f6f6;
+        border-radius: 5px;
+        text-decoration: none;
+        .transition(opacity 0.3s ease);
+
+        &:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+
+        .breakpoint-small-down({
+            width: 180px;
+            height: 75px;
+        });
+    }
+
+    .partner-logo {
+        max-width: 85%;
+        max-height: 70%;
+        object-fit: contain;
+    }
+}

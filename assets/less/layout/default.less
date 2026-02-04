@@ -1,115 +1,189 @@
+// ==========================================================================
+// Layout - Default
+// ==========================================================================
+
+// Container - Responsive width with breakpoints
 .container {
     max-width: 100%;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
-     //padding-top: @padding-base-space-home * 2.5;
     padding-top: 50px;
-    //padding-bottom: @padding-base-space-home * 2.5;
     padding-bottom: 50px;
     margin-right: auto;
     margin-left: auto;
 
+    // Desktop-first: set max-widths using min-width breakpoints
     .breakpoint-small({
         max-width: 540px;
     });
+
     .breakpoint-medium({
         max-width: 720px;
     });
+
     .breakpoint-large({
         max-width: 960px;
     });
+
     .breakpoint-huge({
         max-width: 1200px;
     });
-    &.highlights-news{
+
+    // Modifier classes
+    &.highlights-news {
         padding-bottom: 30px;
     }
-    &.jpi{
+
+    &.jpi {
         padding-top: 0;
     }
 }
 
-.container-responsive {
-    max-width: calc(100vw - 8rem) !important;
+.container-dynamic {
+    max-width: 98vw !important;
 }
 
+// Full-width container - used for hero and footer sections
+.container-full-width {
+    max-width: 98vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Fluid container - full width
 .container-fluid {
     width: 100%;
-    padding-left: 0!important;
+    padding-left: 0 !important;
 }
 
+// ==========================================================================
+// Fixed Position Utilities
+// ==========================================================================
 
-
-
-.fixed-top,.fixed-bottom,.fixed-right,.fixed-left {
+.fixed-top,
+.fixed-bottom,
+.fixed-right,
+.fixed-left {
     position: fixed;
 }
+
 .fixed-top {
     top: 0;
     left: 0;
     right: 0;
 }
+
 .fixed-bottom {
     bottom: 0;
     left: 0;
     right: 0;
 }
+
 .fixed-right {
     top: 0;
     bottom: 0;
     left: 0;
 }
+
 .fixed-left {
     top: 0;
     bottom: 0;
     right: 0;
 }
 
+// ==========================================================================
+// Position Utilities
+// ==========================================================================
+
 .border-box {
     box-sizing: border-box;
 }
 
-// Positions
-
 .relative {
     position: relative;
 }
+
 .absolute {
     position: absolute;
 }
+
 .fixed {
     position: fixed;
 }
+
 .sticky {
     position: sticky;
 }
+
 .static {
     position: static;
 }
+
+// ==========================================================================
+// Display Utilities
+// ==========================================================================
+
 .show {
     display: block;
 }
+
 .hide {
     display: none;
 }
+
+// ==========================================================================
+// Screen Reader Only (Accessibility)
+// ==========================================================================
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+
+    &.sr-only-focusable:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+}
+
+// ==========================================================================
+// Body States
+// ==========================================================================
 
 body {
     &.menu-open {
         overflow: hidden;
     }
-    
+
     &.search-open {
         overflow: hidden;
-        
+
         #headernavbar {
-            .navbar-brand, #desktopMenuToggle {
-                z-index: 1005;
+            .navbar-brand,
+            #desktopMenuToggle {
+                z-index: @zindex-modal-backdrop - 35;
             }
         }
-        
-        // Add a subtle transition to all elements when search is open
-        .container, .header-image, .navbar-collapse {
-            transition: filter 0.3s ease;
+
+        .container,
+        .header-image,
+        .navbar-collapse {
+            .transition(filter 0.3s ease);
         }
+    }
+
+    #main-content{
+        min-height: 640px;
     }
 }

@@ -1,0 +1,20 @@
+{# Hero Section - Homepage Only #}
+{% if page_id == 'home' %}
+<section class="hero-section" role="banner" aria-label="COAST-SCAPES hero">
+    <div class="hero-background container-dynamic">
+        <div class="hero-content container">
+            <h1 class="hero-headline">
+                <span class="text-white">Rethinking </span><span class="text-gradient">COAST</span><span class="text-white">al</span>
+                <br>
+                <span class="text-white">Land</span><span class="text-gradient">SCAPES</span>
+            </h1>
+            <p class="hero-subtitle">
+                With climate-resilient interventions - Systemic land-to-sea solutions
+            </p>
+            <button type="button" href="{{ 'mission'|page }}" class="btn btn-primary">
+                Learn about our mission
+            </button>
+        </div>
+    </div>
+</section>
+{% endif %}

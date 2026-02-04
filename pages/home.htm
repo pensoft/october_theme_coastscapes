@@ -26,3 +26,104 @@ function onStart(){
 ?>
 ==
 
+<!-- Plan & Perspectives Section -->
+<section class="container-fluid plan-perspectives-section">
+    <div class="container">
+        <span class="section-label">PLAN & PERSPECTIVES</span>
+        <p class="section-description">
+            COAST-SCAPES will promote the utilisation of nature-based solutions (NbS)
+            and the development of integrated indicators, proactive climate warning systems,
+            as well as knowledge-based strategies for innovative business models.
+        </p>
+
+        <div class="perspective-cards">
+            <div class="perspective-card mission-card">
+                <div class="card-body">
+                    <img src="{{ 'assets/images/image-card-1a.png' | theme }}" alt="Mission" class="card-image">
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Mission</h3>
+                    </div>
+                    <div class="card-hover-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <span class="arrow-inner"></span>
+                </div>
+            </div>
+
+            <div class="perspective-card vision-card">
+                <div class="card-body">
+                    <img src="{{ 'assets/images/image-card-2.png' | theme }}" alt="Vision" class="card-image">
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">Vision</h3>
+                    </div>
+                    <div class="card-hover-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <span class="arrow-inner"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News Section -->
+{% if highlights|length %}
+<section class="container-fluid latest-news-section">
+    <div class="container">
+        <span class="section-label">LATEST NEWS</span>
+    </div>
+    <div class="news-carousel-wrapper">
+        <div class="news-carousel">
+            {% for item in highlights %}
+            <div class="news-slide">
+                <a href="/news/{{ item.slug }}" class="news-card">
+                    <div class="card-image-container">
+                        <div class="card-image-wrapper">
+                            {% if item.cover %}
+                            <img src="{{ item.cover.path }}" alt="{{ item.title }}" class="card-image">
+                            {% endif %}
+                            <div class="card-gradient-overlay"></div>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="arrow-inner"></span>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-date">{{ item.published_at|date('d F Y')|upper }}</span>
+                        <h3 class="card-title">{{ item.title|slice(0, 80) }}{% if item.title|length > 80 %}...{% endif %}</h3>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Consortium Section -->
+{% if consortium_partners|length %}
+<section class="container-fluid consortium-section">
+    <div class="container">
+        <span class="section-label">CONSORTIUM</span>
+    </div>
+    <div class="consortium-carousel-wrapper">
+        <div class="consortium-carousel">
+            {% for partner in consortium_partners %}
+            <div class="consortium-slide">
+                <a href="{{ partner.instituion_url }}" target="_blank" rel="noopener" class="consortium-card">
+                    {% if partner.cover %}
+                    <img src="{{ partner.cover.path }}" alt="{{ partner.instituion }}" class="partner-logo">
+                    {% endif %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

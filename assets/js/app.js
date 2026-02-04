@@ -12,6 +12,7 @@ $(function() {
     initLatestNewsCarousel();
     initConsortiumCarousel();
     initObjectivesAccordion();
+    initOurWorkTabs();
     $('nav').removeClass('no-transition');
 });
 
@@ -429,6 +430,60 @@ function initObjectivesAccordion() {
             $item.addClass('active');
             $content.slideDown(300);
             $btn.attr('aria-expanded', 'true');
+        }
+    });
+}
+
+// ---------- Our Work Tabs ----------
+
+function initOurWorkTabs() {
+    var $tabs = $('.circular-tab');
+    var $panels = $('.tab-panel');
+
+    if (!$tabs.length) return;
+
+    // Tab click handler
+    $tabs.on('click', function() {
+        var $clickedTab = $(this);
+        var targetPanel = $clickedTab.data('tab');
+
+        // Update active tab
+        $tabs.removeClass('active').attr('aria-selected', 'false');
+        $clickedTab.addClass('active').attr('aria-selected', 'true');
+
+        // Update active panel
+        $panels.removeClass('active');
+        $('#' + targetPanel).addClass('active');
+    });
+
+    // Keyboard navigation
+    $tabs.on('keydown', function(e) {
+        var $currentTab = $(this);
+        var $allTabs = $tabs;
+        var currentIndex = $allTabs.index($currentTab);
+        var newIndex;
+
+        switch (e.key) {
+            case 'ArrowLeft':
+            case 'ArrowUp':
+                e.preventDefault();
+                newIndex = currentIndex > 0 ? currentIndex - 1 : $allTabs.length - 1;
+                $allTabs.eq(newIndex).focus().click();
+                break;
+            case 'ArrowRight':
+            case 'ArrowDown':
+                e.preventDefault();
+                newIndex = currentIndex < $allTabs.length - 1 ? currentIndex + 1 : 0;
+                $allTabs.eq(newIndex).focus().click();
+                break;
+            case 'Home':
+                e.preventDefault();
+                $allTabs.first().focus().click();
+                break;
+            case 'End':
+                e.preventDefault();
+                $allTabs.last().focus().click();
+                break;
         }
     });
 }

@@ -216,66 +216,8 @@
         order: 2;
         flex-shrink: 0;
 
-        // Login Button - Matches Figma design (similar to btn-primary but smaller)
+        // Login Button - Styles defined in buttons.less
         .btn-login {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background-color: #D8EDFE;
-            color: #122E47;
-            padding: 12px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 400;
-            font-family: 'Funnel Sans', sans-serif;
-            line-height: 1.45;
-            .transition(all 0.3s ease);
-
-            .btn-login-text {
-                white-space: nowrap;
-            }
-
-            .btn-login-icon {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 32px;
-                height: 32px;
-                background-color: #122E47;
-                border-radius: 50%;
-                flex-shrink: 0;
-                .transition(all 0.3s ease);
-
-                img {
-                    width: 16px;
-                    height: 16px;
-                    transform: rotate(-45deg);
-                    .transition(transform 0.3s ease);
-                }
-            }
-
-            &:hover {
-                background-color: #C8DDF0;
-                transform: translateY(-2px);
-                .box-shadow(0, 4px, 12px, 0, rgba(216, 237, 254, 0.4));
-
-                .btn-login-icon {
-                    transform: translateX(4px);
-                }
-            }
-
-            &:active {
-                transform: translateY(0);
-                .box-shadow(0, 2px, 6px, 0, rgba(216, 237, 254, 0.3));
-            }
-
-            &:focus {
-                outline: none;
-                .box-shadow(0, 0, 0, 3px, rgba(18, 46, 71, 0.2));
-            }
-
             // Hide on tablet and below
             .breakpoint-large-down({
                 display: none;
@@ -470,57 +412,13 @@
             }
         }
 
-        // Mobile Login Link - Same as desktop btn-login
+        // Mobile Login Link - Button styles defined in buttons.less
         .mobile-login {
             padding: 30px;
             margin-top: 20px;
             display: flex;
             justify-content: center;
             width: 100%;
-
-            .btn-login {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                background-color: #D8EDFE;
-                color: #122E47;
-                padding: 12px 16px;
-                border-radius: 8px;
-                text-decoration: none;
-                font-size: 17px;
-                font-weight: 400;
-                font-family: 'Funnel Sans', sans-serif;
-                line-height: 1.45;
-                .transition(all 0.3s ease);
-
-                .btn-login-text {
-                    white-space: nowrap;
-                }
-
-                .btn-login-icon {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 32px;
-                    height: 32px;
-                    background-color: #122E47;
-                    border-radius: 50%;
-                    flex-shrink: 0;
-                    .transition(all 0.3s ease);
-
-                    img {
-                        width: 16px;
-                        height: 16px;
-                        transform: rotate(-45deg);
-                        .transition(transform 0.3s ease);
-                    }
-                }
-
-                &:hover {
-                    background-color: #C8DDF0;
-                }
-            }
         }
 
         .navbar-bottom-elements {

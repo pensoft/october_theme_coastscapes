@@ -125,73 +125,7 @@
     });
 }
 
-// Newsletter Subscribe Button
-.btn-newsletter {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: @footer-btn-bg;
-    color: @footer-dark-blue;
-    padding: 12px 16px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-family: 'Funnel Sans', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 1.45;
-    transition: all 0.3s ease-in-out;
-
-    .btn-newsletter-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        background: @footer-dark-blue;
-        border-radius: 50%;
-        transition: transform 0.3s ease-in-out;
-
-        img {
-            width: 16px;
-            height: 16px;
-        }
-    }
-
-    &:hover {
-        background: darken(@footer-btn-bg, 5%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(216, 237, 254, 0.4);
-
-        .btn-newsletter-icon {
-            transform: translateX(4px);
-        }
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(18, 46, 71, 0.2);
-    }
-
-    .breakpoint-medium-down({
-        font-size: 18px;
-        padding: 10px 14px;
-
-        .btn-newsletter-icon {
-            width: 28px;
-            height: 28px;
-        }
-    });
-
-    .breakpoint-small-down({
-        width: 100%;
-        justify-content: center;
-        font-size: 16px;
-    });
-}
+// Newsletter Subscribe Button - Styles defined in buttons.less
 
 // ==========================================================================
 // Main Footer Section

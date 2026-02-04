@@ -1,3 +1,7 @@
+// ==========================================================================
+// Base Button Styles
+// ==========================================================================
+
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
 [type=submit]:not(:disabled),
@@ -88,57 +92,272 @@ button:not(:disabled) {
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
+// ==========================================================================
+// CTA Buttons with Arrow Icons (Light Blue Style)
+// ==========================================================================
+
 .btn-primary {
-    border-radius: 8px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.11) 100%),
-                linear-gradient(90deg, #D8EDFE 0%, #D8EDFE 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #D8EDFE;
     color: #122E47;
     padding: 12px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-    display: inline-flex;
+    border-radius: 5px;
     text-decoration: none;
-    cursor: pointer;
     font-family: 'Funnel Sans', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 400;
     line-height: 1.45;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
 
     &::after {
         content: '';
-        background: #122E47 url("../../assets/images/white-arrow.svg") center no-repeat;
-        background-size: 50%;
-        width: 32px;
-        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: #122E47;
         border-radius: 50%;
-        transition: all 0.3s ease-in-out;
-        transform: translateX(0);
         flex-shrink: 0;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        background-image: url("../../assets/images/white-arrow.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50%;
+        transform: rotate(0deg);
     }
 
     &:hover {
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%),
-                    linear-gradient(90deg, #C8DDF0 0%, #C8DDF0 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(216, 237, 254, 0.4);
+        background-color: #C8DDF0;
 
         &::after {
-            transform: translateX(4px);
+            background-image: url("../../assets/images/white-arrow.svg"), linear-gradient(180deg, #3984C6 0%, #35B956 100%);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 50%, 100%;
+            transform: rotate(45deg);
         }
     }
 
     &:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(216, 237, 254, 0.3);
+        &::after {
+            transform: rotate(45deg) scale(0.95);
+        }
     }
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 3px rgba(18, 46, 71, 0.2);
     }
 }
+
+// Login Button
+.btn-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #D8EDFE;
+    color: #122E47;
+    padding: 12px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.45;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    .btn-login-text {
+        white-space: nowrap;
+    }
+
+    .btn-login-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: #122E47;
+        border-radius: 50%;
+        flex-shrink: 0;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        img {
+            width: 12px;
+            height: 12px;
+            transform: rotate(0deg);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    }
+
+    &:hover {
+        background-color: #C8DDF0;
+
+        .btn-login-icon {
+            background: linear-gradient(180deg, #3984C6 0%, #35B956 100%);
+
+            img {
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    &:active {
+        .btn-login-icon {
+            img {
+                transform: rotate(45deg) scale(0.95);
+            }
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+// Newsletter Button
+.btn-newsletter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #D8EDFE;
+    color: #122E47;
+    padding: 12px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.45;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    .btn-newsletter-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background-color: #122E47;
+        border-radius: 50%;
+        flex-shrink: 0;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        img {
+            width: 12px;
+            height: 12px;
+            transform: rotate(0deg);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    }
+
+    &:hover {
+        background-color: #C8DDF0;
+
+        .btn-newsletter-icon {
+            background: linear-gradient(180deg, #3984C6 0%, #35B956 100%);
+
+            img {
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    &:active {
+        .btn-newsletter-icon {
+            img {
+                transform: rotate(45deg) scale(0.95);
+            }
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    .breakpoint-medium-down({
+        font-size: 16px;
+        padding: 10px 14px;
+
+        .btn-newsletter-icon {
+            width: 22px;
+            height: 22px;
+        }
+    });
+
+    .breakpoint-small-down({
+        width: 100%;
+        justify-content: center;
+        font-size: 16px;
+    });
+}
+
+// ==========================================================================
+// Card Arrow Buttons (Used in cards across the site)
+// Default sizes: outer 62px, inner 33px, arrow 14x12px
+// Override sizes in page-specific files as needed
+// ==========================================================================
+
+.card-arrow {
+    position: absolute;
+    bottom: -7px;
+    right: -7px;
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #FEFFFD;
+    z-index: 3;
+
+    .breakpoint-small-down({
+        width: 50px;
+        height: 50px;
+        bottom: -5px;
+        right: -5px;
+    });
+
+    .arrow-inner {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        background-color: #122E47;
+        transform: rotate(0deg);
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        background-image: url("../../assets/images/white-arrow.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14px 12px;
+
+        .breakpoint-small-down({
+            width: 28px;
+            height: 28px;
+        });
+    }
+
+    // Hover state - apply .card-arrow-hover class to parent for hover effect
+    &.hover,
+    &:hover {
+        .arrow-inner {
+            background-image: url("../../assets/images/white-arrow.svg"), linear-gradient(180deg, #3984C6 0%, #35B956 100%);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 14px 12px, 100%;
+            transform: rotate(45deg);
+        }
+    }
+}
+
+// ==========================================================================
+// Other Button Variants
+// ==========================================================================
 
 .btn-secondary {
     color: @white-color;
@@ -286,12 +505,10 @@ a.btn-involved {
 // Global button hover improvements
 .btn {
     &:hover {
-        transform: translateY(-1px);
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    
+
     &:active {
-        transform: translateY(0);
         transition: all 0.1s ease;
     }
 }

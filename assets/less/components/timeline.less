@@ -1,0 +1,333 @@
+// ==========================================================================
+// Component - Timeline
+// ==========================================================================
+
+// Timeline color variables
+@timeline-dark: #122E47;
+@timeline-active-text: #35B956;
+@timeline-bg-light: #d5fce3;
+@timeline-bg-white: #fefffd;
+
+// ==========================================================================
+// Systemic Approach Section
+// ==========================================================================
+
+.systemic-approach {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 45px;
+    margin-top: 75px;
+
+    .breakpoint-medium-down({
+        gap: 35px;
+        margin-top: 50px;
+    });
+}
+
+.systemic-title {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.8px;
+    color: @timeline-dark;
+    text-align: center;
+    margin: 0;
+
+    .highlight {
+        color: @timeline-active-text;
+    }
+
+    .breakpoint-large-down({
+        font-size: 32px;
+    });
+
+    .breakpoint-medium-down({
+        font-size: 28px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 24px;
+    });
+}
+
+// ==========================================================================
+// Timeline Grid
+// ==========================================================================
+
+.timeline-grid {
+    width: 100%;
+    max-width: 1244px;
+    margin: 0 auto;
+}
+
+// Desktop timeline - hide on mobile
+.timeline-desktop {
+    display: block;
+
+    .breakpoint-medium-down({
+        display: none;
+    });
+}
+
+// Mobile timeline - show only on mobile
+.timeline-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 20px;
+
+    .breakpoint-medium-down({
+        display: flex;
+    });
+}
+
+.timeline-mobile-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.timeline-mobile-line {
+    width: 2px;
+    height: 30px;
+    background-color: @timeline-bg-light;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        background-color: @timeline-active-text;
+        border-radius: 50%;
+    }
+}
+
+.timeline-mobile .info-card {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+
+    .info-card-title {
+        width: 100%;
+    }
+
+    .info-card-text {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+
+// Row 1: Empowers card centered
+.timeline-row-1 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    .info-card-center {
+        text-align: center;
+        max-width: 351px;
+
+        .info-card-title {
+            width: 301px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-card-text {
+            width: 247px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .breakpoint-medium-down({
+        .info-card-center {
+            max-width: 100%;
+
+            .info-card-title,
+            .info-card-text {
+                width: 100%;
+                max-width: 301px;
+            }
+        }
+    });
+}
+
+// Row 2: WP tags positioned to align with timeline pins (~5% from edges)
+.timeline-row-2 {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+    margin-bottom: 0;
+    max-width: 93%;
+
+    .breakpoint-medium-down({
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 0;
+        margin-bottom: 20px;
+    });
+}
+
+// Row 3: Timeline image
+.timeline-row-3 {
+    width: 100%;
+    margin: 15px 0 20px;
+
+    .breakpoint-medium-down({
+        display: none;
+    });
+}
+
+.timeline-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+// Row 4: Bottom cards and WP tag - using CSS Grid for precise control
+.timeline-row-4 {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto;
+    align-items: flex-start;
+    gap: 0;
+
+    > .info-card:first-child {
+        grid-column: 1;
+        max-width: 297px;
+
+        .info-card-title {
+            width: 193px;
+        }
+
+        .info-card-text {
+            max-width: 247px;
+        }
+    }
+
+    > .wp-tag {
+        grid-column: 3;
+        justify-self: center;
+    }
+
+    > .info-card:last-child {
+        grid-column: 5;
+        max-width: 273px;
+
+        .info-card-title {
+            width: 190px;
+        }
+
+        .info-card-text {
+            width: 223px;
+        }
+    }
+
+    .breakpoint-medium-down({
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+
+        > .info-card {
+            max-width: 100%;
+            text-align: center;
+
+            .info-card-title,
+            .info-card-text {
+                width: 100%;
+                max-width: 280px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    });
+}
+
+// ==========================================================================
+// Work Package Tags
+// ==========================================================================
+
+.wp-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 25px;
+    background-color: @timeline-active-text;
+    border-radius: 8px;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: -0.4px;
+    color: #FFFFFF;
+    text-align: center;
+
+    .breakpoint-small-down({
+        font-size: 16px;
+        padding: 12px 20px;
+    });
+}
+
+// ==========================================================================
+// Info Cards
+// ==========================================================================
+
+.info-card {
+    padding: 15px 25px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, @timeline-bg-light 69%, @timeline-bg-white 100%);
+
+    &.gradient-right {
+        background: linear-gradient(to right, @timeline-bg-light 87%, @timeline-bg-white 100%);
+    }
+
+    &.gradient-left {
+        background: linear-gradient(to left, @timeline-bg-light 61%, @timeline-bg-white 100%);
+    }
+
+    .breakpoint-small-down({
+        padding: 12px 20px;
+    });
+}
+
+.info-card-title {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.52px;
+    color: @timeline-dark;
+    margin: 0 0 15px;
+
+    .highlight {
+        color: @timeline-active-text;
+    }
+
+    .breakpoint-small-down({
+        font-size: 22px;
+    });
+}
+
+.info-card-text {
+    font-family: 'Zalando Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.45;
+    color: @timeline-dark;
+    margin: 0;
+
+    .breakpoint-small-down({
+        font-size: 16px;
+    });
+}

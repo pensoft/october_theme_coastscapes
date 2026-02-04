@@ -2,7 +2,10 @@
 {% if page_id == 'home' %}
 <section class="hero-section" role="banner" aria-label="COAST-SCAPES hero">
     <div class="hero-background container-dynamic">
-        <div class="hero-content container">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="{{ 'core_video.mp4' | media }}" type="video/mp4">
+        </video>
+        <div class="hero-content">
             <h1 class="hero-headline">
                 <span class="text-white">Rethinking </span><span class="text-gradient">COAST</span><span class="text-white">al</span>
                 <br>

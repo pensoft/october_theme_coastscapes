@@ -14,15 +14,15 @@
     width: 100%;
 
     .hero-background {
-        background: url('../../assets/images/hero-image.png') center center / cover no-repeat;
         .rounded(35px);
         min-height: 90vh;
         margin: 0 auto;
         display: flex;
         align-items: center;
         position: relative;
+        overflow: hidden;
 
-        // Overlay for better text readability
+        // Gradient overlay for better text readability - matches Figma design
         &::before {
             content: '';
             position: absolute;
@@ -31,22 +31,37 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(
-                to right,
-                rgba(0, 0, 0, 0.45) 0%,
-                rgba(0, 0, 0, 0.25) 40%,
-                rgba(0, 0, 0, 0) 70%
+                135deg,
+                rgba(10, 35, 60, 0.75) 0%,
+                rgba(10, 45, 70, 0.5) 25%,
+                rgba(15, 50, 75, 0.25) 45%,
+                rgba(0, 0, 0, 0) 65%
             );
             .rounded(35px);
             pointer-events: none;
+            z-index: 1;
         }
+    }
+
+    .hero-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover;
+        z-index: 0;
     }
 
     .hero-content {
         position: relative;
-        z-index: 1;
-        padding-left: 20px;
-        width: 60%;
-        max-width: 60%;
+        z-index: 2;
+        padding-left: 80px;
+        width: 50%;
+        max-width: 600px;
     }
 
     .hero-headline {

@@ -329,7 +329,7 @@ button:not(:disabled) {
         height: 33px;
         border-radius: 50%;
         background-color: #122E47;
-        transform: rotate(0deg);
+        transform: rotate(45deg);
         transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         background-image: url("../../assets/images/white-arrow.svg");
         background-repeat: no-repeat;
@@ -350,8 +350,70 @@ button:not(:disabled) {
             background-repeat: no-repeat;
             background-position: center;
             background-size: 14px 12px, 100%;
+            transform: rotate(-135deg);
+        }
+    }
+}
+
+// ==========================================================================
+// CTA Buttons with Arrow Icons (Dark Style)
+// ==========================================================================
+
+.btn-cta-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #122E47;
+    color: #FEFFFD;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.45;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background-color: rgba(216, 237, 254, 0.15);
+        border-radius: 50%;
+        flex-shrink: 0;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        background-image: url("../../assets/images/white-arrow.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50%;
+        transform: rotate(0deg);
+    }
+
+    &:hover {
+        background-color: #1a3d5c;
+
+        &::after {
+            background-image: url("../../assets/images/white-arrow.svg"), linear-gradient(180deg, #3984C6 0%, #35B956 100%);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 50%, 100%;
             transform: rotate(45deg);
         }
+    }
+
+    &:active {
+        &::after {
+            transform: rotate(45deg) scale(0.95);
+        }
+    }
+
+    &:focus {
+        outline: none;
     }
 }
 

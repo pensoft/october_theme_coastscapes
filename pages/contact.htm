@@ -1,0 +1,52 @@
+url = "/contact"
+layout = "default"
+title = "Contact"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Cardprofiles\Models\Profiles;
+
+function onStart(){
+	$this['profiles'] =  Profiles::where('category_id', 1)->get();
+}
+?>
+==
+
+{% component 'siteSearchInclude' %}
+
+<section class="container-fluid contact">
+    <div class="container">
+        <div class="contact-grid">
+            {% for profile in profiles %}
+            <div class="contact-card {% if loop.index is even %}card-reverse{% endif %}">
+                <div class="contact-card-visual">
+                    <div class="card-avatar">
+                        {% if profile.avatar %}
+                        <img src="{{ profile.avatar.getThumb(400, 400, {'mode': 'crop'}) }}" alt="{{ profile.names }}">
+                        {% endif %}
+                    </div>
+                    <div class="card-name-badge">
+                        <span>{{ profile.names }}</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    {% if profile.position %}
+                    <p class="card-position">{{ profile.position }}</p>
+                    {% endif %}
+                    {% if profile.email %}
+                    <a href="mailto:{{ profile.email }}" class="card-email">{{ profile.email }}</a>
+                    <a href="mailto:{{ profile.email }}" class="btn-cta-dark">
+                        Get in touch
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

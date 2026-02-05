@@ -7,6 +7,24 @@ meta_description = "Coast-Scapes"
 robot_index = "index"
 robot_follow = "follow"
 
+[jumbotron plan-perspectives]
+jumbotron = "plan-perspectives"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
+[jumbotron mission-card-content]
+jumbotron = "mission-card-content"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
+[jumbotron vision-card-content]
+jumbotron = "vision-card-content"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
 ==
 <?php
 use Pensoft\Articles\Models\Article;
@@ -29,13 +47,8 @@ function onStart(){
 <!-- Plan & Perspectives Section -->
 <section class="container-fluid plan-perspectives-section">
     <div class="container">
-        <span class="section-label">PLAN & PERSPECTIVES</span>
-        <p class="section-description">
-            COAST-SCAPES will promote the utilisation of nature-based solutions (NbS)
-            and the development of integrated indicators, proactive climate warning systems,
-            as well as knowledge-based strategies for innovative business models.
-        </p>
-
+        {% component 'plan-perspectives' %}
+        
         <div class="perspective-cards">
             <div class="perspective-card mission-card">
                 <div class="card-body">

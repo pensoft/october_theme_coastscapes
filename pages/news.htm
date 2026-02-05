@@ -1,0 +1,215 @@
+url = "/news/:id?|[a-zA-Z\-0-9]"
+layout = "default"
+title = "News & events"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[related_articles]
+limit = 9
+thumb_width = 386
+thumb_height = 203
+==
+<?php
+use Pensoft\Articles\Models\Category;
+use Pensoft\Articles\Models\Article;
+
+function urlencode($string){
+    return trim(urlencode($string));
+}
+function onStart()
+{
+
+$this['article'] = Pensoft\Articles\Models\Article::where('slug', $this->param('id'))->where('published', 'true')->first();
+
+$this['categories'] = Category::orderBy('sort_order')->orderBy('created_at', 'desc')->get();
+
+    $categoryId = input('categoryId', 'all');
+
+    if ($categoryId !== 'all' && !is_numeric($categoryId)) {
+        return redirect('news');
+    }
+
+    $this['categoryId'] = $categoryId;
+
+    if ($categoryId === 'all') {
+        $records = Article::news()->where('published_at', '<=', 'now')
+                                  ->where('published', 'true')
+                                  ->orderBy('published_at', 'DESC')
+                                  ->paginate(15);
+    } else {
+        $records = Article::news()->whereHas('categories', function ($query) use ($categoryId) {
+                     $query->where('id', $categoryId);
+                 })->where('published_at', '<=', 'now')
+                   ->where('published', 'true')
+                   ->orderBy('published_at', 'DESC')
+                   ->paginate(15);
+    }
+
+    if ($categoryId !== 'all') {
+        $records->appends(['categoryId' => $categoryId]);
+    }
+
+    $this['records'] = $records;
+
+if($this['article']){
+
+$this['is_detail_page'] = $this['article'] ? true : false;
+$this['allow_share'] = $this['article']['allow_share'] == 'yes' ? true : false;
+if($this['is_detail_page']){
+$seoTitle = $this['article']['title'];
+$seoKeywords = $this['article']['meta_keywords'] ?: $this['article']['keywords'];
+$seoDescription = str_limit(Html::strip($this['article']['content']), 255);
+
+if (class_exists('\BennoThommo\Meta\Meta')) {
+if($seoTitle) {
+\BennoThommo\Meta\Meta::set('title', $seoTitle);
+}
+if($seoKeywords) {
+\BennoThommo\Meta\Meta::set('keywords', $seoKeywords);
+}
+if($seoDescription) {
+\BennoThommo\Meta\Meta::set('description', $seoDescription);
+}
+}
+}
+if($this['is_detail_page'] and $this['allow_share']){
+$this['page_url'] = $this->pageUrl('');
+$this['encoded_title'] = urlencode($this['article']['title']);
+$this['slug'] = $this['article']['slug'];
+\BennoThommo\Meta\Meta::set('twitter:card', 'summary_large_image');
+\BennoThommo\Meta\Meta::set('twitter:title', $this['article']['title']);
+\BennoThommo\Meta\Meta::set('twitter:description', str_limit(Html::strip($this['article']['content']), 255));
+\BennoThommo\Meta\Meta::set('og:title', $this['article']['title']);
+\BennoThommo\Meta\Meta::set('og:description', str_limit(Html::strip($this['article']['content']), 255) );
+\BennoThommo\Meta\Meta::set('og:type', 'article');
+\BennoThommo\Meta\Meta::set('og:url', $this->pageUrl(''));
+if($this['article']['cover']){
+\BennoThommo\Meta\Meta::set('twitter:image', $this['article']['cover']->getThumb(600, null, ['mode' => 'auto']));
+
+\BennoThommo\Meta\Meta::set('og:image', $this['article']['cover']->getThumb(600, 314, ['mode' => 'crop']));
+\BennoThommo\Meta\Meta::set('og:image:width', 600);
+\BennoThommo\Meta\Meta::set('og:image:height', 314);
+}
+}
+}
+
+if($this['is_detail_page']){
+$related = array();
+if($this['article']['slug']){
+$article = Article::where('slug', $this['article']['slug'])->first();
+$arrayOfTags = explode(",", $article->keywords);
+
+$related = Article::where('slug', '!=', $this['article']['slug']);
+
+$orWhere = '( ';
+$c = 1;
+
+foreach($arrayOfTags as $tag){
+$orWhere .= ' keywords ILIKE \'%'.trim($tag).'%\' ';
+if($c < count($arrayOfTags)){
+$orWhere .= ' or ';
+}
+$c++;
+}
+$orWhere .= ')';
+$related = $related
+->whereRaw($orWhere)
+->limit(3)
+->get();
+
+$this['related'] = $related;
+}
+}
+}
+?>
+==
+{% if not is_detail_page %}<h1 class="underline">News & events</h1>{% endif %}
+<div class="container">
+
+	{% if is_detail_page %}
+    <div class="news-detail-container">
+        <div class="news-back-button">
+            <a href="/news" class="back-to-news">
+                <span class="back-arrow"></span>
+                Back to news & events
+            </a>
+        </div>
+
+        <div class="news-detail-header">
+            <div class="news-detail-date">{{ article.published_at|date('d F Y')|upper }}</div>
+            <h2 class="news-detail-title">{{ article.title }}</h2>
+
+            {% if article.cover %}
+            <div class="news-cover-container">
+                <img class="news-cover-image" src="{{ article.cover.thumb(1200, auto, { mode: 'crop' }) }}" alt="{{ article.title }}">
+                <div class="news-cover-overlay"></div>
+            </div>
+            {% endif %}
+            {% if article.caption %}
+                <div class="news-cover-caption">{{ article.caption|raw }}</div>
+            {% endif %}
+        </div>
+
+        <div class="news-detail-body">
+            {{ article.content|raw }}
+        </div>
+
+        {% if allow_share %}
+        <div class="news-detail-share">
+            <span class="share-label">Share</span>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page_url }}" target="_blank" aria-label="Share on LinkedIn">
+                <img src="{{ 'assets/images/linkedin-dark.svg'|theme }}" alt="LinkedIn" width="22" height="22">
+            </a>
+            <a href="https://bsky.app/intent/compose?text={{ encoded_title }}%20{{ page_url }}" target="_blank" aria-label="Share on Bluesky">
+                <img src="{{ 'assets/images/bluesky-dark.svg'|theme }}" alt="Bluesky" width="22" height="22">
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" aria-label="Follow on Instagram">
+                <img src="{{ 'assets/images/instagram-dark.svg'|theme }}" alt="Instagram" width="22" height="22">
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+	{% else %}
+
+    <!-- Category Tabs -->
+    <div class="news-category-tabs">
+        <div class="tabs-navigation" role="tablist">
+            <a href="/news" class="tab-link{% if categoryId == 'all' %} active{% endif %}" data-category="all" role="tab" aria-selected="{% if categoryId == 'all' %}true{% else %}false{% endif %}">All news</a>
+            {% for category in categories %}
+                <a href="/news?categoryId={{category.id}}" class="tab-link{% if categoryId == category.id %} active{% endif %}" data-category="{{category.id}}" role="tab" aria-selected="{% if categoryId == category.id %}true{% else %}false{% endif %}">{{category.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="news-list row">
+        {% for record in records %}
+            <div class="col-md-4 col-xs-12">
+                <a href="/news/{{record.slug}}" class="news-card">
+                    <div class="card-image-container">
+                        <div class="card-image-wrapper">
+                            <img class="card-image" src="{{ record.cover.thumb(600, 400, { mode: 'crop' }) }}" alt="{{ record.title }}">
+                            <div class="card-gradient-overlay"></div>
+                        </div>
+                        <div class="card-arrow">
+                            <div class="arrow-inner"></div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-date">{{ record.published_at|date('d.m.Y') }}</div>
+                        <div class="card-title">{{ record.title|length > 100 ? record.title|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|replace({"&nbsp;": " ", ".": ". "}) }}</div>
+                    </div>
+                </a>
+            </div>
+        {% else %}
+            <p class="no-news">No news available.</p>
+        {% endfor %}
+    </div>
+
+    <div class="news-pagination">
+        {{ records.render|raw }}
+    </div>
+
+	{% endif %}
+</div>

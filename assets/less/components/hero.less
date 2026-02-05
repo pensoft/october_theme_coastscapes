@@ -32,10 +32,10 @@
             bottom: 0;
             background: linear-gradient(
                 135deg,
-                rgba(10, 35, 60, 0.75) 0%,
-                rgba(10, 45, 70, 0.5) 25%,
-                rgba(15, 50, 75, 0.25) 45%,
-                rgba(0, 0, 0, 0) 65%
+                rgba(10, 35, 60, 0.85) 0%,
+                rgba(10, 45, 70, 0.65) 30%,
+                rgba(15, 50, 75, 0.35) 55%,
+                rgba(0, 0, 0, 0.1) 75%
             );
             .rounded(35px);
             pointer-events: none;
@@ -141,6 +141,13 @@
 
             &::before {
                 .rounded(20px);
+                background: linear-gradient(
+                    135deg,
+                    rgba(10, 35, 60, 0.9) 0%,
+                    rgba(10, 45, 70, 0.7) 35%,
+                    rgba(15, 50, 75, 0.45) 60%,
+                    rgba(0, 0, 0, 0.15) 80%
+                );
             }
         }
 
@@ -256,23 +263,27 @@
 
 .page-header-title {
     font-family: @font-family, 'Funnel Sans', sans-serif;
-    font-size: 56px;
+    font-size: 75px;
+    font-style: normal;
     font-weight: 400;
-    color: #FEFFFD;
+    color: @background-color;
     margin: 0;
-    line-height: 1.2;
+    line-height: 145%;
     text-align: center;
     padding: 0 20px;
 
     .breakpoint-large-down({
-        font-size: 44px;
+        font-size: 56px;
+        line-height: 140%;
     });
 
     .breakpoint-medium-down({
-        font-size: 36px;
+        font-size: 42px;
+        line-height: 135%;
     });
 
     .breakpoint-small-down({
-        font-size: 28px;
+        font-size: 32px;
+        line-height: 130%;
     });
 }

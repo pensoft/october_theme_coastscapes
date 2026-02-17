@@ -265,7 +265,6 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    cursor: pointer;
     .transition(all 0.4s ease);
 
     // Gradient border on hover using pseudo-element
@@ -284,7 +283,7 @@
         .transition(opacity 0.4s ease);
     }
 
-    &:hover {
+    &.in-view {
         border-color: transparent;
         transform: scale(1.03);
 
@@ -429,37 +428,7 @@
     }
 }
 
-// ==========================================================================
-// Hover Interactions - Circles & Connectors
-// ==========================================================================
-
-// Activate connector-1 when hovering related circles
-.about-grid-layout:has(.circle-resilience:hover) .connector-1 path,
-.about-grid-layout:has(.circle-adaptation:hover) .connector-1 path {
-    stroke: url(#connector-gradient-1);
-    stroke-width: 3;
-}
-
-// Activate connector-2 when hovering related circles
-.about-grid-layout:has(.circle-adaptation:hover) .connector-2 path,
-.about-grid-layout:has(.circle-collaboration:hover) .connector-2 path {
-    stroke: url(#connector-gradient-2);
-    stroke-width: 3;
-}
-
-// When hovering adaptation, activate both connectors
-.about-grid-layout:has(.circle-adaptation:hover) {
-    .connector-1 path,
-    .connector-2 path {
-        stroke-width: 3;
-    }
-    .connector-1 path {
-        stroke: url(#connector-gradient-1);
-    }
-    .connector-2 path {
-        stroke: url(#connector-gradient-2);
-    }
-}
+// Connector scroll animations handled in JS (app.js)
 
 // ==========================================================================
 // Section Content Positions (Desktop)

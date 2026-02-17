@@ -369,24 +369,32 @@
         text-align: center;
     }
 
-    .consortium-carousel-wrapper {
-        position: relative;
+    .consortium-marquee {
         width: 100%;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     }
 
-    .consortium-carousel {
-        .slick-track {
-            display: flex;
-            align-items: center;
-        }
+    .marquee-track {
+        display: flex;
+        align-items: center;
+        gap: 29px;
+        width: max-content;
+        animation: marquee-scroll 45s linear infinite;
 
-        .slick-slide {
-            padding: 0 14.5px; // 29px gap / 2 = 14.5px on each side
+        &:hover {
+            animation-play-state: paused;
         }
     }
 
-    .consortium-slide {
-        height: 100%;
+    @keyframes marquee-scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
     }
 
     .consortium-card {

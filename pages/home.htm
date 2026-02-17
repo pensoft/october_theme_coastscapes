@@ -124,16 +124,22 @@ function onStart(){
     <div class="container">
         <span class="section-label">CONSORTIUM</span>
     </div>
-    <div class="consortium-carousel-wrapper">
-        <div class="consortium-carousel">
+    <div class="consortium-marquee">
+        <div class="marquee-track">
             {% for partner in consortium_partners %}
-            <div class="consortium-slide">
-                <a href="{{ partner.instituion_url }}" target="_blank" rel="noopener" class="consortium-card">
-                    {% if partner.cover %}
-                    <img src="{{ partner.cover.path }}" alt="{{ partner.instituion }}" class="partner-logo">
-                    {% endif %}
-                </a>
-            </div>
+            <a href="{{ partner.instituion_url }}" target="_blank" rel="noopener" class="consortium-card">
+                {% if partner.cover %}
+                <img src="{{ partner.cover.path }}" alt="{{ partner.instituion }}" class="partner-logo">
+                {% endif %}
+            </a>
+            {% endfor %}
+            {# Duplicate for seamless loop #}
+            {% for partner in consortium_partners %}
+            <a href="{{ partner.instituion_url }}" target="_blank" rel="noopener" class="consortium-card" aria-hidden="true">
+                {% if partner.cover %}
+                <img src="{{ partner.cover.path }}" alt="{{ partner.instituion }}" class="partner-logo">
+                {% endif %}
+            </a>
             {% endfor %}
         </div>
     </div>

@@ -33,7 +33,7 @@ use Pensoft\Partners\Models\Partners as Partner;
 
 function onStart(){
 
-    $this['highlights'] = Article::news()->where('published', 'true')->orderBy('published_at', 'desc')->take(10)->get()->map(function($item){
+    $this['highlights'] = Article::news()->where('published', 'true')->orderBy('published_at', 'desc')->take(3)->get()->map(function($item){
         $item->content = str_limit(strip_tags($item->content), 90);
         $item->href = $item->slug;
         return $item;
@@ -90,11 +90,9 @@ function onStart(){
 <section class="container-fluid latest-news-section">
     <div class="container">
         <span class="section-label">LATEST NEWS</span>
-    </div>
-    <div class="news-carousel-wrapper">
-        <div class="news-carousel">
-            {% for item in highlights %}
-            <div class="news-slide">
+        <div class="news-grid row">
+            {% for item in highlights|slice(0, 3) %}
+            <div class="col-md-4 col-xs-12">
                 <a href="/news/{{ item.slug }}" class="news-card">
                     <div class="card-image-container">
                         <div class="card-image-wrapper">
@@ -115,6 +113,7 @@ function onStart(){
             </div>
             {% endfor %}
         </div>
+        <a href="/news" class="btn-read-all">Read all</a>
     </div>
 </section>
 {% endif %}

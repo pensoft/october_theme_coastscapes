@@ -727,7 +727,7 @@
     align-items: center;
     gap: 10px;
     max-width: 790px;
-    margin: 0 auto;
+    margin: 0 auto 30px;
 
     .breakpoint-small-down({
         max-width: 100%;
@@ -742,9 +742,11 @@
     gap: 10px;
 }
 
-// Individual pill
+// Individual pill (now a button)
 .wp-pill {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Funnel Sans', sans-serif;
     font-size: 20px;
     font-weight: 400;
@@ -753,10 +755,191 @@
     color: #fff;
     background-color: @wp-pill-bg;
     padding: 15px 25px;
+    border: none;
+    cursor: pointer;
     .rounded(8px);
+    .transition(all 0.2s ease);
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    &.active {
+        background-color: @our-work-dark;
+    }
 
     .breakpoint-small-down({
         font-size: 16px;
         padding: 10px 18px;
+    });
+}
+
+// ==========================================================================
+// Work Package Expandable Card
+// ==========================================================================
+
+.wp-card {
+    background-color: @wp-pill-bg;
+    .rounded(8px);
+    box-shadow: 6.4px 14px 40px rgba(17, 91, 118, 0.08);
+    padding: 30px;
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+
+    .breakpoint-large-down({
+        padding: 25px;
+    });
+
+    .breakpoint-small-down({
+        padding: 20px 15px;
+    });
+}
+
+.wp-card-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    .transition(opacity 0.2s ease);
+    z-index: 2;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    .breakpoint-small-down({
+        top: 12px;
+        right: 12px;
+        font-size: 24px;
+    });
+}
+
+.wp-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    .breakpoint-large-down({
+        flex-direction: column;
+        gap: 25px;
+    });
+}
+
+.wp-card-image {
+    flex-shrink: 0;
+    width: 193px;
+    height: 308px;
+    background: linear-gradient(to bottom, #ebf6ff, #fefffd);
+    .rounded(8px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        max-width: 70%;
+        max-height: 70%;
+        object-fit: contain;
+    }
+
+    .breakpoint-large-down({
+        width: 160px;
+        height: 250px;
+    });
+
+    .breakpoint-small-down({
+        width: 140px;
+        height: 220px;
+    });
+}
+
+.wp-card-badge {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    background-color: @wp-pill-bg;
+    color: #fbfdff;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.65;
+    text-align: center;
+    padding: 10px 18px;
+    border-bottom-right-radius: 8px;
+    z-index: 1;
+
+    .breakpoint-small-down({
+        font-size: 14px;
+        padding: 8px 14px;
+    });
+}
+
+.wp-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    min-width: 0;
+
+    .breakpoint-large-down({
+        text-align: center;
+    });
+}
+
+.wp-card-title {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #fefffd;
+    margin: 0;
+    max-width: 526px;
+
+    .breakpoint-large-down({
+        max-width: 100%;
+        font-size: 20px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 18px;
+    });
+}
+
+.wp-card-body {
+    font-family: 'Zalando Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.45;
+    color: #fefffd;
+    margin: 0;
+    max-width: 574px;
+
+    p {
+        margin: 0;
+        color: inherit;
+        font: inherit;
+        line-height: inherit;
+    }
+
+    .breakpoint-large-down({
+        max-width: 100%;
+        font-size: 16px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 15px;
     });
 }

@@ -14,7 +14,20 @@ jumbotron = "our-approach"
 background = "transperant"
 templates = "template3"
 description_limit = 0
+
 ==
+<?php
+use Pensoft\Accordions\Models\Item;
+use Pensoft\Accordions\Models\Category;
+
+function onStart(){
+    $this['work_packages_title'] = Category::where('slug', 'wp')->first();
+    $this['work_packages_records'] = Item::whereHas('accordion', function($query) {
+        $query->where('slug', 'wp');
+    })->orderBy('sort_order', 'asc')->get();
+}
+
+?>
 ==
 
 {% component 'siteSearchInclude' %}
@@ -58,30 +71,49 @@ description_limit = 0
                  aria-labelledby="panel-work-packages">
                 <div class="tab-panel-content">
 
+                    {% if work_packages_title %}
                     <!-- Work Packages Heading -->
                     <div class="wp-heading">
                         <p class="wp-tagline">
                             The COAST-SCAPES project is structured into<br>
                             <span class="wp-gradient-text-green">6 interconnected </span><span class="wp-gradient-text-blue">Work Packages (WPs)</span>
                         </p>
-                        <p class="wp-description">
-                            That progressively move from analysis to action, combining advanced scientific tools, local stakeholder knowledge, systemic modelling to co-design, implement, and scale climate-resilient solutions across land-coast-sea systems, and communication strategies to disseminate project results.
-                        </p>
+                        {% if work_packages_title.body %}
+                            <p class="wp-description">{{ work_packages_title.body|raw }}</p>
+                        {% endif %}
                     </div>
+                    {% endif %}
 
+                    {% if work_packages_records is not empty %}
                     <!-- Work Package Pills -->
                     <div class="wp-pills">
                         <div class="wp-pills-row">
-                            <span class="wp-pill">WP1</span>
-                            <span class="wp-pill">WP2</span>
-                            <span class="wp-pill">WP3</span>
-                            <span class="wp-pill">WP4</span>
-                        </div>
-                        <div class="wp-pills-row">
-                            <span class="wp-pill">WP5</span>
-                            <span class="wp-pill">WP6</span>
+                            {% for record in work_packages_records %}
+                                <button class="wp-pill" data-wp-target="wp-card-{{ record.id }}">{{ record.prefix }}</button>
+                            {% endfor %}
                         </div>
                     </div>
+
+                    <!-- Expandable WP Cards -->
+                    {% for record in work_packages_records %}
+                    <div class="wp-card" id="wp-card-{{ record.id }}" style="display: none;">
+                        <button class="wp-card-close" aria-label="Close">&times;</button>
+                        <div class="wp-card-inner">
+                            <div class="wp-card-image">
+                                <span class="wp-card-badge">{{ record.prefix }}</span>
+                            </div>
+                            <div class="wp-card-content">
+                                {% if record.title %}
+                                    <h3 class="wp-card-title">{{ record.title|raw }}</h3>
+                                {% endif %}
+                                {% if record.body %}
+                                    <div class="wp-card-body">{{ record.body|raw }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
 
                 </div>
             </div>

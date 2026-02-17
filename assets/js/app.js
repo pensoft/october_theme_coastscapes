@@ -9,9 +9,11 @@ $(function() {
     sanitizeNavDropdowns();
     initFooterDropdowns();
     initNavbarScroll();
-    initConsortiumCarousel();
+
+    initAboutScrollAnimations();
     initObjectivesAccordion();
     initOurWorkTabs();
+    initWorkPackageCards();
     initScopePillTabs();
     initScopeButtons();
     initNewsCategoryTabs();
@@ -306,60 +308,51 @@ function initFooterDropdowns() {
     });
 }
 
-// ---------- Consortium Carousel ----------
+// ---------- Consortium Carousel (removed – now CSS-only marquee) ----------
 
-function initConsortiumCarousel() {
-    var $carousel = $('.consortium-carousel');
-    if (!$carousel.length) return;
+// ---------- About Page Scroll Animations ----------
 
-    $carousel.slick({
-        slidesToShow: 6,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        pauseOnHover: true,
-        arrows: false,
-        dots: false,
-        infinite: true,
-        centerMode: true,
-        centerPadding: '5%',
-        responsive: [
-            {
-                breakpoint: 1400,
-                settings: {
-                    slidesToShow: 5,
-                    centerPadding: '3%'
-                }
-            },
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 4,
-                    centerPadding: '3%'
-                }
-            },
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 3,
-                    centerPadding: '5%'
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    centerPadding: '10%'
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    centerPadding: '20%'
-                }
+function initAboutScrollAnimations() {
+    const $circles = $('.about-circle');
+    if (!$circles.length) return;
+
+    const $conn1Path = $('.connector-1 path');
+    const $conn2Path = $('.connector-2 path');
+
+    function updateConnectors() {
+        const resilienceIn = $('.circle-resilience').hasClass('in-view');
+        const adaptationIn = $('.circle-adaptation').hasClass('in-view');
+        const collaborationIn = $('.circle-collaboration').hasClass('in-view');
+
+        if (resilienceIn || adaptationIn) {
+            $conn1Path.css({ stroke: 'url(#connector-gradient-1)', 'stroke-width': 3 });
+        } else {
+            $conn1Path.css({ stroke: '', 'stroke-width': '' });
+        }
+
+        if (adaptationIn || collaborationIn) {
+            $conn2Path.css({ stroke: 'url(#connector-gradient-2)', 'stroke-width': 3 });
+        } else {
+            $conn2Path.css({ stroke: '', 'stroke-width': '' });
+        }
+    }
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                $(entry.target).addClass('in-view');
+            } else {
+                $(entry.target).removeClass('in-view');
             }
-        ]
+        });
+        updateConnectors();
+    }, {
+        threshold: 0.5,
+        rootMargin: '-20% 0px'
+    });
+
+    $circles.each(function() {
+        observer.observe(this);
     });
 }
 
@@ -440,6 +433,42 @@ function initOurWorkTabs() {
                 $allTabs.last().focus().click();
                 break;
         }
+    });
+}
+
+// ---------- Work Package Cards Toggle ----------
+
+function initWorkPackageCards() {
+    var $pills = $('.wp-pill[data-wp-target]');
+    var $cards = $('.wp-card');
+
+    if (!$pills.length) return;
+
+    $pills.on('click', function() {
+        var $pill = $(this);
+        var targetId = $pill.data('wp-target');
+        var $targetCard = $('#' + targetId);
+
+        if ($pill.hasClass('active')) {
+            // Close the card
+            $pill.removeClass('active');
+            $targetCard.slideUp(300);
+        } else {
+            // Close any open card
+            $pills.removeClass('active');
+            $cards.slideUp(300);
+
+            // Open the clicked one
+            $pill.addClass('active');
+            $targetCard.slideDown(300);
+        }
+    });
+
+    // Close button handler
+    $cards.find('.wp-card-close').on('click', function() {
+        var $card = $(this).closest('.wp-card');
+        $card.slideUp(300);
+        $pills.removeClass('active');
     });
 }
 

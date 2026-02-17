@@ -9,10 +9,11 @@ $(function() {
     sanitizeNavDropdowns();
     initFooterDropdowns();
     initNavbarScroll();
-    initLatestNewsCarousel();
     initConsortiumCarousel();
     initObjectivesAccordion();
     initOurWorkTabs();
+    initScopePillTabs();
+    initScopeButtons();
     initNewsCategoryTabs();
     $('nav').removeClass('no-transition');
 });
@@ -305,49 +306,6 @@ function initFooterDropdowns() {
     });
 }
 
-// ---------- Latest News Carousel ----------
-
-function initLatestNewsCarousel() {
-    var $carousel = $('.news-carousel');
-    if (!$carousel.length) return;
-
-    $carousel.slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        pauseOnHover: true,
-        arrows: false,
-        dots: false,
-        infinite: true,
-        centerMode: true,
-        centerPadding: '10%',
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    centerPadding: '5%'
-                }
-            },
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 2,
-                    centerPadding: '8%'
-                }
-            },
-            {
-                breakpoint: 576,
-                settings: {
-                    slidesToShow: 1,
-                    centerPadding: '20px'
-                }
-            }
-        ]
-    });
-}
-
 // ---------- Consortium Carousel ----------
 
 function initConsortiumCarousel() {
@@ -481,6 +439,50 @@ function initOurWorkTabs() {
                 e.preventDefault();
                 $allTabs.last().focus().click();
                 break;
+        }
+    });
+}
+
+// ---------- Scope Pilot Pill Tabs ----------
+
+function initScopePillTabs() {
+    var $pills = $('.scope-pills .scope-pill');
+    var $panels = $('.scope-panel');
+
+    if (!$pills.length) return;
+
+    $pills.on('click', function() {
+        var $clicked = $(this);
+        var target = $clicked.data('scope');
+
+        // Update active pill
+        $pills.removeClass('active').attr('aria-selected', 'false');
+        $clicked.addClass('active').attr('aria-selected', 'true');
+
+        // Update active panel
+        $panels.removeClass('active');
+        $('#scope-' + target).addClass('active');
+    });
+}
+
+// ---------- Scope Buttons Toggle ----------
+
+function initScopeButtons() {
+    $('.scope-btn[data-toggle]').on('click', function() {
+        var $btn = $(this);
+        var $section = $btn.closest('.scope-section');
+        var target = $btn.data('toggle');
+        var $targetPanel = $section.find('.scope-expand-panel[data-panel="' + target + '"]');
+
+        if ($btn.hasClass('active')) {
+            $btn.removeClass('active');
+            $targetPanel.slideUp(300);
+        } else {
+            $section.find('.scope-btn').removeClass('active');
+            $section.find('.scope-expand-panel').slideUp(300);
+
+            $btn.addClass('active');
+            $targetPanel.slideDown(300);
         }
     });
 }

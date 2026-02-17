@@ -324,3 +324,439 @@
         font-size: 16px;
     });
 }
+
+// ==========================================================================
+// Our Scope Panel
+// ==========================================================================
+
+@scope-gold: #BEAA37;
+@scope-gold-dark: #B09E34;
+@scope-green: #35B956;
+
+// Pilot Category Pills
+.scope-pills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 1012px;
+    margin: 0 auto 65px;
+
+    .breakpoint-large-down({
+        margin-bottom: 45px;
+    });
+
+    .breakpoint-small-down({
+        margin-bottom: 30px;
+    });
+}
+
+.scope-pill {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.4px;
+    color: #fff;
+    background-color: @scope-gold;
+    padding: 15px 25px;
+    border: none;
+    .rounded(8px);
+    cursor: pointer;
+    opacity: 0.55;
+    .transition(opacity 0.2s ease);
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &.active {
+        opacity: 1;
+        background-color: @scope-gold-dark;
+    }
+
+    .breakpoint-small-down({
+        font-size: 16px;
+        padding: 10px 18px;
+    });
+}
+
+// Scope Sub-panels
+.scope-panel {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}
+
+// Tagline
+.scope-tagline {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: @our-work-dark;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 65px;
+
+    .breakpoint-large-down({
+        font-size: 32px;
+        margin-bottom: 45px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 24px;
+        margin-bottom: 30px;
+    });
+}
+
+.scope-gradient-text {
+    background-image: linear-gradient(90deg, rgb(18, 46, 71) 17.308%, rgb(190, 170, 55) 69.712%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// Scope Section spacing
+.scope-section {
+    margin-bottom: 65px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .breakpoint-large-down({
+        margin-bottom: 45px;
+    });
+
+    .breakpoint-small-down({
+        margin-bottom: 30px;
+    });
+
+    .content-col-text {
+        gap: 5px;
+    }
+
+    .content-description {
+        font-size: 18px;
+        max-width: 586px;
+
+        .breakpoint-large-down({
+            font-size: 16px;
+            max-width: 100%;
+        });
+    }
+}
+
+// Region Label
+.scope-region-label {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: @our-work-dark;
+
+    .breakpoint-small-down({
+        font-size: 16px;
+        letter-spacing: 1.5px;
+    });
+}
+
+// Scope Buttons
+.scope-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+
+    .breakpoint-large-down({
+        justify-content: center;
+    });
+}
+
+.scope-btn {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.44px;
+    color: #fff;
+    border: none;
+    height: 40px;
+    padding: 0 25px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    .rounded(5px);
+    .transition(opacity 0.2s ease);
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    .breakpoint-small-down({
+        font-size: 18px;
+        padding: 0 18px;
+        height: 36px;
+    });
+}
+
+.scope-btn-challenges {
+    background-color: @scope-gold;
+}
+
+.scope-btn-goal {
+    background-color: @scope-green;
+}
+
+// Scope Button active state
+.scope-btn.active {
+    outline: 2px solid @our-work-dark;
+    outline-offset: 2px;
+}
+
+// Scope Expand Content
+.scope-expand-content {
+    margin-top: 20px;
+
+    .breakpoint-large-down({
+        margin-top: 15px;
+    });
+}
+
+.scope-expand-panel {
+    display: none;
+    background: linear-gradient(135deg, rgba(57, 132, 198, 0.08), rgba(53, 185, 86, 0.08));
+    padding: 25px 30px;
+    .rounded(15px);
+
+    p {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 1.55;
+        color: @our-work-dark;
+        margin: 0;
+    }
+
+    .breakpoint-large-down({
+        padding: 20px 25px;
+
+        p {
+            font-size: 16px;
+        }
+    });
+
+    .breakpoint-small-down({
+        padding: 15px 20px;
+        .rounded(10px);
+    });
+}
+
+// Scope Image Wrapper override
+.scope-image-wrapper {
+    height: 520px;
+    border-radius: 25px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .breakpoint-large-down({
+        height: 380px;
+        border-radius: 20px;
+    });
+
+    .breakpoint-small-down({
+        height: 280px;
+        border-radius: 15px;
+    });
+}
+
+// ==========================================================================
+// Networking Pilots Grid
+// ==========================================================================
+
+.networking-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 35px;
+    max-width: 1244px;
+    margin: 0 auto;
+
+    .breakpoint-small-down({
+        gap: 25px;
+    });
+}
+
+.networking-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    .scope-region-label {
+        text-align: center;
+    }
+}
+
+.networking-card-map {
+    height: 188px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    img {
+        max-height: 100%;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .breakpoint-small-down({
+        height: 140px;
+    });
+}
+
+.networking-card-title {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.8px;
+    color: @our-work-dark;
+    text-align: center;
+    max-width: 471px;
+    margin: 0;
+
+    .breakpoint-large-down({
+        font-size: 32px;
+        max-width: 380px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 24px;
+        max-width: 300px;
+    });
+}
+
+// ==========================================================================
+// Work Packages Panel
+// ==========================================================================
+
+@wp-pill-bg: #3984C6;
+
+// Heading block (tagline + description)
+.wp-heading {
+    text-align: center;
+    max-width: 1244px;
+    margin: 0 auto 40px;
+
+    .breakpoint-large-down({
+        margin-bottom: 30px;
+    });
+
+    .breakpoint-small-down({
+        margin-bottom: 25px;
+    });
+}
+
+// Tagline
+.wp-tagline {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: @our-work-dark;
+    margin: 0 0 20px;
+
+    .breakpoint-large-down({
+        font-size: 32px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 24px;
+        margin-bottom: 15px;
+    });
+}
+
+// Gradient text: "6 interconnected " (dark to green)
+.wp-gradient-text-green {
+    background-image: linear-gradient(90deg, #122E47 34.615%, #35B956 79.808%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// Gradient text: "Work Packages (WPs)" (dark to blue)
+.wp-gradient-text-blue {
+    background-image: linear-gradient(90deg, #122E47 34.615%, #3984C6 79.808%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// Description paragraph
+.wp-description {
+    font-family: 'Zalando Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: @our-work-dark;
+    margin: 0;
+
+    .breakpoint-large-down({
+        font-size: 20px;
+    });
+
+    .breakpoint-small-down({
+        font-size: 16px;
+    });
+}
+
+// Pills container
+.wp-pills {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 790px;
+    margin: 0 auto;
+
+    .breakpoint-small-down({
+        max-width: 100%;
+    });
+}
+
+// Pills row
+.wp-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+// Individual pill
+.wp-pill {
+    display: inline-block;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: -0.4px;
+    color: #fff;
+    background-color: @wp-pill-bg;
+    padding: 15px 25px;
+    .rounded(8px);
+
+    .breakpoint-small-down({
+        font-size: 16px;
+        padding: 10px 18px;
+    });
+}

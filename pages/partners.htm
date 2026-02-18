@@ -1,0 +1,101 @@
+url = "/partners"
+layout = "default"
+title = "Partners"
+is_hidden = 0
+meta_description = "Partners"
+seo_keywords = "partners"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Partners\Models\Partners as Partner;
+
+function onStart(){
+    $partners = Partner::where('type', 2)
+    ->with(['country', 'cardprofiles' => function($q){
+        $q->whereHas('category', function($cq){
+            $cq->where('slug', 'partners');
+        })->orderBy('sort_order');
+    }])
+    ->get();
+
+    $continentCodes = [
+        'europe' => ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','GB','NO','CH','IS','RS','UA','BA','ME','MK','AL','XK','MD','BY','AD','LI','MC','SM','VA','IM','JE','GG','FO','GI','AX'],
+        'asia' => ['CN','JP','KR','IN','ID','TH','VN','MY','PH','SG','TW','HK','BD','PK','LK','NP','MM','KH','LA','BN','MN','KZ','UZ','TJ','KG','TM','AF','IR','IQ','SA','AE','QA','KW','BH','OM','YE','JO','LB','SY','IL','GE','AM','AZ','TR','MO','BT','MV','TL'],
+        'africa' => ['ZA','EG','NG','KE','ET','GH','TZ','UG','MA','DZ','TN','SN','CI','CM','AO','MZ','MG','MW','ZM','ZW','BW','NA','RW','BI','ML','BF','NE','TD','GA','CG','CD','DJ','ER','SO','SS','SD','LR','SL','GN','GW','GM','MR','CV','ST','SC','KM','MU','LS','SZ','GQ','TG','BJ','LY','CF'],
+        'southamerica' => ['BR','AR','CL','CO','PE','VE','EC','BO','PY','UY','GY','SR','GF'],
+        'australia' => ['AU','NZ','FJ','PG','WS','SB','TO','VU','FM','KI','MH','NR','PW','TV','CK','NU','TK','AS','GU','MP','NC','PF','WF']
+    ];
+
+    $partnerContinents = [];
+    foreach ($partners as $partner) {
+        $codes = $partner->country->pluck('code')->toArray();
+        $assigned = [];
+        foreach ($codes as $code) {
+            foreach ($continentCodes as $continent => $countryCodes) {
+                if (in_array($code, $countryCodes)) {
+                    $assigned[] = $continent;
+                }
+            }
+        }
+        $partnerContinents[$partner->id] = array_unique($assigned);
+    }
+
+    $this['partners'] = $partners;
+    $this['partnerContinents'] = $partnerContinents;
+}
+?>
+==
+
+{% component 'siteSearchInclude' %}
+
+<section class="partners-map-section">
+    <div class="container">
+        <h2 class="partners-map-title">Collaborative work between five continents</h2>
+        <div class="partners-map-wrapper">
+            {% partial 'components/partners-map' %}
+            <div class="map-tooltip" id="mapTooltip"></div>
+        </div>
+    </div>
+</section>
+
+<section class="partners-cards-section">
+    <div class="container">
+        <div class="partners-cards-grid" id="partnersGrid">
+            {% for partner in partners %}
+                {% set continents = partnerContinents[partner.id] | default([]) %}
+                <div class="partner-card" data-partner-id="{{ partner.id }}" data-continents="{{ continents | join(' ') }}">
+                    <div class="partner-card-logo">
+                        {% if partner.cover %}
+                            <img src="{{ partner.cover.path }}" alt="{{ partner.instituion }}">
+                        {% else %}
+                            <span class="partner-card-name">{{ partner.instituion }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="partner-card-hover">
+                        <span class="partner-card-hover-text">Read More</span>
+                    </div>
+                    <div class="card-arrow">
+                        <div class="arrow-inner"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<div class="partner-popup-overlay" id="partnerPopupOverlay">
+    <div class="partner-popup">
+        <button class="partner-popup-close" type="button">&times;</button>
+        <div class="partner-popup-content" id="partnerPopupContent"></div>
+    </div>
+</div>
+
+<div style="display:none" id="partnerPopupDataContainer">
+    {% for partner in partners %}
+        {% partial 'components/partner-popup' partner=partner %}
+    {% endfor %}
+</div>

@@ -17,6 +17,8 @@ $(function() {
     initScopePillTabs();
     initScopeButtons();
     initNewsCategoryTabs();
+    initPartnersMap();
+    initPartnerPopup();
     $('nav').removeClass('no-transition');
 });
 
@@ -534,6 +536,250 @@ function initNewsCategoryTabs() {
             $tab.addClass('active').attr('aria-selected', 'true');
         } else {
             $tab.removeClass('active').attr('aria-selected', 'false');
+        }
+    });
+}
+
+// ---------- Partners Map Hover ----------
+
+function initPartnersMap() {
+    var $svg = $('.partners-map-wrapper svg');
+    if (!$svg.length) return;
+
+    var svg = $svg[0];
+
+    // Dot positions: filter ID → continent name, with dot center coordinates
+    var continents = {
+        africa:       { filter: 'filter0_d_777_2360', cx: 501.5, cy: 257.5, label: 'Africa' },
+        asia:         { filter: 'filter1_d_777_2360', cx: 686.5, cy: 57.5, label: 'Asia' },
+        australia:    { filter: 'filter2_d_777_2360', cx: 820.5, cy: 361.5, label: 'Australia' },
+        southamerica: { filter: 'filter3_d_777_2360', cx: 202.5, cy: 314.5, label: 'South America' },
+        europe:       { filter: 'filter4_d_777_2360', cx: 494.5, cy: 88.5, label: 'Europe' }
+    };
+
+    var continentNames = Object.keys(continents);
+    var $tooltip = $('#mapTooltip');
+    var $wrapper = $('.partners-map-wrapper');
+
+    // Tag each dot <g> with a class
+    continentNames.forEach(function(name) {
+        var dotG = svg.querySelector('g[filter="url(#' + continents[name].filter + ')"]');
+        if (dotG) {
+            dotG.classList.add('map-dot', 'dot-' + name);
+            continents[name].dotEl = dotG;
+        }
+    });
+
+    // Find all blue continent paths and assign to nearest dot
+    var bluePaths = svg.querySelectorAll('path[fill="#3984C6"]');
+
+    bluePaths.forEach(function(path) {
+        var bbox = path.getBBox();
+        var pathCx = bbox.x + bbox.width / 2;
+        var pathCy = bbox.y + bbox.height / 2;
+
+        var nearest = null;
+        var minDist = Infinity;
+
+        continentNames.forEach(function(name) {
+            var c = continents[name];
+            var dx = pathCx - c.cx;
+            var dy = pathCy - c.cy;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < minDist) {
+                minDist = dist;
+                nearest = name;
+            }
+        });
+
+        if (nearest) {
+            path.classList.add('continent-path', 'continent-' + nearest);
+        }
+    });
+
+    // Track active continent for click filtering
+    var activeContinent = null;
+    var $cards = $('.partner-card');
+    var allPaths = svg.querySelectorAll('.continent-path');
+
+    // Hide all cards by default — only show on continent click
+    $cards.addClass('hidden');
+
+    function setActiveContinent(name) {
+        if (activeContinent === name) {
+            // Deselect — hide all again
+            activeContinent = null;
+            allPaths.forEach(function(p) {
+                p.classList.remove('continent-active', 'continent-dimmed');
+            });
+            continentNames.forEach(function(n) {
+                if (continents[n].dotEl) continents[n].dotEl.classList.remove('pulsing');
+            });
+            $cards.addClass('hidden');
+        } else {
+            // Select this continent
+            activeContinent = name;
+
+            // Dim all paths, highlight active
+            allPaths.forEach(function(p) {
+                if (p.classList.contains('continent-' + name)) {
+                    p.classList.add('continent-active');
+                    p.classList.remove('continent-dimmed');
+                } else {
+                    p.classList.add('continent-dimmed');
+                    p.classList.remove('continent-active');
+                }
+            });
+
+            // Pulse active dot, stop others
+            continentNames.forEach(function(n) {
+                if (continents[n].dotEl) {
+                    if (n === name) {
+                        continents[n].dotEl.classList.add('pulsing');
+                    } else {
+                        continents[n].dotEl.classList.remove('pulsing');
+                    }
+                }
+            });
+
+            // Filter partner cards
+            $cards.each(function() {
+                var cardContinents = ($(this).data('continents') || '').split(' ');
+                if (cardContinents.indexOf(name) !== -1) {
+                    $(this).removeClass('hidden');
+                } else {
+                    $(this).addClass('hidden');
+                }
+            });
+        }
+    }
+
+    // Position tooltip above the continent's dot
+    function showTooltip(name) {
+        var c = continents[name];
+        var svgRect = svg.getBoundingClientRect();
+        var wrapperRect = $wrapper[0].getBoundingClientRect();
+        var viewBox = svg.viewBox.baseVal;
+        var scaleX = svgRect.width / viewBox.width;
+        var scaleY = svgRect.height / viewBox.height;
+        var x = (c.cx * scaleX) + (svgRect.left - wrapperRect.left);
+        var y = (c.cy * scaleY) + (svgRect.top - wrapperRect.top) - 16;
+        $tooltip.text(c.label);
+        $tooltip.css({ left: x + 'px', top: y + 'px' });
+        $tooltip.addClass('visible');
+    }
+
+    function hideTooltip() {
+        $tooltip.removeClass('visible');
+    }
+
+    // Attach hover + click listeners per continent
+    continentNames.forEach(function(name) {
+        var paths = svg.querySelectorAll('.continent-' + name);
+        var dot = continents[name].dotEl;
+
+        if (!dot || !paths.length) return;
+
+        paths.forEach(function(path) {
+            // Hover: pulse dot + tooltip (only if no active selection)
+            path.addEventListener('mouseenter', function() {
+                if (!activeContinent) {
+                    dot.classList.add('pulsing');
+                    paths.forEach(function(p) { p.classList.add('continent-hover'); });
+                }
+                showTooltip(name);
+            });
+            path.addEventListener('mouseleave', function() {
+                if (!activeContinent) {
+                    dot.classList.remove('pulsing');
+                    paths.forEach(function(p) { p.classList.remove('continent-hover'); });
+                }
+                hideTooltip();
+            });
+
+            // Click: filter partners
+            path.addEventListener('click', function() {
+                setActiveContinent(name);
+            });
+        });
+    });
+}
+
+// ---------- Partner Popup ----------
+
+function initPartnerPopup() {
+    var $overlay = $('#partnerPopupOverlay');
+    var $content = $('#partnerPopupContent');
+
+    if (!$overlay.length) return;
+
+    // Open popup on card click
+    $(document).on('click', '.partner-card', function(e) {
+        e.preventDefault();
+        var partnerId = $(this).data('partner-id');
+        var $data = $('#partnerPopupDataContainer .partner-popup-data[data-partner-id="' + partnerId + '"]');
+
+        if (!$data.length) return;
+
+        $content.html($data.html());
+        $overlay.addClass('active');
+        $('body').css('overflow', 'hidden');
+    });
+
+    // Close popup
+    $overlay.on('click', '.partner-popup-close', function() {
+        closePartnerPopup();
+    });
+
+    // Close on overlay background click
+    $overlay.on('click', function(e) {
+        if ($(e.target).is($overlay)) {
+            closePartnerPopup();
+        }
+    });
+
+    // Close on Escape
+    $(document).on('keydown.partnerPopup', function(e) {
+        if (e.key === 'Escape' && $overlay.hasClass('active')) {
+            closePartnerPopup();
+        }
+    });
+
+    function closePartnerPopup() {
+        $overlay.removeClass('active');
+        $('body').css('overflow', '');
+        $content.empty();
+    }
+
+    // Read more toggle for description
+    $(document).on('click', '.partner-popup-readmore-btn', function() {
+        var $btn = $(this);
+        var $text = $btn.siblings('.partner-popup-desc-text');
+
+        $btn.toggleClass('expanded');
+        $text.toggleClass('expanded');
+
+        if ($btn.hasClass('expanded')) {
+            $btn.contents().first()[0].textContent = 'Read less ';
+        } else {
+            $btn.contents().first()[0].textContent = 'Read more ';
+        }
+    });
+
+    // Biography toggle
+    $(document).on('click', '.partner-popup-bio-toggle', function() {
+        var $btn = $(this);
+        var $profile = $btn.closest('.partner-popup-profile');
+        var $bio = $profile.find('.partner-popup-profile-bio');
+
+        $btn.toggleClass('expanded');
+
+        if ($btn.hasClass('expanded')) {
+            $bio.slideDown(250);
+            $btn.find('.bio-toggle-text').text('Hide Biography');
+        } else {
+            $bio.slideUp(250);
+            $btn.find('.bio-toggle-text').text('Show Biography');
         }
     });
 }

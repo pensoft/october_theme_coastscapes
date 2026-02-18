@@ -1,0 +1,57 @@
+<div class="partner-popup-data" data-partner-id="{{ partner.id }}">
+    <div class="partner-popup-left">
+        <div class="partner-popup-logo">
+            {% if partner.cover %}
+                <img src="{{ partner.cover.path }}" alt="{{ partner.instituion }}">
+            {% else %}
+                <span class="partner-popup-logo-name">{{ partner.instituion }}</span>
+            {% endif %}
+        </div>
+        {% if partner.instituion_url %}
+            <a href="{{ partner.instituion_url }}" target="_blank" class="partner-popup-visit-btn">Visit website</a>
+        {% endif %}
+    </div>
+    <div class="partner-popup-right">
+        {% if partner.content %}
+            <div class="partner-popup-description">
+                <div class="partner-popup-desc-text">{{ partner.content | raw }}</div>
+                <button class="partner-popup-readmore-btn" type="button">
+                    Read more <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        {% endif %}
+
+        {% if partner.cardprofiles.count > 0 %}
+            <div class="partner-popup-divider"></div>
+            <h3 class="partner-popup-team-title">Team Lead</h3>
+
+            {% for profile in partner.cardprofiles %}
+                <div class="partner-popup-profile">
+                    <div class="partner-popup-profile-header">
+                        {% if profile.avatar %}
+                            <div class="partner-popup-profile-avatar">
+                                <img src="{{ profile.avatar.path }}" alt="{{ profile.names }}">
+                            </div>
+                        {% endif %}
+                        <div class="partner-popup-profile-info">
+                            <h4 class="partner-popup-profile-name">{{ profile.names }}</h4>
+                            <button class="partner-popup-bio-toggle" type="button">
+                                <span class="bio-toggle-text">Show Biography</span>
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            {% if profile.position %}
+                                <span class="partner-popup-profile-position">{{ profile.position }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if profile.content %}
+                        <div class="partner-popup-profile-bio">
+                            <div class="partner-popup-bio-divider"></div>
+                            <div class="partner-popup-bio-text">{{ profile.content | raw }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

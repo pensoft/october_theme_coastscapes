@@ -21,13 +21,30 @@ numberOfLevels = 2
 
         {# Desktop Header Elements (Right side) #}
         <div class="desktop-header-elements">
-            {# Login Button #}
-            <a href="/login" class="btn-login">
-                <span class="btn-login-text">Log in</span>
-                <span class="btn-login-icon" aria-hidden="true">
-                    <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
-                </span>
-            </a>
+            {% if user %}
+                {# Logged-in User Controls #}
+                <div class="user-controls">
+                    <a href="/profile" class="user-profile-link" aria-label="View profile for {{ user.name }} {{ user.surname }}">
+                        {% if user.avatar %}
+                            <img alt="" src="{{ user.avatar.getThumb(30,30, { mode : 'crop' }) }}" class="user-avatar" role="presentation">
+                        {% else %}
+                            <span class="user-avatar-placeholder" aria-hidden="true">{{ user.name|first }}</span>
+                        {% endif %}
+                        <span class="user-name">{{ user.name }} {{ user.surname }}</span>
+                    </a>
+                    <a href="javascript:;" data-request="onLogout" data-request-data="redirect: '/'" class="btn-logout" aria-label="Log out">
+                        <span class="btn-logout-text">Log out</span>
+                    </a>
+                </div>
+            {% else %}
+                {# Login Button #}
+                <a href="/login" class="btn-login">
+                    <span class="btn-login-text">Log in</span>
+                    <span class="btn-login-icon" aria-hidden="true">
+                        <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
+                    </span>
+                </a>
+            {% endif %}
 
             {# Mobile Menu Toggle (Hidden on Desktop) #}
             <button id="desktopMenuToggle"
@@ -84,12 +101,21 @@ numberOfLevels = 2
         {% component 'menu' %}
 
         <div class="mobile-login">
-            <a href="/login" class="btn-login">
-                <span class="btn-login-text">Log in</span>
-                <span class="btn-login-icon" aria-hidden="true">
-                    <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
-                </span>
-            </a>
+            {% if user %}
+                <a href="/profile" class="btn-login">
+                    <span class="btn-login-text">{{ user.name }} {{ user.surname }}</span>
+                </a>
+                <a href="javascript:;" data-request="onLogout" data-request-data="redirect: '/'" class="btn-logout">
+                    <span class="btn-logout-text">Log out</span>
+                </a>
+            {% else %}
+                <a href="/login" class="btn-login">
+                    <span class="btn-login-text">Log in</span>
+                    <span class="btn-login-icon" aria-hidden="true">
+                        <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
+                    </span>
+                </a>
+            {% endif %}
         </div>
     </div>
 </div>

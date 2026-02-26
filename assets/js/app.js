@@ -10,6 +10,7 @@ $(function() {
     initFooterDropdowns();
     initNavbarScroll();
 
+    initHomepageAnimations();
     initAboutScrollAnimations();
     initObjectivesAccordion();
     initOurWorkTabs();
@@ -299,6 +300,30 @@ function initFooterDropdowns() {
 }
 
 // ---------- Consortium Carousel (removed – now CSS-only marquee) ----------
+
+// ---------- Scroll Animations ----------
+
+function initHomepageAnimations() {
+    // Gradient text on scroll — applies to ALL .section-label elements site-wide
+    var $labels = $('.section-label');
+    if ($labels.length) {
+        var labelObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    $(entry.target).addClass('gradient-active');
+                    labelObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        $labels.each(function() {
+            labelObserver.observe(this);
+        });
+    }
+
+    // AOS fade-up on .section-description (CMS-managed content)
+    $('.section-description').attr('data-aos', 'fade-up');
+}
 
 // ---------- About Page Scroll Animations ----------
 

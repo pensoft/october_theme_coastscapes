@@ -23,7 +23,7 @@ function onStart(){
     <div class="container">
         <div class="contact-grid">
             {% for profile in profiles %}
-            <div class="contact-card {% if loop.index is even %}card-reverse{% endif %}">
+            <div class="contact-card {% if loop.index is even %}card-reverse{% endif %}" data-aos="fade-up" data-aos-duration="700" data-aos-delay="{{ (loop.index0) * 100 }}">
                 <div class="contact-card-visual">
                     <div class="card-avatar">
                         {% if profile.avatar %}

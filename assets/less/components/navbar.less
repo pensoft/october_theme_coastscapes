@@ -118,9 +118,7 @@
                         transform: rotate(180deg);
                     }
 
-                    &.active > a:after {
-                        transform: rotate(180deg);
-                    }
+                    // Arrow only rotates on hover (dropdown open), not for active page state
                 }
 
                 // Desktop dropdown menu
@@ -184,10 +182,9 @@
                     visibility: visible;
                 }
 
-                // Active state
+                // Active state — current page
                 &.active > a {
-                    color: #FEFFFD;
-                    font-weight: 400;
+                    color: rgba(255, 255, 255, 0.55);
                 }
             }
         }
@@ -210,6 +207,78 @@
 
         // Login Button - Styles defined in buttons.less
         .btn-login {
+            // Hide on tablet and below
+            .breakpoint-large-down({
+                display: none;
+            });
+        }
+
+        // Logged-in User Controls
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            .user-profile-link {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                text-decoration: none;
+                color: @white-color;
+                .transition(all 0.3s ease);
+
+                &:hover {
+                    opacity: 0.85;
+                }
+
+                .user-avatar {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                .user-avatar-placeholder {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background-color: #D8EDFE;
+                    color: #122E47;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 14px;
+                    font-weight: 600;
+                    font-family: 'Funnel Sans', sans-serif;
+                }
+
+                .user-name {
+                    font-size: 14px;
+                    font-weight: 500;
+                    white-space: nowrap;
+                    font-family: 'Funnel Sans', sans-serif;
+                }
+            }
+
+            .btn-logout {
+                display: inline-flex;
+                align-items: center;
+                padding: 8px 14px;
+                border-radius: 8px;
+                background-color: rgba(255, 255, 255, 0.15);
+                color: @white-color;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 400;
+                font-family: 'Funnel Sans', sans-serif;
+                .transition(all 0.3s ease);
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.25);
+                }
+            }
+
             // Hide on tablet and below
             .breakpoint-large-down({
                 display: none;
@@ -566,6 +635,28 @@ body.menu-open {
     .mobile-login {
         display: flex;
         justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+
+        .btn-logout {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: @white-color;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            font-family: 'Funnel Sans', sans-serif;
+            .transition(all 0.3s ease);
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.25);
+            }
+        }
     }
 }
 
@@ -611,6 +702,17 @@ body.menu-open {
             padding: 8px 14px;
             font-size: 15px;
             letter-spacing: -0.15px;
+        }
+
+        .user-controls {
+            .user-profile-link .user-name {
+                font-size: 13px;
+            }
+
+            .btn-logout {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
         }
     }
 }

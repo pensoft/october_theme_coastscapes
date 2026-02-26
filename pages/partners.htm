@@ -14,7 +14,7 @@ robot_follow = "follow"
 use Pensoft\Partners\Models\Partners as Partner;
 
 function onStart(){
-    $partners = Partner::where('type', 2)
+    $partners = Partner::where('type', 3)
     ->with(['country', 'cardprofiles' => function($q){
         $q->whereHas('category', function($cq){
             $cq->where('slug', 'partners');

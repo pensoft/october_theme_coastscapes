@@ -50,7 +50,7 @@ function onStart(){
         {% component 'plan-perspectives' %}
         
         <div class="perspective-cards">
-            <div class="perspective-card mission-card">
+            <div class="perspective-card mission-card" data-aos="fade-up">
                 <div class="card-body">
                     <img src="{{ 'assets/images/image-card-1a.png' | theme }}" alt="Mission" class="card-image">
                     <div class="card-overlay"></div>
@@ -58,7 +58,9 @@ function onStart(){
                         <h3 class="card-title">Mission</h3>
                     </div>
                     <div class="card-hover-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>
+                            To reduce risks of climate change and biodiversity loss and improve land-sea interactions by developing systemic science-based and community-driven pathways for coastal landscapes.
+                        </p>
                     </div>
                 </div>
                 <div class="card-arrow">
@@ -66,7 +68,7 @@ function onStart(){
                 </div>
             </div>
 
-            <div class="perspective-card vision-card">
+            <div class="perspective-card vision-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="card-body">
                     <img src="{{ 'assets/images/image-card-2.png' | theme }}" alt="Vision" class="card-image">
                     <div class="card-overlay"></div>
@@ -74,7 +76,9 @@ function onStart(){
                         <h3 class="card-title">Vision</h3>
                     </div>
                     <div class="card-hover-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>
+                            COAST-SCAPES will demonstrate that building resilient coasts that can thrive, not just survive, under climate change, is possible through collective effort and technical innovation.
+                        </p>
                     </div>
                 </div>
                 <div class="card-arrow">
@@ -92,7 +96,7 @@ function onStart(){
         <span class="section-label">LATEST NEWS</span>
         <div class="news-grid row">
             {% for item in highlights|slice(0, 3) %}
-            <div class="col-md-4 col-xs-12">
+            <div class="col-md-4 col-xs-12" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 150 }}">
                 <a href="/news/{{ item.slug }}" class="news-card">
                     <div class="card-image-container">
                         <div class="card-image-wrapper">
@@ -124,7 +128,7 @@ function onStart(){
     <div class="container">
         <span class="section-label">CONSORTIUM</span>
     </div>
-    <div class="consortium-marquee">
+    <div class="consortium-marquee" data-aos="fade-up">
         <div class="marquee-track">
             {% for partner in consortium_partners %}
             <a href="{{ partner.instituion_url }}" target="_blank" rel="noopener" class="consortium-card">

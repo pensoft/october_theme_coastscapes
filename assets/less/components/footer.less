@@ -77,8 +77,10 @@
 .footer-newsletter-content {
     position: relative;
     z-index: 1;
-    padding: 60px 96px;
-    text-align: right;
+    padding: 30px 96px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
     h2 {
         font-family: 'Funnel Sans', sans-serif;
@@ -87,6 +89,11 @@
         line-height: 1.15;
         color: @footer-text-white;
         margin: 0 0 30px 0;
+        text-align: left;
+    }
+
+    .btn-newsletter {
+        align-self: flex-start;
     }
 
     .breakpoint-laptop-down({
@@ -107,11 +114,16 @@
 
     .breakpoint-medium-down({
         padding: 30px 40px;
-        text-align: center;
+        align-items: center;
         width: 100%;
 
         h2 {
             font-size: 40px;
+            text-align: center;
+        }
+
+        .btn-newsletter {
+            align-self: center;
         }
     });
 

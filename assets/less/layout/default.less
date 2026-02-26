@@ -57,6 +57,31 @@
 }
 
 // ==========================================================================
+// Section Label — Global scroll gradient + fade-right
+// ==========================================================================
+
+.section-label {
+    // Gradient text reveal on scroll (dark blue → green gradient)
+    background: linear-gradient(90deg, #122E47, #35B956);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: #122E47;
+
+    // Fade-right entrance
+    opacity: 0;
+    transform: translateX(-30px);
+
+    // Transitions
+    .transition(~'-webkit-text-fill-color 1s ease, opacity 0.8s ease, transform 0.8s ease');
+
+    &.gradient-active {
+        -webkit-text-fill-color: transparent;
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+// ==========================================================================
 // Fixed Position Utilities
 // ==========================================================================
 

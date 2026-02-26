@@ -136,7 +136,7 @@ $this['related'] = $related;
             </a>
         </div>
 
-        <div class="news-detail-header">
+        <div class="news-detail-header" data-aos="fade-up" data-aos-duration="800">
             <div class="news-detail-date">{{ article.published_at|date('d F Y')|upper }}</div>
             <h2 class="news-detail-title">{{ article.title }}</h2>
 
@@ -151,7 +151,7 @@ $this['related'] = $related;
             {% endif %}
         </div>
 
-        <div class="news-detail-body">
+        <div class="news-detail-body" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
             {{ article.content|raw }}
         </div>
 
@@ -174,7 +174,7 @@ $this['related'] = $related;
 	{% else %}
 
     <!-- Category Tabs -->
-    <div class="news-category-tabs">
+    <div class="news-category-tabs" data-aos="fade-up" data-aos-duration="700">
         <div class="tabs-navigation" role="tablist">
             <a href="/news" class="tab-link{% if categoryId == 'all' %} active{% endif %}" data-category="all" role="tab" aria-selected="{% if categoryId == 'all' %}true{% else %}false{% endif %}">All news</a>
             {% for category in categories %}
@@ -185,7 +185,7 @@ $this['related'] = $related;
 
     <div class="news-list row">
         {% for record in records %}
-            <div class="col-md-4 col-xs-12">
+            <div class="col-md-4 col-xs-12" data-aos="fade-up" data-aos-duration="700" data-aos-delay="{{ (loop.index0 % 3) * 100 }}">
                 <a href="/news/{{record.slug}}" class="news-card">
                     <div class="card-image-container">
                         <div class="card-image-wrapper">

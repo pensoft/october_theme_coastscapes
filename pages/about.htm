@@ -37,7 +37,7 @@ function onStart() {
         <div class="about-grid-layout">
 
             {# What We Do - Top Left #}
-            <div class="about-section-what about-text-block">
+            <div class="about-section-what about-text-block" data-aos="fade-up" data-aos-duration="800">
                 <h2 class="about-title">What we do</h2>
                 <p class="about-description">
                     COAST-SCAPES aims to strengthen climate resilience by developing sustainable solutions that increase the environmental benefits across socioeconomic sectors, different geographical regions and timeframes. The project's overarching focus is to reduce the climate resilience deficit. These measures will support coastal communities, providing them with integrated early warning systems, NbS and proactive maintenance strategies to boost the resilience of coastal areas.
@@ -68,7 +68,7 @@ function onStart() {
             </div>
 
             {# How We Do It - Middle Right #}
-            <div class="about-section-how about-text-block">
+            <div class="about-section-how about-text-block" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                 <h2 class="about-title">How we do it</h2>
                 <p class="about-description">
                     COAST-SCAPES addresses the climate resilience deficit by implementing resilience-through-adaptation plans. These plans use nature-based solutions (NbS) that both mitigate climate risks, enhance welfare and improve the community well-being. COAST-SCAPES envisions improvement of infrastructure and land use compatibility to strengthen adaptation capacity.
@@ -89,7 +89,7 @@ function onStart() {
             </div>
 
             {# Looking Ahead - Bottom Left #}
-            <div class="about-section-ahead about-text-block">
+            <div class="about-section-ahead about-text-block" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
                 <h2 class="about-title">Looking ahead</h2>
                 <p class="about-description">
                     COAST-SCAPES envisions increased transdisciplinary collaboration to foster the implementation of NbS into the resilience plans. This includes ensuring that different sectors work together to integrate NbS into planning, as well as applying shared knowledge and coordinated strategies across regions.
@@ -108,14 +108,14 @@ function onStart() {
 {# Objectives Section #}
 <section class="objectives-section">
     <div class="container">
-        <div class="objectives-header">
+        <div class="objectives-header" data-aos="fade-up" data-aos-duration="800">
             <span class="section-label">OUR OBJECTIVES</span>
             <h2 class="section-title">What guides our work</h2>
         </div>
 
         <div class="objectives-accordion">
             {% for item in mission_records %}
-                <div class="objective-item">
+                <div class="objective-item" data-aos="fade-up" data-aos-duration="700" data-aos-delay="{{ (loop.index0) * 100 }}">
                     <div class="objective-toggle">
                         <span class="objective-title">{{ item.prefix }} {{ item.title }}</span>
                         <button class="objective-btn" aria-expanded="false">

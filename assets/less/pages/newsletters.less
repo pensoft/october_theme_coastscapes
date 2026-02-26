@@ -1,0 +1,104 @@
+// ==========================================================================
+// Page - Newsletters
+// ==========================================================================
+
+// Color variables
+@newsletters-dark-blue: #122E47;
+@newsletters-bg-white: #FEFFFD;
+@newsletters-placeholder-start: #EBF6FF;
+
+// ==========================================================================
+// Newsletters Grid Section
+// ==========================================================================
+
+.newsletters-section {
+    background-color: @newsletters-bg-white;
+    padding: 0 68px 80px;
+    max-width: 1380px;
+    margin: 0 auto;
+
+    .breakpoint-laptop-down({
+        padding: 0 50px 70px;
+    });
+
+    .breakpoint-large-down({
+        padding: 0 40px 60px;
+    });
+
+    .breakpoint-medium-down({
+        padding: 0 30px 50px;
+    });
+
+    .breakpoint-small-down({
+        padding: 0 20px 40px;
+    });
+}
+
+.newsletter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.newsletter-card {
+    width: calc((100% - 30px) / 3);
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    align-items: center;
+
+    .breakpoint-large-down({
+        width: calc((100% - 15px) / 2);
+    });
+
+    .breakpoint-small-down({
+        width: 100%;
+    });
+}
+
+// ==========================================================================
+// Newsletter Preview
+// ==========================================================================
+
+.newsletter-preview {
+    width: 100%;
+    height: 255px;
+    .rounded(15px);
+    overflow: hidden;
+    background: linear-gradient(180deg, @newsletters-placeholder-start 0%, @newsletters-bg-white 100%);
+    position: relative;
+
+    .breakpoint-small-down({
+        height: 220px;
+        .rounded(12px);
+    });
+}
+
+.newsletter-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+// ==========================================================================
+// Empty State
+// ==========================================================================
+
+.newsletters-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+
+    p {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 1.55;
+        color: @newsletters-dark-blue;
+        opacity: 0.5;
+        margin: 0;
+    }
+}

@@ -1,0 +1,115 @@
+url = "/videos"
+layout = "default"
+title = "Videos"
+is_hidden = 0
+meta_description = "Videos"
+seo_keywords = "videos, media center"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Media\Models\Videos;
+use System\Models\File;
+
+function onStart(){
+    $this['mediaVideosList'] = Videos::where('pensoft_media_videos.parent_id', null)->get();
+
+    if(get('download')){
+        $file = File::find((int)get('download'));
+        $file_name = $file->getLocalPath();
+        $recordName = get('file_name') ? get('file_name') : 'COASTSCAPES_video';
+        $ext = $file->getExtension();
+
+        if (file_exists($file_name)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header("Content-Type: application/force-download");
+            header('Content-Disposition: attachment; filename=' . $recordName . '.' . $ext);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_name));
+            ob_clean();
+            flush();
+            readfile($file_name);
+            exit();
+        }
+        return Redirect::to('/videos');
+    }
+}
+
+function onDownloadFile(){
+    $file = File::find(post('id'));
+    $pathToFile = $file->getLocalPath();
+    $fileName = $file->file_name;
+    $fileType = $file->content_type;
+    $headers = [
+        'HTTP/1.1 200 OK',
+        'Pragma: public',
+        'Content-Type: ' . $fileType,
+        'Content-Type: application/force-download'
+    ];
+
+    return Response::download($pathToFile, $fileName, $headers);
+}
+?>
+==
+
+{% component 'siteSearchInclude' %}
+
+{% set records = mediaVideosList %}
+
+{# ====================================================================
+   Sub-navigation tabs (shared across media sub-pages)
+   ==================================================================== #}
+<nav class="media-sub-nav container-dynamic" aria-label="Media centre navigation">
+    <a href="/brand-kit" class="media-sub-nav-item">Brand kit</a>
+    <a href="/project-materials" class="media-sub-nav-item">Project materials</a>
+    <a href="/videos" class="media-sub-nav-item active" aria-current="page">Videos</a>
+    <a href="/newsletters" class="media-sub-nav-item">Newsletters</a>
+</nav>
+
+{# ====================================================================
+   Video Grid
+   ==================================================================== #}
+<section class="videos-section container-dynamic">
+    {% if records is not empty %}
+        <div class="video-grid">
+            {% for record in records %}
+                <div class="video-card">
+                    <div class="video-embed-wrapper">
+                        {% if record.youtube_url %}
+                            <iframe
+                                src="{{ record.youtube_url }}"
+                                title="{{ record.name }}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                            ></iframe>
+                        {% elseif record.vimeo_url %}
+                            <iframe
+                                src="{{ record.vimeo_url }}"
+                                title="{{ record.name }}"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen
+                            ></iframe>
+                        {% elseif record.file %}
+                            <video controls preload="metadata">
+                                <source src="{{ record.file.getPath() }}" type="{{ record.file.content_type }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
+                    </div>
+                    <h3 class="video-title">{{ record.name }}</h3>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="videos-empty-state">
+            <p>No videos available yet.</p>
+        </div>
+    {% endif %}
+</section>

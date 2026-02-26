@@ -1,6 +1,6 @@
 url = "/media-center"
 layout = "default"
-title = "Media Center"
+title = "Media centre"
 is_hidden = 0
 meta_description = "Media Center"
 seo_keywords = "media center"
@@ -13,3 +13,83 @@ robot_follow = "follow"
 ==
 
 {% component 'siteSearchInclude' %}
+
+{# ====================================================================
+   Section 1 - Brand Kit (text left, image right)
+   ==================================================================== #}
+<section class="media-section container-dynamic">
+    <div class="media-row">
+        <div class="media-text">
+            <h2 class="media-title">Brand kit</h2>
+            <p class="media-description">
+                Access COAST-SCAPES brand assets including logos, colour palettes, typography guidelines, and templates. Everything you need for consistent visual communication across the project.
+            </p>
+            <a href="/brand-kit" class="btn-cta-dark">View brand kit</a>
+        </div>
+        <div class="media-image">
+            <div class="media-image-card brand-kit-card">
+                <img src="{{ 'assets/images/brand-kit.png'|theme }}" alt="COAST-SCAPES brand kit materials" class="media-card-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ====================================================================
+   Section 2 - Project Materials (image left, text right)
+   ==================================================================== #}
+<section class="media-section container-dynamic">
+    <div class="media-row row-reverse">
+        <div class="media-text">
+            <h2 class="media-title">Project materials</h2>
+            <p class="media-description">
+                Browse our collection of project deliverables, presentations, factsheets, and informational brochures documenting COAST-SCAPES research and findings.
+            </p>
+            <a href="/project-materials" class="btn-cta-dark">View project materials</a>
+        </div>
+        <div class="media-image">
+            <div class="media-image-card materials-card">
+                <img src="{{ 'assets/images/brochure.png'|theme }}" alt="COAST-SCAPES project materials" class="media-card-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ====================================================================
+   Section 3 - Videos (text left, image right)
+   ==================================================================== #}
+<section class="media-section container-dynamic">
+    <div class="media-row">
+        <div class="media-text">
+            <h2 class="media-title">Videos</h2>
+            <p class="media-description">
+                Watch project video content including interviews, site documentaries, event recordings, and educational material about coastal resilience.
+            </p>
+            <a href="/videos" class="btn-cta-dark">View videos</a>
+        </div>
+        <div class="media-image">
+            <div class="media-image-card videos-card">
+                <img src="{{ 'assets/images/videos.png'|theme }}" alt="COAST-SCAPES video content" class="media-card-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ====================================================================
+   Section 4 - Newsletters (image left, text right)
+   ==================================================================== #}
+<section class="media-section container-dynamic">
+    <div class="media-row row-reverse">
+        <div class="media-text">
+            <h2 class="media-title">Newsletters</h2>
+            <p class="media-description">
+                Read our periodic newsletters covering project milestones, research highlights, upcoming events, and stories from our pilot sites across Europe and beyond.
+            </p>
+            <a href="/newsletters" class="btn-cta-dark">View newsletters</a>
+        </div>
+        <div class="media-image">
+            <div class="media-image-card coming-soon-card">
+                <div class="coming-soon-text">Coming soon</div>
+            </div>
+        </div>
+    </div>
+</section>

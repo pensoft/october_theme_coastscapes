@@ -15,6 +15,12 @@ background = "transperant"
 templates = "template3"
 description_limit = 0
 
+[jumbotron timeline]
+jumbotron = "timeline"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
 ==
 <?php
 use Pensoft\Accordions\Models\Item;
@@ -24,7 +30,7 @@ function onStart(){
     $this['work_packages_title'] = Category::where('slug', 'wp')->first();
     $this['work_packages_records'] = Item::whereHas('accordion', function($query) {
         $query->where('slug', 'wp');
-    })->orderBy('sort_order', 'asc')->get();
+    })->with(['partner', 'partner.cover'])->orderBy('sort_order', 'asc')->get();
 }
 
 ?>
@@ -101,6 +107,9 @@ function onStart(){
                         <div class="wp-card-inner">
                             <div class="wp-card-image">
                                 <span class="wp-card-badge">{{ record.prefix }}</span>
+                                {% if record.partner and record.partner.cover %}
+                                    <img src="{{ record.partner.cover.getThumb(140, 140, {'mode': 'crop'}) }}" alt="{{ record.partner.instituion }}">
+                                {% endif %}
                             </div>
                             <div class="wp-card-content">
                                 {% if record.title %}
@@ -125,7 +134,7 @@ function onStart(){
                  aria-labelledby="panel-our-approach">
                 <div class="tab-panel-content">
                     {% component 'our-approach' %}
-                    {% partial 'timeline' %}
+                    {% component 'timeline' %}
                 </div>
             </div>
 

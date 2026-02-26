@@ -1,0 +1,108 @@
+url = "/brand-kit"
+layout = "default"
+title = "Brand kit"
+is_hidden = 0
+meta_description = "Brand kit"
+seo_keywords = "brand kit, media center, logos"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Media\Models\MediaLogos;
+use System\Models\File;
+
+function onStart(){
+    $this['logosList'] = MediaLogos::where('parent_id', null)->get();
+
+    if(get('download')){
+        $file = File::find((int)get('download'));
+        $file_name = $file->getLocalPath();
+        $recordName = get('file_name') ? get('file_name') : 'COASTSCAPES_brand';
+        $ext = $file->getExtension();
+
+        if (file_exists($file_name)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header("Content-Type: application/force-download");
+            header('Content-Disposition: attachment; filename=' . $recordName . '.' . $ext);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_name));
+            ob_clean();
+            flush();
+            readfile($file_name);
+            exit();
+        }
+        return Redirect::to('/brand-kit');
+    }
+}
+
+function onDownloadFile(){
+    $file = File::find(post('id'));
+    $pathToFile = $file->getLocalPath();
+    $fileName = $file->file_name;
+    $fileType = $file->content_type;
+    $headers = [
+        'HTTP/1.1 200 OK',
+        'Pragma: public',
+        'Content-Type: ' . $fileType,
+        'Content-Type: application/force-download'
+    ];
+
+    return Response::download($pathToFile, $fileName, $headers);
+}
+?>
+==
+
+{% component 'siteSearchInclude' %}
+
+{% set records = logosList %}
+
+{# ====================================================================
+   Sub-navigation tabs (shared across media sub-pages)
+   ==================================================================== #}
+<nav class="media-sub-nav container-dynamic" aria-label="Media centre navigation">
+    <a href="/brand-kit" class="media-sub-nav-item active" aria-current="page">Brand kit</a>
+    <a href="/project-materials" class="media-sub-nav-item">Project materials</a>
+    <a href="/videos" class="media-sub-nav-item">Videos</a>
+    <a href="/newsletters" class="media-sub-nav-item">Newsletters</a>
+</nav>
+
+{# ====================================================================
+   Brand Kit Grid
+   ==================================================================== #}
+<section class="brandkit-section container-dynamic">
+    {% if records is not empty %}
+        <div class="brandkit-grid">
+            {% for record in records %}
+                <div class="brandkit-card">
+                    <div class="brandkit-preview">
+                        {% if record.logo_image %}
+                            <img src="{{ record.logo_image.getPath() }}" alt="{{ record.name }}" class="brandkit-logo-image">
+                        {% endif %}
+                    </div>
+                    {% set downloadFile = record.file_zip ?: (record.file_png ?: (record.file_eps ?: (record.file_pdf ?: record.file_jpg))) %}
+                    {% if downloadFile %}
+                        <a href="{{ downloadFile.getPath() }}" class="btn-material-download" download="{{ record.name }}">
+                            <span>{{ record.name }}</span>
+                            <span class="btn-download-circle">
+                                <img src="{{ 'assets/images/arrow-down.svg'|theme }}" alt="">
+                            </span>
+                        </a>
+                    {% else %}
+                        <span class="brandkit-name">{{ record.name }}</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="brandkit-empty-state">
+            <p>No brand assets available yet.</p>
+        </div>
+    {% endif %}
+</section>

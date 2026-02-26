@@ -1,0 +1,177 @@
+// ==========================================================================
+// Page - Videos
+// ==========================================================================
+
+// Color variables
+@videos-dark-blue: #122E47;
+@videos-bg-white: #FEFFFD;
+@videos-placeholder-start: #EBF6FF;
+
+// ==========================================================================
+// Shared Media Sub-navigation (used across all media sub-pages)
+// ==========================================================================
+
+.media-sub-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 55px 68px 40px;
+    background-color: @videos-bg-white;
+    max-width: 1380px;
+    margin: 0 auto;
+
+    .media-sub-nav-item {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.55;
+        color: @videos-dark-blue;
+        text-decoration: none;
+        opacity: 0.35;
+        .transition(opacity 0.2s ease);
+
+        &:hover {
+            opacity: 0.7;
+            text-decoration: none;
+        }
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
+    .breakpoint-large-down({
+        padding: 45px 40px 35px;
+    });
+
+    .breakpoint-medium-down({
+        gap: 24px;
+        padding: 40px 30px 30px;
+    });
+
+    .breakpoint-small-down({
+        gap: 20px;
+        padding: 30px 20px 25px;
+        flex-wrap: wrap;
+
+        .media-sub-nav-item {
+            font-size: 14px;
+        }
+    });
+}
+
+// ==========================================================================
+// Video Grid Section
+// ==========================================================================
+
+.videos-section {
+    background-color: @videos-bg-white;
+    padding: 0 68px 80px;
+    max-width: 1380px;
+    margin: 0 auto;
+
+    .breakpoint-laptop-down({
+        padding: 0 50px 70px;
+    });
+
+    .breakpoint-large-down({
+        padding: 0 40px 60px;
+    });
+
+    .breakpoint-medium-down({
+        padding: 0 30px 50px;
+    });
+
+    .breakpoint-small-down({
+        padding: 0 20px 40px;
+    });
+}
+
+.video-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.video-card {
+    width: calc((100% - 30px) / 3);
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+
+    .breakpoint-large-down({
+        width: calc((100% - 15px) / 2);
+    });
+
+    .breakpoint-small-down({
+        width: 100%;
+    });
+}
+
+// ==========================================================================
+// Video Embed Wrapper
+// ==========================================================================
+
+.video-embed-wrapper {
+    width: 100%;
+    position: relative;
+    padding-bottom: 60%; // aspect ratio ~425:255 (roughly 5:3)
+    .rounded(15px);
+    overflow: hidden;
+    background: linear-gradient(180deg, @videos-placeholder-start 0%, @videos-bg-white 100%);
+
+    iframe,
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        object-fit: cover;
+    }
+
+    .breakpoint-small-down({
+        .rounded(12px);
+    });
+}
+
+// ==========================================================================
+// Video Title
+// ==========================================================================
+
+.video-title {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: @videos-dark-blue;
+    margin: 0;
+
+    .breakpoint-small-down({
+        font-size: 18px;
+    });
+}
+
+// ==========================================================================
+// Empty State
+// ==========================================================================
+
+.videos-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+
+    p {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 1.55;
+        color: @videos-dark-blue;
+        opacity: 0.5;
+        margin: 0;
+    }
+}

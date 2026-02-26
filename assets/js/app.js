@@ -141,26 +141,14 @@ function initDesktopMenuToggle() {
 }
 
 function initDesktopDropdownToggle() {
-    // Only apply click-based dropdown toggle for mobile slide-out menu
-    // Desktop menu uses CSS hover states
-    $('.navbar-collapse .nav-item.dropdown > a').on('click.desktopDropdown', function(e) {
-        e.preventDefault();
-        var $dropdownMenu = $(this).siblings('.dropdown-menu');
-        if ($dropdownMenu.hasClass('show')) {
-            $dropdownMenu.removeClass('show');
-            $(this).parent().removeClass('active');
-        } else {
-            $('.navbar-collapse .dropdown-menu.show').removeClass('show');
-            $('.navbar-collapse .nav-item.dropdown').removeClass('active');
-            $dropdownMenu.addClass('show');
-            $(this).parent().addClass('active');
-        }
-    });
+    // Mobile slide-out menu dropdowns are handled by initHamburgerMenuDropdowns.
+    // This function is kept for any future desktop-specific dropdown logic.
+    // Desktop nav uses CSS :hover states defined in navbar.less.
 }
 
 function sanitizeNavDropdowns() {
-    // Only sanitize dropdowns in mobile menu and footer, not desktop nav
-    $('.navbar-collapse .nav-item, .footer-navigation .nav-item').children('a').each(function() {
+    // Only sanitize dropdowns in footer, mobile menu is handled by initHamburgerMenuDropdowns
+    $('.footer-navigation .nav-item').children('a').each(function() {
         var $link = $(this);
         if ($link.attr('data-toggle') === 'dropdown') {
             $link

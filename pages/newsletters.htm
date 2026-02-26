@@ -1,0 +1,102 @@
+url = "/newsletters"
+layout = "default"
+title = "Newsletters"
+is_hidden = 0
+meta_description = "Newsletters"
+seo_keywords = "newsletters, media center"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Media\Models\Newsletters;
+use System\Models\File;
+
+function onStart(){
+    $this['newslettersList'] = Newsletters::orderBy('sort_order', 'asc')->get();
+
+    if(get('download')){
+        $file = File::find((int)get('download'));
+        $file_name = $file->getLocalPath();
+        $recordName = get('file_name') ? get('file_name') : 'COASTSCAPES_newsletter';
+        $ext = $file->getExtension();
+
+        if (file_exists($file_name)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header("Content-Type: application/force-download");
+            header('Content-Disposition: attachment; filename=' . $recordName . '.' . $ext);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_name));
+            ob_clean();
+            flush();
+            readfile($file_name);
+            exit();
+        }
+        return Redirect::to('/newsletters');
+    }
+}
+
+function onDownloadFile(){
+    $file = File::find(post('id'));
+    $pathToFile = $file->getLocalPath();
+    $fileName = $file->file_name;
+    $fileType = $file->content_type;
+    $headers = [
+        'HTTP/1.1 200 OK',
+        'Pragma: public',
+        'Content-Type: ' . $fileType,
+        'Content-Type: application/force-download'
+    ];
+
+    return Response::download($pathToFile, $fileName, $headers);
+}
+?>
+==
+
+{% component 'siteSearchInclude' %}
+
+{% set records = newslettersList %}
+
+{# ====================================================================
+   Sub-navigation tabs (shared across media sub-pages)
+   ==================================================================== #}
+<nav class="media-sub-nav container-dynamic" aria-label="Media centre navigation">
+    <a href="/brand-kit" class="media-sub-nav-item">Brand kit</a>
+    <a href="/project-materials" class="media-sub-nav-item">Project materials</a>
+    <a href="/videos" class="media-sub-nav-item">Videos</a>
+    <a href="/newsletters" class="media-sub-nav-item active" aria-current="page">Newsletters</a>
+</nav>
+
+{# ====================================================================
+   Newsletters Grid
+   ==================================================================== #}
+<section class="newsletters-section container-dynamic">
+    {% if records is not empty %}
+        <div class="newsletter-grid">
+            {% for record in records %}
+                <div class="newsletter-card">
+                    <div class="newsletter-preview">
+                        {% if record.newsletter_image %}
+                            <img src="{{ record.newsletter_image.getPath() }}" alt="{{ record.name }}" class="newsletter-preview-image">
+                        {% endif %}
+                    </div>
+                    {% if record.url %}
+                        <a href="{{ record.url }}" class="btn-cta-dark" target="_blank" rel="noopener noreferrer">Read newsletter</a>
+                    {% elseif record.file %}
+                        <a href="{{ record.file.getPath() }}" class="btn-cta-dark" target="_blank" rel="noopener noreferrer">Read newsletter</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="newsletters-empty-state">
+            <p>No newsletters available yet.</p>
+        </div>
+    {% endif %}
+</section>

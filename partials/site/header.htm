@@ -42,27 +42,6 @@ numberOfLevels = 2
         </div>
     </div>
 
-    {# Mobile Full-screen Navigation Menu #}
-    <div class="navbar-collapse" id="headerNavbarNav" aria-hidden="true">
-        <video class="menu-video" autoplay muted loop playsinline>
-            <source src="{{ 'core_video.mp4'|media }}" type="video/mp4">
-        </video>
-        <div class="menu-overlay"></div>
-
-        <div class="menu-content">
-            {% component 'menu' %}
-
-            <div class="mobile-login">
-                <a href="/login" class="btn-login">
-                    <span class="btn-login-text">Log in</span>
-                    <span class="btn-login-icon" aria-hidden="true">
-                        <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
-                    </span>
-                </a>
-            </div>
-        </div>
-    </div>
-
     {# Search Overlay #}
     <div id="search" class="search" aria-hidden="true" role="dialog" aria-label="Site search">
         <div class="container">
@@ -92,6 +71,28 @@ numberOfLevels = 2
         </div>
     </div>
 </nav>
+
+{# Mobile Full-screen Navigation Menu — placed outside <nav> to avoid
+   containing block issues from backdrop-filter on scrolled navbar #}
+<div class="navbar-collapse" id="headerNavbarNav" aria-hidden="true">
+    <video class="menu-video" autoplay muted loop playsinline>
+        <source src="{{ 'core_video.mp4'|media }}" type="video/mp4">
+    </video>
+    <div class="menu-overlay"></div>
+
+    <div class="menu-content">
+        {% component 'menu' %}
+
+        <div class="mobile-login">
+            <a href="/login" class="btn-login">
+                <span class="btn-login-text">Log in</span>
+                <span class="btn-login-icon" aria-hidden="true">
+                    <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
 
 {# Page Header Image (Non-Home Pages) #}
 {% if this.theme.header_image %}

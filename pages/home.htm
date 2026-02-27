@@ -98,7 +98,7 @@ function onStart(){
                         </div>
                     </div>
                     <div class="card-info">
-                        <span class="card-date">{{ item.published_at|date('d F Y')|upper }}</span>
+                        <span class="card-date">{{ item.published_at|date('d.m.Y') }}</span>
                         <h3 class="card-title">{{ item.title|slice(0, 80) }}{% if item.title|length > 80 %}...{% endif %}</h3>
                     </div>
                 </a>

@@ -19,15 +19,17 @@
         align-items: center;
         position: relative;
 
-        // Visual section: avatar + floating name badge
+        // Visual section: avatar + centered name badge below
         .contact-card-visual {
-            position: relative;
-            margin-bottom: 54px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .card-avatar {
-            width: 305px;
-            height: 305px;
+            width: 240px;
+            height: 240px;
             border-radius: 50%;
             background: linear-gradient(180deg, #D8EDFE 0%, #D5FCE3 100%);
             overflow: hidden;
@@ -41,16 +43,15 @@
             }
         }
 
-        // Glassmorphism name badge - default: left side
+        // Glassmorphism name badge - centered below avatar
         .card-name-badge {
-            position: absolute;
-            bottom: 10px;
-            left: -80px;
+            margin-top: 12px;
             backdrop-filter: blur(27.5px);
             -webkit-backdrop-filter: blur(27.5px);
             background: rgba(216, 237, 254, 0.45);
             padding: 12px 16px;
             border-radius: 8px;
+            text-align: center;
 
             span {
                 font-family: 'Funnel Sans', sans-serif;
@@ -59,14 +60,6 @@
                 line-height: 1.45;
                 color: #3984C6;
                 white-space: nowrap;
-            }
-        }
-
-        // Even cards: badge on the right side
-        &.card-reverse {
-            .card-name-badge {
-                left: auto;
-                right: -80px;
             }
         }
 
@@ -116,17 +109,8 @@
 
         .contact-card {
             .card-avatar {
-                width: 260px;
-                height: 260px;
-            }
-
-            .card-name-badge {
-                left: -40px;
-            }
-
-            &.card-reverse .card-name-badge {
-                right: -40px;
-                left: auto;
+                width: 220px;
+                height: 220px;
             }
         }
     });
@@ -138,20 +122,8 @@
 
         .contact-card {
             .card-avatar {
-                width: 240px;
-                height: 240px;
-            }
-
-            .card-name-badge {
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: -20px;
-            }
-
-            &.card-reverse .card-name-badge {
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
+                width: 200px;
+                height: 200px;
             }
         }
     });
@@ -165,12 +137,12 @@
 
         .contact-card {
             .contact-card-visual {
-                margin-bottom: 40px;
+                margin-bottom: 16px;
             }
 
             .card-avatar {
-                width: 220px;
-                height: 220px;
+                width: 180px;
+                height: 180px;
             }
 
             .card-position {

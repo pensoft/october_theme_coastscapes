@@ -66,13 +66,7 @@ function onDownloadFile(){
 {# ====================================================================
    Sub-navigation tabs (shared across media sub-pages)
    ==================================================================== #}
-<nav class="media-sub-nav container-dynamic" aria-label="Media centre navigation">
-    <a href="/brand-kit" class="media-sub-nav-item">Brand kit</a>
-    <a href="/project-materials" class="media-sub-nav-item active" aria-current="page">Project materials</a>
-    <a href="/videos" class="media-sub-nav-item">Videos</a>
-    <a href="/newsletters" class="media-sub-nav-item">Newsletters</a>
-    <a href="/press-releases" class="media-sub-nav-item">Press releases</a>
-</nav>
+{% partial 'site/media-sub-nav' active='project-materials' %}
 
 {# ====================================================================
    Materials Grid
@@ -88,7 +82,7 @@ function onDownloadFile(){
                         {% endif %}
                     </div>
                     {% if record.file %}
-                        <a href="{{ record.file.getPath() }}" class="btn-material-download" download="{{ record.name }}">
+                        <a href="{{ record.file.getPath() }}" class="btn-material-download" target="_blank" rel="noopener noreferrer">
                             <span>{{ record.name }}</span>
                             <span class="btn-download-circle">
                                 <img src="{{ 'assets/images/arrow-down.svg'|theme }}" alt="">

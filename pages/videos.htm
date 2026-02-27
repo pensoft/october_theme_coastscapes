@@ -66,13 +66,7 @@ function onDownloadFile(){
 {# ====================================================================
    Sub-navigation tabs (shared across media sub-pages)
    ==================================================================== #}
-<nav class="media-sub-nav container-dynamic" aria-label="Media centre navigation">
-    <a href="/brand-kit" class="media-sub-nav-item">Brand kit</a>
-    <a href="/project-materials" class="media-sub-nav-item">Project materials</a>
-    <a href="/videos" class="media-sub-nav-item active" aria-current="page">Videos</a>
-    <a href="/newsletters" class="media-sub-nav-item">Newsletters</a>
-    <a href="/press-releases" class="media-sub-nav-item">Press releases</a>
-</nav>
+{% partial 'site/media-sub-nav' active='videos' %}
 
 {# ====================================================================
    Video Grid

@@ -1,0 +1,34 @@
+==
+<?php
+use Pensoft\Media\Models\MediaLogos;
+use Pensoft\Media\Models\Flyers;
+use Pensoft\Media\Models\Videos;
+use Pensoft\Media\Models\Newsletters;
+use Pensoft\Media\Models\Pressreleases;
+
+function onStart(){
+    $this['hasBrandKit'] = MediaLogos::where('parent_id', null)->exists();
+    $this['hasMaterials'] = Flyers::exists();
+    $this['hasVideos'] = Videos::where('pensoft_media_videos.parent_id', null)->exists();
+    $this['hasNewsletters'] = Newsletters::exists();
+    $this['hasPressReleases'] = Pressreleases::where('parent_id', null)->exists();
+}
+?>
+==
+<nav class="media-sub-nav container-dynamic" aria-label="Media centre navigation">
+    {% if hasBrandKit %}
+        <a href="/brand-kit" class="media-sub-nav-item{% if active == 'brand-kit' %} active{% endif %}"{% if active == 'brand-kit' %} aria-current="page"{% endif %}>Brand kit</a>
+    {% endif %}
+    {% if hasMaterials %}
+        <a href="/project-materials" class="media-sub-nav-item{% if active == 'project-materials' %} active{% endif %}"{% if active == 'project-materials' %} aria-current="page"{% endif %}>Project materials</a>
+    {% endif %}
+    {% if hasVideos %}
+        <a href="/videos" class="media-sub-nav-item{% if active == 'videos' %} active{% endif %}"{% if active == 'videos' %} aria-current="page"{% endif %}>Videos</a>
+    {% endif %}
+    {% if hasNewsletters %}
+        <a href="/newsletters" class="media-sub-nav-item{% if active == 'newsletters' %} active{% endif %}"{% if active == 'newsletters' %} aria-current="page"{% endif %}>Newsletters</a>
+    {% endif %}
+    {% if hasPressReleases %}
+        <a href="/press-releases" class="media-sub-nav-item{% if active == 'press-releases' %} active{% endif %}"{% if active == 'press-releases' %} aria-current="page"{% endif %}>Press releases</a>
+    {% endif %}
+</nav>

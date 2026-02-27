@@ -18,6 +18,7 @@ $(function() {
     initScopePillTabs();
     initScopeButtons();
     initNewsCategoryTabs();
+    initPressReleaseFilters();
     initPartnersMap();
     initPartnerPopup();
     $('nav').removeClass('no-transition');
@@ -549,6 +550,36 @@ function initNewsCategoryTabs() {
             $tab.addClass('active').attr('aria-selected', 'true');
         } else {
             $tab.removeClass('active').attr('aria-selected', 'false');
+        }
+    });
+}
+
+// ---------- Press Release Category Filters ----------
+
+function initPressReleaseFilters() {
+    var $pills = $('.pressrelease-filter-pill');
+    var $cards = $('.pressrelease-card');
+
+    if (!$pills.length) return;
+
+    $pills.on('click', function() {
+        var $clicked = $(this);
+        var category = $clicked.data('category');
+
+        $pills.removeClass('active');
+        $clicked.addClass('active');
+
+        if (category === 'all') {
+            $cards.removeClass('hidden');
+        } else {
+            $cards.each(function() {
+                var cardCategory = $(this).data('category');
+                if (String(cardCategory) === String(category)) {
+                    $(this).removeClass('hidden');
+                } else {
+                    $(this).addClass('hidden');
+                }
+            });
         }
     });
 }

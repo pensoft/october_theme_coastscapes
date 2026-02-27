@@ -54,14 +54,7 @@ function onStart(){
                 <div class="card-body">
                     <img src="{{ 'assets/images/image-card-1a.png' | theme }}" alt="Mission" class="card-image">
                     <div class="card-overlay"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Mission</h3>
-                    </div>
-                    <div class="card-hover-content">
-                        <p>
-                            To reduce risks of climate change and biodiversity loss and improve land-sea interactions by developing systemic science-based and community-driven pathways for coastal landscapes.
-                        </p>
-                    </div>
+                    {% component 'mission-card-content' %}
                 </div>
                 <div class="card-arrow">
                     <span class="arrow-inner"></span>
@@ -72,14 +65,7 @@ function onStart(){
                 <div class="card-body">
                     <img src="{{ 'assets/images/image-card-2.png' | theme }}" alt="Vision" class="card-image">
                     <div class="card-overlay"></div>
-                    <div class="card-content">
-                        <h3 class="card-title">Vision</h3>
-                    </div>
-                    <div class="card-hover-content">
-                        <p>
-                            COAST-SCAPES will demonstrate that building resilient coasts that can thrive, not just survive, under climate change, is possible through collective effort and technical innovation.
-                        </p>
-                    </div>
+                    {% component 'vision-card-content' %}
                 </div>
                 <div class="card-arrow">
                     <span class="arrow-inner"></span>

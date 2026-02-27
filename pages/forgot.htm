@@ -1,0 +1,27 @@
+title = "Forgot password"
+url = "/forgot"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[resetPassword]
+paramCode = "code"
+==
+{% if not user %}
+<div class="container login-page">
+    <div class="row center-xs">
+        <div class="col-xs-12 col-md-8 col-lg-6">
+            <div class="login-card">
+                <h2 class="login-card-title">Password reset</h2>
+                <p class="login-card-subtitle">Enter your email address and we will send you a link to reset your password.</p>
+                {% if resetPassword.code == null %}
+                    {% partial 'components/resetpassword/restore' %}
+                {% else %}
+                    {% partial 'components/resetpassword/reset' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

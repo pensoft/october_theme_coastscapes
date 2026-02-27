@@ -16,7 +16,8 @@
     .hero-background {
         .rounded(35px);
         min-height: 90vh;
-        margin: 0 auto;
+        margin-left: auto;
+        margin-right: auto;
         display: flex;
         align-items: center;
         position: relative;
@@ -265,7 +266,8 @@
         background-repeat: no-repeat;
         .rounded(35px);
         height: 50vh;
-        margin: 0 auto;
+        margin-left: auto;
+        margin-right: auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -289,17 +291,21 @@
     // About page - no bottom rounding to connect with about-project-section
     &.page-header-about .page-header-background {
         border-radius: 35px 35px 0 0;
+        margin-bottom: 0;
 
         .breakpoint-large-down({
             border-radius: 25px 25px 0 0;
+            margin-bottom: 0;
         });
 
         .breakpoint-medium-down({
             border-radius: 20px 20px 0 0;
+            margin-bottom: 0;
         });
 
         .breakpoint-small-down({
             border-radius: 15px 15px 0 0;
+            margin-bottom: 0;
         });
     }
 }

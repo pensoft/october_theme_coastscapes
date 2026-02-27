@@ -21,6 +21,36 @@ background = "transperant"
 templates = "template2"
 description_limit = 0
 
+[jumbotron replacing-pilots]
+jumbotron = "replacing-pilots"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
+[jumbotron core-pilots]
+jumbotron = "core-pilots"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
+[jumbotron transfer-pilots]
+jumbotron = "transfer-pilots"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
+[jumbotron networking-pilots]
+jumbotron = "networking-pilots"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
+[jumbotron work-packages-title]
+jumbotron = "work-packages-title"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
 ==
 <?php
 use Pensoft\Accordions\Models\Item;
@@ -80,10 +110,7 @@ function onStart(){
                     {% if work_packages_title %}
                     <!-- Work Packages Heading -->
                     <div class="wp-heading" data-aos="fade-up" data-aos-duration="700">
-                        <p class="wp-tagline">
-                            The COAST-SCAPES project is structured into<br>
-                            <span class="wp-gradient-text-green">6 interconnected </span><span class="wp-gradient-text-blue">Work Packages (WPs)</span>
-                        </p>
+                        {% component 'work-packages-title' %}
                         {% if work_packages_title.body %}
                             <p class="wp-description">{{ work_packages_title.body|raw }}</p>
                         {% endif %}
@@ -108,7 +135,7 @@ function onStart(){
                             <div class="wp-card-image">
                                 <span class="wp-card-badge">{{ record.prefix }}</span>
                                 {% if record.partner and record.partner.cover %}
-                                    <img src="{{ record.partner.cover.getThumb(140, 140, {'mode': 'crop'}) }}" alt="{{ record.partner.instituion }}">
+                                    <img src="{{ record.partner.cover.path }}" alt="{{ record.partner.instituion }}">
                                 {% endif %}
                             </div>
                             <div class="wp-card-content">
@@ -154,344 +181,16 @@ function onStart(){
                     </div>
 
                     <!-- Replicating Pilots Content -->
-                    <div class="scope-panel" id="scope-replicating" role="tabpanel">
-                        <p class="scope-tagline">
-                            Ensuring <span class="scope-gradient-text">scalability and flexibility</span> by verifying if the solutions developed in the CPs can work elsewhere, possibly with adaptations.
-                        </p>
-
-                        <!-- Card 1: Ebro Delta — text left, image right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Catalonia</span>
-                                        <h3 class="content-title">Ebro Delta</h3>
-                                        <p class="content-description">Ebro Delta is the largest wetland area of Catalonia and one of the most important regions of the Mediterranean, evolving from a small, wave-dominated system to a large landform due to an increase in sediment supply from human activities, such as deforestation and agriculture.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper">
-                                            <img src="{{ 'assets/images/scope-ebro-delta.png'|theme }}" alt="Ebro Delta">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Aveiro Ria — image left, text right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row row-reverse">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Atlantic Coast</span>
-                                        <h3 class="content-title">Aveiro Ria</h3>
-                                        <p class="content-description">The Aveiro Ria is a low-lying coastal lagoon system on the Portuguese Atlantic coast, characterised by sandy beaches and dunes that form a natural barrier between the lagoon and the open sea. Consisting mainly of medium quartz sand, this dune system features well-developed foredunes and is marked by seasonal beach variability.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper gradient-left">
-                                            <img src="{{ 'assets/images/scope-aveiro-ria.png'|theme }}" alt="Aveiro Ria">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3: Danube Delta — text left, image right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Black Sea</span>
-                                        <h3 class="content-title">Danube Delta</h3>
-                                        <p class="content-description">Located in the Northwestern part of the Black Sea, the Danube delta covers 580.000 ha, making it the second largest delta in Europe. It is recognised as a UNESCO World Heritage Site and a RAMSAR wetland of international importance due to its pristine environment with rich biodiversity and historical shape formed through natural sedimentation processes.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper">
-                                            <img src="{{ 'assets/images/scope-danube-delta.png'|theme }}" alt="Danube Delta">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% component 'replacing-pilots' %}
 
                     <!-- Core Pilots Content -->
-                    <div class="scope-panel active" id="scope-core" role="tabpanel">
-                        <p class="scope-tagline">
-                            Serving as <span class="scope-gradient-text">the main testing sites</span> to develop and implement innovative solutions.
-                        </p>
-
-                        <!-- Card 1: Weser Estuary — text left, image right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Atlantic North-Sea</span>
-                                        <h3 class="content-title">Weser Estuary and Wadden Sea</h3>
-                                        <p class="content-description">Located in the Atlantic-North sea mixing zone and comprising a total of 430 km², the Wadden sea-Weser estuary is an energetic zone, driven by ocean-land drivers, 73% of which is recognised as UNESCO World Heritage with saltmarshes, seagrass meadows, various faunal and fish species and 6 million migratory birds.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper">
-                                            <img src="{{ 'assets/images/scope-weser.png'|theme }}" alt="Weser Estuary and Wadden Sea">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Venice Lagoon — image left, text right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row row-reverse">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Veneto Region</span>
-                                        <h3 class="content-title">Venice Lagoon</h3>
-                                        <p class="content-description">Located in the Veneto region, the Venice lagoon with its functioning port is crucial for the survival of Venice. As the largest coastal wetland in Italy, it is responsible for the physical safeguard from sea and rivers and the de-pollution of the drainage basin.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper gradient-left">
-                                            <img src="{{ 'assets/images/scope-venice.png'|theme }}" alt="Venice Lagoon">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3: Mar Menor — text left, image right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Western Mediterranean</span>
-                                        <h3 class="content-title">Mar Menor</h3>
-                                        <p class="content-description">The Mar Menor lagoon, with its watershed taking over 1,200 km², is known as the greatest coastal lagoon in the Western Mediterranean. It is hypersaline and consists of 5 inner islands, home to various lagoon habitats and biodiversity species such as the Hippocampus guttulatus, the Podiceps nigricollis and the Phalacrocorax carbo.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper">
-                                            <img src="{{ 'assets/images/scope-mar-menor.png'|theme }}" alt="Mar Menor">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% component 'core-pilots' %}
 
                     <!-- Transfer Pilots Content -->
-                    <div class="scope-panel" id="scope-transfer" role="tabpanel">
-                        <p class="scope-tagline">
-                            Translating the results from the CPs and RPs into strict guidelines, systemic training and governance frameworks to guarantee that what has worked locally <span class="scope-gradient-text">can become useful internationally.</span>
-                        </p>
-
-                        <!-- Card 1: Inhambane Bay — text left, image right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Mozambique</span>
-                                        <h3 class="content-title">Inhambane Bay</h3>
-                                        <p class="content-description">Inhambane Bay, located on the Southern coast of Mozambique, is a shallow, well-mixed estuary, characterised by muddy and sandy bottoms, extensive intertidal flats and meandering channels, with a semidiurnal mesotidal tides, representing the dominant hydrodynamic forcing mechanism that governs circulation in the coastal system. Despite its ecological significance as a vital habitat for marine life, Inhambane Bay remains underexplored compared to other European estuaries.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper">
-                                            <img src="{{ 'assets/images/scope-inhambane-bay.png'|theme }}" alt="Inhambane Bay">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Mar Chica Lagoon — image left, text right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row row-reverse">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Mediterranean</span>
-                                        <h3 class="content-title">Mar Chica Lagoon</h3>
-                                        <p class="content-description">Classified as a SIBE site and RAMSAR site since 2005, the Mar Chica lagoon is one of the most important lagoons in the Mediterranean region, spanning an impressive 115 km² and home to various invasive species, such as sea hares, blue crab, Posidonia oceanica (native algae) and Caulerpa prolifera (invasive algae).</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper gradient-left">
-                                            <img src="{{ 'assets/images/scope-mar-chica.png'|theme }}" alt="Mar Chica Lagoon">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3: Magdalena Estuary — text left, image right -->
-                        <div class="content-section scope-section" data-aos="fade-up" data-aos-duration="700">
-                            <div class="container">
-                                <div class="row content-row">
-                                    <div class="col-sm-6 content-col-text">
-                                        <span class="scope-region-label">Caribbean Coast</span>
-                                        <h3 class="content-title">Magdalena estuary</h3>
-                                        <p class="content-description">The Magdalena estuary is a dynamic delta system with frequent channel shifts and island formation on Colombia's Caribbean coast, formed by the Magdalena River flowing into the sea. It is of crucial economic and ecological importance to the region as it is the main provider of freshwater, supports port activity and serves as a contributor of freshwater and sediment to the Caribbean Sea.</p>
-                                        <div class="scope-buttons">
-                                            <button class="scope-btn scope-btn-challenges" data-toggle="challenges">Challenges</button>
-                                            <button class="scope-btn scope-btn-goal" data-toggle="goal">Goal</button>
-                                        </div>
-                                        <div class="scope-expand-content">
-                                            <div class="scope-expand-panel" data-panel="challenges">
-                                                <p>Challenges text goes here.</p>
-                                            </div>
-                                            <div class="scope-expand-panel" data-panel="goal">
-                                                <p>Goal text goes here.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 content-col-image">
-                                        <div class="content-image-wrapper scope-image-wrapper">
-                                            <img src="{{ 'assets/images/scope-magdalena.png'|theme }}" alt="Magdalena estuary">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% component 'transfer-pilots' %}
 
                     <!-- Networking Pilots Content -->
-                    <div class="scope-panel" id="scope-networking" role="tabpanel">
-                        <p class="scope-tagline">
-                            Introduction Text?
-                        </p>
-
-                        <div class="networking-grid" data-aos="fade-up" data-aos-duration="700">
-                            <div class="networking-card">
-                                <div class="networking-card-map">
-                                    <img src="{{ 'assets/images/map-vietnam.svg'|theme }}" alt="Vietnam map outline">
-                                </div>
-                                <span class="scope-region-label">Vietnam</span>
-                                <h3 class="networking-card-title">Mekong low river basin-delta-sea system</h3>
-                            </div>
-
-                            <div class="networking-card">
-                                <div class="networking-card-map">
-                                    <img src="{{ 'assets/images/map-united-kingdom.svg'|theme }}" alt="United Kingdom map outline">
-                                </div>
-                                <span class="scope-region-label">United Kingdom</span>
-                                <h3 class="networking-card-title">Firth of Lorn land-sea system</h3>
-                            </div>
-
-                            <div class="networking-card">
-                                <div class="networking-card-map">
-                                    <img src="{{ 'assets/images/map-senegal.svg'|theme }}" alt="Senegal map outline">
-                                </div>
-                                <span class="scope-region-label">Senegal</span>
-                                <h3 class="networking-card-title">Casamance basin-delta-sea system</h3>
-                            </div>
-
-                            <div class="networking-card">
-                                <div class="networking-card-map">
-                                    <img src="{{ 'assets/images/map-ecuador.svg'|theme }}" alt="Ecuador map outline">
-                                </div>
-                                <span class="scope-region-label">Ecuador</span>
-                                <h3 class="networking-card-title">Galapagos Isabela wetlands and Villaamil Bay</h3>
-                            </div>
-
-                            <div class="networking-card">
-                                <div class="networking-card-map">
-                                    <img src="{{ 'assets/images/map-ukraine.svg'|theme }}" alt="Ukraine map outline">
-                                </div>
-                                <span class="scope-region-label">Ukraine</span>
-                                <h3 class="networking-card-title">Reeds and wetlands N of Danube delta</h3>
-                            </div>
-                        </div>
-                    </div>
+                    {% component 'networking-pilots' %}
 
                 </div>
             </div>

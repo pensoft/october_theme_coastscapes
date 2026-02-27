@@ -9,6 +9,24 @@ robot_follow = "follow"
 
 [siteSearchInclude]
 
+[jumbotron what-we-do]
+jumbotron = "what-we-do"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
+[jumbotron how-we-do-it]
+jumbotron = "how-we-do-it"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
+[jumbotron looking-ahead]
+jumbotron = "looking-ahead"
+background = "transperant"
+templates = "template2"
+description_limit = 0
+
 ==
 <?php
 use Pensoft\Accordions\Models\Item;
@@ -38,10 +56,7 @@ function onStart() {
 
             {# What We Do - Top Left #}
             <div class="about-section-what about-text-block" data-aos="fade-up" data-aos-duration="800">
-                <h2 class="about-title">What we do</h2>
-                <p class="about-description">
-                    COAST-SCAPES aims to strengthen climate resilience by developing sustainable solutions that increase the environmental benefits across socioeconomic sectors, different geographical regions and timeframes. The project's overarching focus is to reduce the climate resilience deficit. These measures will support coastal communities, providing them with integrated early warning systems, NbS and proactive maintenance strategies to boost the resilience of coastal areas.
-                </p>
+                {% component 'what-we-do'%}
             </div>
 
             {# Resilience Circle - Top Right #}
@@ -69,10 +84,7 @@ function onStart() {
 
             {# How We Do It - Middle Right #}
             <div class="about-section-how about-text-block" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                <h2 class="about-title">How we do it</h2>
-                <p class="about-description">
-                    The COAST-SCAPES project is structured into 6 interconnected Work Packages (WPs) that progressively move from analysis to action, combining advanced scientific tools, local stakeholder knowledge, systemic modelling to co-design, implement, and scale climate-resilient solutions across land-coast-sea systems, and communication strategies to disseminate project results.
-                </p>
+                {% component 'how-we-do-it'%}
             </div>
 
             {# Connector Line 2 #}
@@ -90,10 +102,7 @@ function onStart() {
 
             {# Looking Ahead - Bottom Left #}
             <div class="about-section-ahead about-text-block" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-                <h2 class="about-title">Looking ahead</h2>
-                <p class="about-description">
-                    COAST-SCAPES envisions increased transdisciplinary collaboration to foster the implementation of NbS into the resilience plans. This includes ensuring that different sectors work together to integrate NbS into planning, as well as applying shared knowledge and coordinated strategies across regions.
-                </p>
+                {% component 'looking-ahead'%}
             </div>
 
             {# Collaboration Circle - Bottom Right #}

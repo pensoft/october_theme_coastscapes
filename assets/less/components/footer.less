@@ -369,12 +369,14 @@
 // ==========================================================================
 
 .footer-legal {
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 30px;
 
     a {
         font-family: 'Inter', sans-serif;
-        font-size: 13px;
+        font-size: 17px;
         font-weight: 300;
         color: #FFF;
         text-decoration: none;
@@ -387,13 +389,49 @@
     }
 
     .breakpoint-medium-down({
-        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
     });
 
     .breakpoint-small-down({
         a {
-            font-size: 12px;
+            font-size: 13px;
         }
+    });
+}
+
+.footer-credit {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: #FFF;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        opacity: 1;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    img {
+        display: block;
+    }
+
+    .breakpoint-small-down({
+        font-size: 13px;
     });
 }
 

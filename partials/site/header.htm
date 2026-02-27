@@ -21,6 +21,13 @@ numberOfLevels = 2
 
         {# Desktop Header Elements (Right side) #}
         <div class="desktop-header-elements">
+            {# Search Toggle #}
+            <div class="search-container">
+                <button class="search-btn" id="searchToggle" aria-label="Open search" type="button">
+                    <span class="search-icon"></span>
+                </button>
+            </div>
+
             {% if user %}
                 {# Logged-in User Controls #}
                 <div class="user-controls">

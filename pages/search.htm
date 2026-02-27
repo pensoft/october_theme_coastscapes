@@ -1,0 +1,20 @@
+title = "Search"
+url = "/search"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[searchResults]
+resultsPerPage = 30
+showProviderBadge = 1
+noResultsMessage = "Your search returned no results."
+visitPageMessage = "Visit page"
+==
+<section class="search-results-section">
+    <div class="container">
+        <h2 class="section-label">Search results for "{{ searchResults.query }}"</h2>
+
+        {% component 'searchResults' %}
+    </div>
+</section>

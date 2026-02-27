@@ -56,18 +56,23 @@ function initSearchToggles() {
 }
 
 function showSearchForm() {
-    $('#search').fadeIn(200);
-    $('#search form').addClass('pop-in');
-    $('#search input.search_input').val('').focus();
+    var $search = $('#search');
+
+    $search.addClass('active');
     $('body').addClass('search-open');
     $('body').css('overflow', 'hidden');
 
+    // Delay focus so the transition can start smoothly
+    setTimeout(function() {
+        $('#search input.search_input').val('').focus();
+    }, 150);
+
     $(document).on('click.searchClose', function(event) {
-        var $search = $('#search form');
+        var $form = $('#search form');
         var $searchToggle = $('#searchToggle');
 
-        if (!$search.is(event.target) &&
-            $search.has(event.target).length === 0 &&
+        if (!$form.is(event.target) &&
+            $form.has(event.target).length === 0 &&
             !$searchToggle.is(event.target) &&
             $searchToggle.has(event.target).length === 0 &&
             !$(event.target).closest('.close-search').length) {
@@ -89,8 +94,7 @@ function showSearchForm() {
 }
 
 function hideSearchForm() {
-    $('#search form').removeClass('pop-in');
-    $('#search').fadeOut(200);
+    $('#search').removeClass('active');
     $('body').removeClass('search-open');
     $('body').css('overflow', '');
     $(document).off('click.searchClose');

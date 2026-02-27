@@ -17,11 +17,12 @@ description_limit = 0
 {# Footer Wrapper #}
 <section class="footer-wrapper container-dynamic">
     {# Newsletter CTA Section #}
+    {%if this.theme.subscribe%}
     <section class="footer-newsletter" aria-labelledby="newsletter-heading">
         <div class="footer-newsletter-image" aria-hidden="true"></div>
         <div class="footer-newsletter-content">
             <h2 id="newsletter-heading">Keep track of<br>our progress</h2>
-            <a href="{{ 'newsletter'|page }}" class="btn-newsletter">
+            <a href="{{this.theme.subscribe}}" class="btn-newsletter">
                 <span>Subscribe to our newsletter</span>
                 <span class="btn-newsletter-icon" aria-hidden="true">
                     <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
@@ -29,6 +30,7 @@ description_limit = 0
             </a>
         </div>
     </section>
+    {%endif%}
 
     {# Main Footer Section #}
     <section class="footer-main">
@@ -66,6 +68,15 @@ description_limit = 0
                             <img src="{{ 'assets/images/instagram-white.svg'|theme }}" alt="" width="22" height="22">
                         </a>
                     {% endif %}
+
+                    {% if enable_youtube %}
+                        <a href="{{ youtube_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="Follow us on YouTube">
+                            <img src="{{ 'assets/images/youtube-white.svg'|theme }}" alt="" width="26" height="18">
+                        </a>
+                    {% endif %}
                 </nav>
             </div>
 
@@ -86,6 +97,10 @@ description_limit = 0
                         {% component 'footer-funds' %}
                     </div>
                 </div>
+            </div>
+
+            <div class="footer-legal">
+                <a href="/privacy-policy">Privacy policy</a>
             </div>
         </div>
     </section>

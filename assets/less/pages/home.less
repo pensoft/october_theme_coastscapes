@@ -224,7 +224,7 @@
 // Latest News Section
 .latest-news-section {
     background-color: #FEFFFD;
-    padding: 80px 0;
+    padding: 0;
 
     .container {
         display: flex;
@@ -343,8 +343,20 @@
 // Consortium Section
 .consortium-section {
     background-color: #FEFFFD;
-    padding: 80px 0 100px; // Extra bottom padding to account for footer -100px overlap
+    padding: 0 80px 100px 100px;
     overflow: hidden;
+
+    .breakpoint-large-down({
+        padding: 0 40px 80px;
+    });
+
+    .breakpoint-medium-down({
+        padding: 0 20px 60px;
+    });
+
+    .breakpoint-small-down({
+        padding: 0 0 50px;
+    });
 
     .container {
         display: flex;

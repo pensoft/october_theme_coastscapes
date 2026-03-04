@@ -3,7 +3,8 @@ start = "id-1"
 activeNode = 0
 listItemClasses = "footer-nav-item"
 primaryClasses = "footer-nav-list"
-numberOfLevels = 1
+secondaryClasses = "dropdown-menu"
+numberOfLevels = 2
 
 [jumbotron footer-funds]
 jumbotron = "footer-funds"
@@ -22,7 +23,7 @@ description_limit = 0
         <div class="footer-newsletter-image" aria-hidden="true"></div>
         <div class="footer-newsletter-content">
             <h2 id="newsletter-heading">Keep track of<br>our progress</h2>
-            <a href="{{this.theme.subscribe}}" class="btn-newsletter">
+            <a href="{{this.theme.subscribe}}" class="btn-newsletter" target="_blank" rel="noopener noreferrer">
                 <span>Subscribe to our newsletter</span>
                 <span class="btn-newsletter-icon" aria-hidden="true">
                     <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
@@ -48,7 +49,7 @@ description_limit = 0
                            target="_blank"
                            rel="noopener noreferrer"
                            aria-label="Follow us on LinkedIn">
-                            <img src="{{ 'assets/images/linkedin-white.svg'|theme }}" alt="" width="28" height="28">
+                            <img src="{{ 'assets/images/linkedin-white.svg'|theme }}" alt="" width="22" height="22">
                         </a>
                     {% endif %}
 
@@ -57,7 +58,7 @@ description_limit = 0
                            target="_blank"
                            rel="noopener noreferrer"
                            aria-label="Follow us on Bluesky">
-                            <img src="{{ 'assets/images/bluesky.svg'|theme }}" alt="" width="24" height="24">
+                            <img src="{{ 'assets/images/bluesky.svg'|theme }}" alt="" width="22" height="20">
                         </a>
                     {% endif %}
 
@@ -66,7 +67,7 @@ description_limit = 0
                            target="_blank"
                            rel="noopener noreferrer"
                            aria-label="Follow us on Instagram">
-                            <img src="{{ 'assets/images/instagram-white.svg'|theme }}" alt="" width="22" height="22">
+                            <img src="{{ 'assets/images/instagram-white.svg'|theme }}" alt="" width="20" height="20">
                         </a>
                     {% endif %}
 
@@ -75,7 +76,7 @@ description_limit = 0
                            target="_blank"
                            rel="noopener noreferrer"
                            aria-label="Follow us on YouTube">
-                            <img src="{{ 'assets/images/youtube-white.svg'|theme }}" alt="" width="26" height="18">
+                            <img src="{{ 'assets/images/youtube-white.svg'|theme }}" alt="" width="24" height="17">
                         </a>
                     {% endif %}
                 </nav>

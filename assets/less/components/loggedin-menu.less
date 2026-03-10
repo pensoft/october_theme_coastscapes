@@ -1,0 +1,142 @@
+// ==========================================================================
+// Logged-in Member Navigation Bar
+// ==========================================================================
+
+.navbar-loggedin-user {
+  background: #122E47;
+  position: fixed;
+  z-index: 1001;
+  height: 50px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 98vw;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    .breakpoint-large-down({
+      max-width: 100%;
+      padding: 0 15px;
+    });
+  }
+
+  .loggedin-menu-links {
+    flex: 1;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    ul {
+      list-style-type: none;
+      white-space: nowrap;
+      padding: 0;
+      margin: 0;
+
+      .breakpoint-small-down({
+        white-space: normal;
+      });
+    }
+
+    ul li {
+      display: inline;
+      padding: 0 16px 0 0;
+      font-size: 14px;
+
+      .breakpoint-small-down({
+        padding: 0 8px;
+        font-size: 13px;
+      });
+    }
+
+    ul li a {
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'Funnel Sans', sans-serif;
+      font-weight: 400;
+      text-decoration: none;
+      .transition(all 0.25s ease);
+
+      .breakpoint-small-down({
+        padding: 0;
+      });
+    }
+
+    ul li a:hover {
+      color: @button-background-color;
+    }
+
+    ul li.active a {
+      color: @white-color;
+      font-weight: 600;
+    }
+  }
+
+  .loggedin-user-info {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .profile-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: @white-color;
+      .transition(all 0.25s ease);
+
+      &:hover {
+        color: @button-background-color;
+      }
+
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .user-avatar-placeholder {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: @button-background-color;
+        color: @white-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: 'Funnel Sans', sans-serif;
+      }
+
+      .user-display-name {
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        font-family: 'Funnel Sans', sans-serif;
+
+        .breakpoint-large-down({
+          display: none;
+        });
+      }
+    }
+
+  }
+}
+
+// Offset the main navbar when logged-in bar is visible
+#headernavbar.user-logged-in {
+  top: 50px;
+}
+
+// Offset the mobile navbar-collapse when logged-in bar is visible
+body.has-loggedin-bar .navbar-collapse {
+  top: 50px;
+}

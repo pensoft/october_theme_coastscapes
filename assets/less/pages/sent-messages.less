@@ -1,0 +1,313 @@
+// ==========================================================================
+// Page - Sent Messages
+// ==========================================================================
+
+.sent-messages-page {
+    padding-bottom: 80px;
+
+    .breakpoint-small-down({
+        padding-bottom: 40px;
+    });
+}
+
+// ==========================================================================
+// Back Link
+// ==========================================================================
+
+.sent-messages-back {
+    margin: 20px 0 10px;
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        color: @grey-color;
+        text-decoration: none;
+        .transition(color linear .2s);
+
+        svg {
+            flex-shrink: 0;
+        }
+
+        &:hover {
+            color: @button-background-color;
+        }
+    }
+}
+
+// ==========================================================================
+// Empty State
+// ==========================================================================
+
+.sent-messages-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+
+    svg {
+        margin-bottom: 16px;
+        opacity: 0.6;
+    }
+
+    p {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 300;
+        color: @grey-color;
+        margin: 0;
+
+        .breakpoint-small-down({
+            font-size: 16px;
+        });
+    }
+}
+
+// ==========================================================================
+// Messages Container
+// ==========================================================================
+
+.sent-messages-container {
+    margin-top: 10px;
+}
+
+// ==========================================================================
+// Individual Message Card
+// ==========================================================================
+
+.sent-messages-page .messages {
+    border-top: 1px solid rgba(0, 4, 1, 0.12);
+
+    &:last-child {
+        border-bottom: 1px solid rgba(0, 4, 1, 0.12);
+    }
+}
+
+// ==========================================================================
+// Accordion Toggle (Header)
+// ==========================================================================
+
+.sent-messages-page .messages .accordion-toggle {
+    cursor: pointer;
+    padding: 18px 0;
+    .transition(background-color linear .15s);
+
+    &:hover {
+        background-color: rgba(37, 189, 210, 0.04);
+    }
+
+    .title_container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+
+        .breakpoint-small-down({
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        });
+    }
+
+    .message-subject {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        color: #000401;
+        line-height: 1.4;
+
+        .breakpoint-small-down({
+            font-size: 16px;
+        });
+    }
+
+    .message-date {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: @grey-color;
+        white-space: nowrap;
+
+        .breakpoint-small-down({
+            font-size: 13px;
+        });
+    }
+}
+
+// ==========================================================================
+// Chevron Indicator (Plus/Minus)
+// ==========================================================================
+
+.sent-messages-page .messages .plusminus {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .plus,
+    .minus {
+        display: block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #122E47;
+        position: relative;
+        .transition(all 0.3s ease);
+
+        // Chevron arrow using CSS borders
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 9px;
+            height: 9px;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            transform: translate(-50%, -60%) rotate(45deg);
+            .transition(transform 0.3s ease);
+        }
+    }
+
+    .minus {
+        background: @button-background-color;
+
+        &::after {
+            transform: translate(-50%, -40%) rotate(-135deg);
+        }
+    }
+
+    .breakpoint-small-down({
+        .plus,
+        .minus {
+            width: 28px;
+            height: 28px;
+
+            &::after {
+                width: 7px;
+                height: 7px;
+            }
+        }
+    });
+}
+
+// ==========================================================================
+// Accordion Content (Expanded Area)
+// ==========================================================================
+
+.sent-messages-page .messages .accordion-content {
+    padding: 0 0 24px 0;
+
+    h2 {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #122E47;
+        margin: 0 0 10px 0;
+        text-transform: none;
+    }
+}
+
+// ==========================================================================
+// Recipients
+// ==========================================================================
+
+.sent-messages-page .message-recipients {
+    margin-bottom: 20px;
+
+    .recipient-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+
+        .breakpoint-small-down({
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        });
+    }
+
+    .recipient-name {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        color: #000401;
+    }
+
+    .recipient-email {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: @button-background-color;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// ==========================================================================
+// Attachments
+// ==========================================================================
+
+.sent-messages-page .message-attachments {
+    margin-bottom: 20px;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        margin-bottom: 6px;
+    }
+
+    a {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        color: @button-background-color;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// ==========================================================================
+// Message Body
+// ==========================================================================
+
+.sent-messages-page .message-body {
+    margin-top: 10px;
+
+    .message-body-content {
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 1.6;
+        color: #000401;
+
+        p {
+            margin: 0 0 10px 0;
+        }
+
+        a {
+            color: @button-background-color;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -5,7 +5,33 @@ listItemClasses = "nav-item"
 primaryClasses = "navbar-nav"
 secondaryClasses = "dropdown-menu"
 numberOfLevels = 2
+
 ==
+{# Logged-in Member Navigation Bar #}
+{% if user %}
+<nav class="navbar-loggedin-user" aria-label="Member navigation">
+    <div class="container navbar-container">
+        <div class="loggedin-menu-links">
+            <ul>
+                <li><a href="/internal-repository">Internal communication platform</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/mails">Mails</a></li>
+            </ul>
+        </div>
+        <div class="loggedin-user-info">
+            <a href="/profile" class="profile-link">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.getThumb(28,28, { mode: 'crop' }) }}" class="user-avatar" alt="">
+                {% else %}
+                    <span class="user-avatar-placeholder">{{ user.name|first }}</span>
+                {% endif %}
+                <span class="user-display-name">{{ user.name }} {{ user.surname }}</span>
+            </a>
+        </div>
+    </div>
+</nav>
+{% endif %}
+
 {# Header Navigation #}
 <nav class="navbar fixed{% if user %} user-logged-in{% endif %}" id="headernavbar" aria-label="Main navigation">
     <div class="container navbar-container">
@@ -29,20 +55,12 @@ numberOfLevels = 2
             </div>
 
             {% if user %}
-                {# Logged-in User Controls #}
-                <div class="user-controls">
-                    <a href="/profile" class="user-profile-link" aria-label="View profile for {{ user.name }} {{ user.surname }}">
-                        {% if user.avatar %}
-                            <img alt="" src="{{ user.avatar.getThumb(30,30, { mode : 'crop' }) }}" class="user-avatar" role="presentation">
-                        {% else %}
-                            <span class="user-avatar-placeholder" aria-hidden="true">{{ user.name|first }}</span>
-                        {% endif %}
-                        <span class="user-name">{{ user.name }} {{ user.surname }}</span>
-                    </a>
-                    <a href="javascript:;" data-request="onLogout" data-request-data="redirect: '/'" class="btn-logout" aria-label="Log out">
-                        <span class="btn-logout-text">Log out</span>
-                    </a>
-                </div>
+                <a href="javascript:;" data-request="onLogout" data-request-data="redirect: '/'" class="btn-login" aria-label="Log out">
+                    <span class="btn-login-text">Log out</span>
+                    <span class="btn-login-icon" aria-hidden="true">
+                        <img src="{{ 'assets/images/white-arrow.svg'|theme }}" alt="" width="16" height="16">
+                    </span>
+                </a>
             {% else %}
                 {# Login Button #}
                 <a href="/login" class="btn-login">

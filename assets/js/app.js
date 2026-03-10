@@ -21,6 +21,8 @@ $(function() {
     initPressReleaseFilters();
     initPartnersMap();
     initPartnerPopup();
+    initEventsTabs();
+    initMemberAccordions();
     $('nav').removeClass('no-transition');
 });
 
@@ -814,7 +816,7 @@ function initPartnerPopup() {
         }
     });
 
-    // Biography toggle
+    // Biography toggle (partner popup)
     $(document).on('click', '.partner-popup-bio-toggle', function() {
         var $btn = $(this);
         var $profile = $btn.closest('.partner-popup-profile');
@@ -828,6 +830,68 @@ function initPartnerPopup() {
         } else {
             $bio.slideUp(250);
             $btn.find('.bio-toggle-text').text('Show Biography');
+        }
+    });
+}
+
+// ---------- Events Calendar/List Tabs ----------
+
+function initEventsTabs() {
+    $('.events .tabs').each(function() {
+        var $links = $(this).find('a');
+        if (!$links.length) return;
+
+        // Determine initial active tab from URL hash or default to first
+        var $active = $($links.filter('[href="' + location.hash + '"]')[0] || $links[0]);
+        var $content = $($active[0].hash);
+
+        $active.addClass('active');
+
+        // Hide non-active panels
+        $links.not($active).each(function() {
+            $(this.hash).hide();
+        });
+
+        // If URL hash matches a tab, show that panel
+        if (location.hash && $content.length) {
+            $content.slideDown('fast');
+        }
+
+        // Tab click handler
+        $links.on('click', function(e) {
+            e.preventDefault();
+
+            if ($(this).hasClass('active')) return;
+
+            // Deactivate old tab
+            $active.removeClass('active');
+            $content.hide();
+
+            // Activate new tab
+            $active = $(this);
+            $content = $(this.hash);
+
+            location.hash = $active[0].hash;
+
+            $active.addClass('active');
+            $content.slideDown('fast');
+        });
+    });
+}
+
+// ---------- Member Area Accordions (Sent Messages) ----------
+
+function initMemberAccordions() {
+    $('body').on('click', '.messages .accordion-toggle', function() {
+        var $toggle = $(this);
+        var $content = $toggle.next('.accordion-content');
+
+        if ($content.is(':visible')) {
+            $content.slideUp(300);
+            $toggle.find('.plusminus').html('<span class="plus"></span>');
+        } else {
+            $content.slideDown(300);
+            $toggle.find('.plusminus').html('<span class="minus"></span>');
         }
     });
 }

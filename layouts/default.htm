@@ -97,7 +97,7 @@ escape = 1
             </header>
 
             {# Main Content #}
-            <main id="main-content" class="{{ this.page.id }}">
+            <main id="main-content" class="{{ this.page.id }}"{% if user %} style="margin-top: 50px;"{% endif %}>
                 {% page %}
             </main>
         </div>

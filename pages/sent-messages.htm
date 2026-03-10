@@ -1,0 +1,103 @@
+url = "/sent-messages"
+layout = "default"
+title = "My sent messages"
+
+[session]
+security = "user"
+allowedUserGroups[] = "internal-users"
+allowedUserGroups[] = "registered"
+allowedUserGroups[] = "guest"
+redirect = "home"
+==
+<?php
+use Pensoft\Mailing\Models\Mails;
+use RainLab\User\Facades\Auth;
+
+function onStart(){
+    $user = Auth::getUser();
+    $this['messages'] = Mails::where('from_user', $user->id)->orderBy('id', 'desc')->get();
+}
+?>
+==
+{% component 'session' %}
+<div class="container sent-messages-page">
+
+    <div class="sent-messages-back">
+        <a href="/mails" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Mails
+        </a>
+    </div>
+
+    <h1 class="page_heading internal">My sent messages</h1>
+
+    {% if messages is empty %}
+    <div class="sent-messages-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z" fill="#ACACAC"/>
+        </svg>
+        <p>You have not sent any messages yet.</p>
+    </div>
+    {% else %}
+    <div class="row sent-messages-container">
+        {% for record in messages %}
+        <div class="col-xs-12 messages">
+            <div class="row middle-xs accordion-toggle">
+                <div class="col-xs-9 col-md-10 start-xs title_container">
+                    <span class="message-subject">{{ record.subject }}</span>
+                    <span class="message-date">{{ record.created_at|date('d F Y') }}</span>
+                </div>
+                <div class="col-xs-3 col-md-2 end-xs plusminus">
+                    <span class="plus"></span>
+                </div>
+            </div>
+            <div class="row accordion-content" style="display: none;">
+                {% if record.user.count %}
+                <div class="col-xs-12 col-md-6 message-recipients">
+                    <h2>To user(s):</h2>
+                    {% for recipient_user in record.user %}
+                    <div class="recipient-item">
+                        <span class="recipient-name">{{ recipient_user.name }} {{ recipient_user.surname }}</span>
+                        <a class="recipient-email" href="mailto:{{ recipient_user.email }}">{{ recipient_user.email }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if record.group.count %}
+                <div class="col-xs-12 col-md-6 message-recipients">
+                    <h2>To group(s):</h2>
+                    {% for recipient_group in record.group %}
+                    <div class="recipient-item">
+                        <span class="recipient-name">{{ recipient_group.name }}</span>
+                        <a class="recipient-email" href="mailto:{{ recipient_group.email }}">{{ recipient_group.email }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if record.attachments.count %}
+                <div class="col-xs-12 message-attachments">
+                    <h2>Attachment(s):</h2>
+                    <ul>
+                        {% for attachment in record.attachments %}
+                        <li>
+                            <a href="{{ attachment.path }}" target="_blank">{{ attachment.file_name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="col-xs-12 message-body">
+                    <h2>Message:</h2>
+                    <div class="message-body-content">{{ record.body|raw }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

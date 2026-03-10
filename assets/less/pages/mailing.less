@@ -1,0 +1,323 @@
+// ==========================================================================
+// Page - Mailing Form
+// ==========================================================================
+
+#mails {
+
+    // ==========================================================================
+    // Section Boxes
+    // ==========================================================================
+
+    .box {
+        margin-bottom: 30px;
+    }
+
+    // ==========================================================================
+    // Section Headings
+    // ==========================================================================
+
+    .group-head {
+
+        h3 {
+            font-family: 'Funnel Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: #122E47;
+            border-bottom: 1px solid rgba(0, 4, 1, 0.12);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+    }
+
+    // ==========================================================================
+    // Checkbox Styling
+    // ==========================================================================
+
+    .group-holder {
+
+        .inputHolder {
+            padding: 8px 0;
+        }
+
+        .control.control--checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+            padding-left: 30px;
+            margin: 0;
+
+            span {
+                font-family: 'Zalando Sans', sans-serif;
+                font-size: 15px;
+                font-weight: 400;
+                color: #000401;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            input[type="checkbox"] {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            // Custom checkbox box
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                .rounded(4px);
+                border: 2px solid @border-color;
+                background-color: @white-color;
+                box-sizing: border-box;
+                .transition(all linear .15s);
+            }
+
+            // Checkmark
+            &::after {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 50%;
+                transform: translateY(-60%) rotate(45deg);
+                width: 6px;
+                height: 11px;
+                border: solid transparent;
+                border-width: 0 2px 2px 0;
+                opacity: 0;
+                .transition(all linear .15s);
+            }
+
+            // Checked state
+            input[type="checkbox"]:checked ~ span,
+            input[type="checkbox"]:checked + span {
+                color: #000401;
+            }
+        }
+
+        // Checked state - applied when checkbox is checked
+        .control.control--checkbox:has(input[type="checkbox"]:checked) {
+
+            &::before {
+                background-color: @button-background-color;
+                border-color: @button-background-color;
+            }
+
+            &::after {
+                border-color: #ffffff;
+                opacity: 1;
+            }
+        }
+
+        // Hover state
+        .control.control--checkbox:hover {
+
+            &::before {
+                border-color: @button-background-color;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // Form Labels
+    // ==========================================================================
+
+    .inputLabel {
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        color: #122E47;
+        margin: 20px 0 8px 0;
+    }
+
+    // ==========================================================================
+    // Input & Textarea Overrides
+    // ==========================================================================
+
+    .field {
+
+        input[type="text"],
+        input.DPText,
+        textarea,
+        select {
+            .rounded(8px);
+            border: 1px solid #d1d1d1;
+            border-right-width: 1px;
+            border-right-color: #d1d1d1;
+            box-shadow: none;
+            padding: 12px 16px;
+            font-family: 'Zalando Sans', sans-serif;
+            font-size: 16px;
+            color: #000401;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            width: 100%;
+            .transition(border-color linear .2s);
+
+            &:focus {
+                outline: none;
+                border-color: @button-background-color;
+                box-shadow: 0 0 0 1px @button-background-color;
+            }
+
+            &::placeholder {
+                color: #999999;
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 160px;
+        }
+
+        // File input
+        input[type="file"] {
+            border: 1px dashed #d1d1d1;
+            .rounded(8px);
+            padding: 16px;
+            background-color: #fafafa;
+            font-family: 'Zalando Sans', sans-serif;
+            font-size: 14px;
+            color: @grey-color;
+            cursor: pointer;
+            box-shadow: none;
+            width: 100%;
+            box-sizing: border-box;
+            .transition(border-color linear .2s);
+
+            &:hover {
+                border-color: @button-background-color;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: @button-background-color;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // Submit Button
+    // ==========================================================================
+
+    .center-xs {
+        margin-top: 30px;
+    }
+
+    input[type="submit"].btn.btn-primary {
+        display: inline-block;
+        background-color: #122E47;
+        color: #ffffff;
+        .rounded(8px);
+        padding: 14px 32px;
+        font-family: 'Funnel Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        min-width: 160px;
+        border: none;
+        cursor: pointer;
+        .transition(background-color linear .2s);
+        line-height: 1.45;
+        text-align: center;
+
+        // Remove the ::after arrow (won't render on input, but override specificity)
+        &::after {
+            display: none;
+        }
+
+        &:hover {
+            background-color: #1a3d5c;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(18, 46, 71, 0.25);
+        }
+
+        .breakpoint-small-down({
+            width: 100%;
+        });
+    }
+
+    // ==========================================================================
+    // Error Container
+    // ==========================================================================
+
+    .formErrors {
+        &:empty {
+            display: none;
+        }
+
+        color: #dc3545;
+        background-color: #FFF0F0;
+        .rounded(8px);
+        padding: 12px 16px;
+        font-family: 'Zalando Sans', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    // ==========================================================================
+    // Title Row
+    // ==========================================================================
+
+    .middle-xs {
+
+        h1 {
+            font-family: 'Funnel Sans', sans-serif;
+            font-weight: 500;
+            color: #122E47;
+        }
+    }
+
+    // ==========================================================================
+    // Attachments Preview
+    // ==========================================================================
+
+    #attachmentsPreview {
+        margin-top: 12px;
+    }
+
+    // ==========================================================================
+    // Mobile Adjustments
+    // ==========================================================================
+
+    .breakpoint-small-down({
+
+        .group-head h3 {
+            font-size: 19px;
+        }
+
+        .inputLabel {
+            font-size: 15px;
+            margin: 16px 0 6px 0;
+        }
+
+        .field {
+
+            input[type="text"],
+            input.DPText,
+            textarea {
+                font-size: 16px; // Prevent iOS zoom
+                padding: 10px 14px;
+            }
+
+            input[type="file"] {
+                padding: 14px;
+            }
+        }
+
+        .box {
+            margin-bottom: 24px;
+        }
+    });
+}

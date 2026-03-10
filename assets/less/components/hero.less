@@ -61,6 +61,11 @@
         position: relative;
         z-index: 2;
         padding-left: 80px;
+
+        // Short viewport: push content below fixed navbar
+        @media (max-height: 700px) {
+            padding-top: 120px;
+        }
     }
 
     .hero-headline {

@@ -1,0 +1,18 @@
+url = "/citations-form"
+layout = "default"
+title = "Citations form"
+
+[session]
+security = "user"
+allowedUserGroups[] = "internal-users"
+allowedUserGroups[] = "registered"
+allowedUserGroups[] = "guest"
+redirect = "home"
+
+[AddCitationForm]
+==
+{% component 'session' %}
+<div class="container">
+    <h1 class="page_heading internal">Citation tool</h1>
+    {% component 'AddCitationForm' %}
+</div>

@@ -1,0 +1,77 @@
+title = "Citations"
+layout = "default"
+url = "/citations"
+
+[session]
+security = "user"
+allowedUserGroups[] = "internal-users"
+allowedUserGroups[] = "registered"
+allowedUserGroups[] = "guest"
+redirect = "home"
+==
+<?php
+use Pensoft\Citationtool\Models\Citation;
+use System\Models\File;
+
+function onStart(){
+    $this['citations'] = Citation::orderBy('year', 'desc')->orderBy('id', 'desc')->get();
+    if(get('download')){
+        $file = File::find((int)get('download'));
+        $file_name = $file->getLocalPath();
+        $recordName = get('file_name') ? get('file_name') : 'CoastScapes_citation';
+        $ext = $file->getExtension();
+
+        if (file_exists($file_name)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header("Content-Type: application/force-download");
+            header('Content-Disposition: attachment; filename='.$recordName.'.'.$ext);
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_name));
+            ob_clean();
+            flush();
+            readfile($file_name);
+            exit();
+        }
+        return Redirect::to('/citations');
+    }
+}
+?>
+==
+{% component 'session' %}
+<div class="container">
+    <h1 class="page_heading internal">Citations</h1>
+    <a href="{{ 'citations-form'|page }}" target="_blank" class="btn btn-primary no-margin">Add citation</a>
+
+    {% for record in citations %}
+    <div class="library-item">
+        <div class="row">
+            <div class="col-md-9 col-xs-12">
+                <h3 class="card-title">{{ record.title }}</h3>
+                <div class="body">
+                    {% partial "citations/content" label="Authors:" value=record.authors %}<br>
+
+                    {% partial "citations/content" label="Year:" value=record.year|date('Y') %}
+
+                    {% partial "citations/content" label="Journal:" value=record.journal_title %}
+
+                    {% partial "citations/content" label="Volume/Issue:" value=record.volume_issue %}
+                    {% partial "citations/content" label="Publisher:" value=record.publisher %}
+                    {% partial "citations/content" label="Place:" value=record.place %}
+                    {% partial "citations/content" label="City:" value=record.city %}
+                    {% partial "citations/content" label="Pages:" value=record.pages %}
+                    <br>{% partial "citations/content" label="URL/DOI:" value=record.doi is_link=true %}
+                </div>
+            </div>
+            {% if record.file_upload %}
+            <div class="col-md-3 col-xs-12">
+                <a target="_blank" href="{{ record.file_upload.path }}#file_name={{ record.file_upload.file_name }}" class="btn btn-primary no-margin">Attachment ({{ (record.file_upload.file_size / 1024 / 1024)|round(2) }} MB)</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -12,6 +12,7 @@ $(function() {
 
     initHomepageAnimations();
     initAboutScrollAnimations();
+    initTimelineScrollAnimation();
     initObjectivesAccordion();
     initOurWorkTabs();
     initWorkPackageCards();
@@ -23,6 +24,17 @@ $(function() {
     initPartnerPopup();
     initEventsTabs();
     initMemberAccordions();
+
+    $('<div class="col-xs-12 col-sm-3 card internal no-border" style="margin-bottom: 15px">\n' +
+        '<a class="folder-background" style="display:flex; background: url(/themes/pensoft-coastscapes/assets/images/living-documents.svg) center center no-repeat; background-size: 100px; height: 200px" href="/internal-repository/living-documents" title="Living documents"></a>\n' +
+        '<h3 class="card-header"><a href="/internal-repository/living-documents" title="Living documents">Living documents</a></h3>\n' +
+        '</div>').insertAfter($('.card.internal').last());
+
+    $('<div class="col-xs-12 col-sm-3 card internal no-border" style="margin-bottom: 15px">\n' +
+        '<a class="folder-background" style="display:flex; background: url(/themes/pensoft-coastscapes/assets/images/Reporting.svg) center center no-repeat; background-size: 100px; height: 200px" href="/internal-repository/dissemination-report-forms" title="Dissemination report forms"></a>\n' +
+        '<h3 class="card-header"><a href="/internal-repository/dissemination-report-forms" title="Reporting forms">Reporting forms</a></h3>\n' +
+        '</div>').insertAfter($('.card.internal').last());
+
     $('nav').removeClass('no-transition');
 });
 
@@ -374,6 +386,32 @@ function initAboutScrollAnimations() {
     });
 
     $circles.each(function() {
+        observer.observe(this);
+    });
+}
+
+// ---------- Timeline Scroll Animation ----------
+
+function initTimelineScrollAnimation() {
+    var $timeline = $('.systemic-approach');
+    if (!$timeline.length) return;
+
+    $timeline.css({
+        opacity: 0,
+        transform: 'translateY(25px)',
+        transition: 'opacity 0.9s ease-out, transform 0.9s ease-out'
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                $(entry.target).css({ opacity: 1, transform: 'translateY(0)' });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    $timeline.each(function() {
         observer.observe(this);
     });
 }

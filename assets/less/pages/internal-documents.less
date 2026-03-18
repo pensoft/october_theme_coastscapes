@@ -446,27 +446,31 @@ a:hover .arrow-left{
     color: @dark-color!important;
     text-transform: none;
     font-size: 22px;
+    .transition(color 0.3s ease);
   }
+}
+
+.card.internal:hover .card-header a {
+  color: #3984C6!important;
 }
 
 .folder-background{
   display: flex;
-  background-size: 80px!important;
+  background-size: 120px!important;
   height: 180px!important;
   width: 180px;
-  background-color: @white-color!important;
-  border-radius: 50%;
-  margin: 25px auto;
-  border: 2px solid @button-background-color;
-  .transition(all 0.3s ease);
+  background-color: transparent!important;
+  border-radius: 0;
+  margin: 0 auto;
+  border: none;
+  .transition(transform 0.3s ease);
   &:hover{
-    background-color: #EBF8FA!important;
-    border-color: #122E47;
+    transform: scale(1.05);
   }
   .breakpoint-small-down({
     width: 150px!important;
     height: 150px!important;
-    background-size: 60px!important;
+    background-size: 100px!important;
   })
 }
 
@@ -537,56 +541,110 @@ a:hover .arrow-left{
 
 }
 
-// Documents search form (used in internal-documents and documents-search pages)
-.documents-search-form {
-  .input-group {
+// ==========================================================================
+// Internal Documents Search — pure CSS restyle of plugin markup
+// Scoped via .col-md-5 > #search.search (not navbar's #headernavbar .search)
+// ==========================================================================
+
+.col-md-5 > #search.search {
+  // Override navbar .search fixed overlay defaults
+  position: static;
+  background: none;
+  padding: 0;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: auto;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+
+  form.input-group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 12px;
+    padding: 6px 6px 6px 18px;
+    .transition(border-color 0.25s ease);
+    .box-shadow(0, 2px, 12px, 0, rgba(18, 46, 71, 0.06));
+    // Override navbar search form styles
+    transform: none;
+    opacity: 1;
+    max-width: none;
+    box-shadow: 0 2px 12px 0 rgba(18, 46, 71, 0.06);
+
+    &:after {
+      display: none;
+    }
+
+    &:focus-within {
+      border-color: #3984C6;
+      box-shadow: 0 2px 16px 0 rgba(57, 132, 198, 0.12);
+    }
   }
-}
 
-.documents-search-label {
-  white-space: nowrap;
-  color: #495a62;
-  font-size: 15px;
-  font-family: 'Funnel Sans', sans-serif;
-}
-
-.documents-search-input {
-  flex: 1;
-  height: 42px;
-  font-size: 16px;
-  font-family: 'Funnel Sans', sans-serif;
-  color: #122E47;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #d1d1d1;
-  padding: 8px 14px;
-  outline: none;
-  transition: border-color 0.25s ease;
-
-  &:focus {
-    border-color: #25BDD2;
+  label.text-grey {
+    display: none;
   }
-}
 
-.documents-search-btn {
-  height: 42px;
-  padding: 0 20px;
-  background-color: #25BDD2;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: 'Funnel Sans', sans-serif;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.25s ease;
+  // Input field
+  input.form-control.search {
+    flex: 1;
+    height: 40px;
+    font-size: 16px;
+    font-family: 'Funnel Sans', sans-serif;
+    color: #122E47 !important;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0 12px;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+  }
 
-  &:hover {
-    background-color: #1FA8BC;
+  // Replace icon button with styled submit area
+  .text-grey-search-btn {
+    position: static;
+    transform: none;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    padding: 0;
+    background-color: #122E47;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .transition(background-color 0.25s ease);
+    right: auto;
+    top: auto;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      background-image: url('../../assets/images/search-icon.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: brightness(0) invert(1);
+      opacity: 1;
+    }
+
+    &:hover {
+      background-color: #1a4060;
+      transform: none;
+
+      &:before {
+        opacity: 1;
+      }
+    }
   }
 }
 

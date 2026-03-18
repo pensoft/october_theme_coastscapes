@@ -873,7 +873,7 @@
 
 .wp-card-inner {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 40px;
 
     .breakpoint-large-down({
@@ -882,10 +882,24 @@
     });
 }
 
-.wp-card-image {
+.wp-card-left {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
     width: 193px;
-    height: 308px;
+
+    .breakpoint-large-down({
+        width: 160px;
+    });
+
+    .breakpoint-small-down({
+        width: 140px;
+    });
+}
+
+.wp-card-image {
+    width: 100%;
+    height: 263px;
     background: linear-gradient(to bottom, #ebf6ff, #fefffd);
     .rounded(8px);
     position: relative;
@@ -901,12 +915,10 @@
     }
 
     .breakpoint-large-down({
-        width: 160px;
         height: 250px;
     });
 
     .breakpoint-small-down({
-        width: 140px;
         height: 220px;
     });
 }
@@ -979,6 +991,15 @@
         line-height: inherit;
     }
 
+    a {
+        color: #95FFBB;
+        text-decoration: underline;
+
+        &:hover {
+            color: #b5ffd2;
+        }
+    }
+
     .breakpoint-large-down({
         max-width: 100%;
         font-size: 16px;
@@ -986,5 +1007,43 @@
 
     .breakpoint-small-down({
         font-size: 15px;
+    });
+}
+
+// Visit Website Button (below the card inner)
+.wp-card-visit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: @wp-pill-bg;
+    background-color: #fff;
+    padding: 10px 20px;
+    .rounded(8px);
+    text-decoration: none;
+    .transition(all 0.2s ease);
+    margin-top: 12px;
+
+    svg {
+        .transition(transform 0.2s ease);
+    }
+
+    &:hover {
+        background-color: #f0f6fc;
+        color: @our-work-dark;
+
+        svg {
+            transform: translate(2px, -2px);
+        }
+    }
+
+    .breakpoint-small-down({
+        font-size: 14px;
+        padding: 8px 16px;
     });
 }

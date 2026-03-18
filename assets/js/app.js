@@ -785,9 +785,31 @@ function initPartnersMap() {
                 hideTooltip();
             });
 
-            // Click: filter partners
+            // Click: filter partners and scroll to grid
             path.addEventListener('click', function() {
                 setActiveContinent(name);
+                var grid = document.getElementById('partnersGrid');
+                if (grid) {
+                    var targetY = grid.getBoundingClientRect().top + window.pageYOffset - 180;
+                    var startY = window.pageYOffset;
+                    var distance = targetY - startY;
+                    var duration = 1200;
+                    var start = null;
+
+                    function easeInOutCubic(t) {
+                        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                    }
+
+                    function step(timestamp) {
+                        if (!start) start = timestamp;
+                        var elapsed = timestamp - start;
+                        var progress = Math.min(elapsed / duration, 1);
+                        window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+                        if (progress < 1) requestAnimationFrame(step);
+                    }
+
+                    requestAnimationFrame(step);
+                }
             });
         });
     });
@@ -933,3 +955,4 @@ function initMemberAccordions() {
         }
     });
 }
+

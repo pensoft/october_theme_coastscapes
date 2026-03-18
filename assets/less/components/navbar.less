@@ -629,22 +629,17 @@ body.menu-open {
         transform: translateX(0);
     }
 
-    // Background video (same pattern as .hero-video)
-    .menu-video {
+    // Background image
+    .menu-image {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
+        top: 0;
+        left: 0;
+        width: ~"calc(100% + 24px)";
+        height: ~"calc(100% + 24px)";
+        margin: -12px;
         object-fit: cover;
         z-index: 0;
         filter: blur(6px);
-        // Scale slightly to hide blurred edges
-        min-width: ~"calc(100% + 24px)";
-        min-height: ~"calc(100% + 24px)";
     }
 
     // Dark gradient overlay on top of video

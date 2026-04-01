@@ -12,11 +12,37 @@ robot_follow = "follow"
 ==
 <?php
 use Pensoft\Media\Models\Videos;
+use Pensoft\Media\Models\VideosCategory;
 use System\Models\File;
 
 function onStart(){
-    $this['mediaVideosList'] = Videos::where('pensoft_media_videos.parent_id', null)->get();
+    // Fetch categories that have videos, with counts (using direct queries to avoid relationship key mismatch)
+    $categories = VideosCategory::orderBy('sort_order')->get();
+    foreach ($categories as $cat) {
+        $cat->videos_count = Videos::where('category_id', $cat->id)->where('parent_id', null)->count();
+    }
+    $this['categories'] = $categories->filter(function ($cat) {
+        return $cat->videos_count > 0;
+    });
 
+    $categoryId = get('category');
+
+    if ($categoryId && is_numeric($categoryId)) {
+        $category = VideosCategory::find($categoryId);
+        if ($category) {
+            $this['activeCategory'] = $category;
+            $this['mediaVideosList'] = Videos::where('category_id', $categoryId)
+                ->where('parent_id', null)
+                ->get();
+        } else {
+            return Redirect::to('/videos');
+        }
+    } else {
+        $this['activeCategory'] = null;
+        $this['mediaVideosList'] = collect();
+    }
+
+    // Handle file downloads
     if(get('download')){
         $file = File::find((int)get('download'));
         $file_name = $file->getLocalPath();
@@ -38,7 +64,12 @@ function onStart(){
             readfile($file_name);
             exit();
         }
-        return Redirect::to('/videos');
+
+        $redirect = '/videos';
+        if (get('category')) {
+            $redirect .= '?category=' . get('category');
+        }
+        return Redirect::to($redirect);
     }
 }
 
@@ -61,17 +92,27 @@ function onDownloadFile(){
 
 {% component 'siteSearchInclude' %}
 
-{% set records = mediaVideosList %}
-
 {# ====================================================================
    Sub-navigation tabs (shared across media sub-pages)
    ==================================================================== #}
 {% partial 'site/media-sub-nav' active='videos' %}
 
+{% if activeCategory %}
 {# ====================================================================
-   Video Grid
+   Category Detail View
    ==================================================================== #}
 <section class="videos-section container-dynamic">
+    <div class="videos-breadcrumb">
+        <a href="/videos" class="videos-back-link">
+            <img src="{{ 'assets/images/chevron-left.svg'|theme }}" alt="" width="16" height="16">
+            All categories
+        </a>
+    </div>
+
+    <h2 class="videos-category-heading">{{ activeCategory.name }}</h2>
+
+    {% set records = mediaVideosList %}
+
     {% if records is not empty %}
         <div class="video-grid">
             {% for record in records %}
@@ -104,7 +145,36 @@ function onDownloadFile(){
         </div>
     {% else %}
         <div class="videos-empty-state">
-            <p>No videos available yet.</p>
+            <p>No videos in this category yet.</p>
         </div>
     {% endif %}
 </section>
+
+{% else %}
+{# ====================================================================
+   Category Landing View
+   ==================================================================== #}
+<section class="videos-section container-dynamic">
+    {% if categories is not empty %}
+        <div class="video-categories-grid">
+            {% for cat in categories %}
+                <a href="/videos?category={{ cat.id }}" class="video-category-card">
+                    <div class="video-category-card-inner">
+                        <h3 class="video-category-name">{{ cat.name }}</h3>
+                        <span class="video-category-count">
+                            {{ cat.videos_count }} video{{ cat.videos_count != 1 ? 's' : '' }}
+                        </span>
+                    </div>
+                    <span class="video-category-arrow">
+                        <img src="{{ 'assets/images/arrow-down.svg'|theme }}" alt="">
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="videos-empty-state">
+            <p>No video categories available yet.</p>
+        </div>
+    {% endif %}
+</section>
+{% endif %}

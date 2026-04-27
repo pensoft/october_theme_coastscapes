@@ -68,8 +68,9 @@
 .videos-section {
     background-color: @videos-bg-white;
     padding: 0 68px 80px;
-    max-width: 1380px;
+    max-width: 1380px !important;
     margin: 0 auto;
+    overflow: hidden;
 
     .breakpoint-laptop-down({
         padding: 0 50px 70px;
@@ -95,14 +96,10 @@
 }
 
 .video-card {
-    width: calc((100% - 30px) / 3);
+    width: calc((100% - 15px) / 2);
     display: flex;
     flex-direction: column;
     gap: 19px;
-
-    .breakpoint-large-down({
-        width: calc((100% - 15px) / 2);
-    });
 
     .breakpoint-small-down({
         width: 100%;
@@ -116,7 +113,7 @@
 .video-embed-wrapper {
     width: 100%;
     position: relative;
-    padding-bottom: 60%; // aspect ratio ~425:255 (roughly 5:3)
+    padding-bottom: 56.25%; // 16:9 aspect ratio
     .rounded(15px);
     overflow: hidden;
     background: linear-gradient(180deg, @videos-placeholder-start 0%, @videos-bg-white 100%);

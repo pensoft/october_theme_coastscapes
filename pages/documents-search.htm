@@ -18,7 +18,12 @@ use Pensoft\Internaldocuments\Models\Subfolders;
 use System\Models\File;
 
 function onStart(){
+	if(get('download')){
+		return $this->serveDocument((int) get('download'));
+	}
+
 	$term = Request::get('q');
+	$this['searchQuery'] = $term;
 	if($term){
 		$foldersData = Subfolders::where('name','iLIKE','%'.$term.'%')->get();
 		$this['foldersData'] = $foldersData;
@@ -36,9 +41,47 @@ function onStart(){
 	}
 }
 
-public function onDownloadHandler(){
-	$files = post('files');
-	return Redirect::to('trigger-download')->with('files', $files); // pass attributes in the session
+/**
+ * Streams an internal repository file over a plain GET request, so the download
+ * is a real navigation Matomo can track (an AJAX POST handler is invisible to it).
+ * Mirrors the handler on pages/internal-documents.htm.
+ */
+public function serveDocument($fileId){
+	// This page has no [session] guard, so gate the download itself: logged-in
+	// users only, and only files that belong to an internal repository subfolder.
+	if(!Auth::getUser()){
+		return Redirect::to('/login');
+	}
+
+	$file = File::where('attachment_type', 'Pensoft\InternalDocuments\Models\Subfolders')
+		->where('id', $fileId)
+		->first();
+
+	if(!$file){
+		return Redirect::to('/documents-search');
+	}
+
+	$path = $file->getLocalPath();
+	if(!file_exists($path)){
+		return Redirect::to('/documents-search');
+	}
+
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/octet-stream');
+	header('Content-Type: application/force-download');
+	header('Content-Disposition: attachment; filename="'.basename($file->file_name).'"');
+	header('Content-Transfer-Encoding: binary');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header('Content-Length: '.filesize($path));
+	// Discard anything already buffered so it cannot corrupt the file stream.
+	while (ob_get_level()) {
+		ob_end_clean();
+	}
+	flush();
+	readfile($path);
+	exit();
 }
 ?>
 ==

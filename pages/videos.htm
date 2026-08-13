@@ -13,8 +13,10 @@ robot_follow = "follow"
 <?php
 use Pensoft\Media\Models\Videos;
 use Pensoft\Media\Models\VideosCategory;
-use System\Models\File;
 
+// Videos play inline from record.file.getPath(); there is no download control on this
+// page. The old POST handler and ?download= proxy were unreferenced, and the proxy
+// served any system_files record by id to anonymous visitors.
 function onStart(){
     // Fetch categories that have videos, with counts (using direct queries to avoid relationship key mismatch)
     $categories = VideosCategory::orderBy('sort_order')->get();
@@ -42,50 +44,6 @@ function onStart(){
         $this['mediaVideosList'] = collect();
     }
 
-    // Handle file downloads
-    if(get('download')){
-        $file = File::find((int)get('download'));
-        $file_name = $file->getLocalPath();
-        $recordName = get('file_name') ? get('file_name') : 'COASTSCAPES_video';
-        $ext = $file->getExtension();
-
-        if (file_exists($file_name)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header("Content-Type: application/force-download");
-            header('Content-Disposition: attachment; filename=' . $recordName . '.' . $ext);
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file_name));
-            ob_clean();
-            flush();
-            readfile($file_name);
-            exit();
-        }
-
-        $redirect = '/videos';
-        if (get('category')) {
-            $redirect .= '?category=' . get('category');
-        }
-        return Redirect::to($redirect);
-    }
-}
-
-function onDownloadFile(){
-    $file = File::find(post('id'));
-    $pathToFile = $file->getLocalPath();
-    $fileName = $file->file_name;
-    $fileType = $file->content_type;
-    $headers = [
-        'HTTP/1.1 200 OK',
-        'Pragma: public',
-        'Content-Type: ' . $fileType,
-        'Content-Type: application/force-download'
-    ];
-
-    return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==

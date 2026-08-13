@@ -12,49 +12,12 @@ robot_follow = "follow"
 ==
 <?php
 use Pensoft\Media\Models\MediaLogos;
-use System\Models\File;
 
+// Downloads happen through the plain <a href> links below, which point straight at
+// the stored file. No POST handler and no ?download= proxy: both were unreferenced,
+// and the proxy served any system_files record by id to anonymous visitors.
 function onStart(){
     $this['logosList'] = MediaLogos::where('parent_id', null)->get();
-
-    if(get('download')){
-        $file = File::find((int)get('download'));
-        $file_name = $file->getLocalPath();
-        $recordName = get('file_name') ? get('file_name') : 'COASTSCAPES_brand';
-        $ext = $file->getExtension();
-
-        if (file_exists($file_name)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header("Content-Type: application/force-download");
-            header('Content-Disposition: attachment; filename=' . $recordName . '.' . $ext);
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file_name));
-            ob_clean();
-            flush();
-            readfile($file_name);
-            exit();
-        }
-        return Redirect::to('/brand-kit');
-    }
-}
-
-function onDownloadFile(){
-    $file = File::find(post('id'));
-    $pathToFile = $file->getLocalPath();
-    $fileName = $file->file_name;
-    $fileType = $file->content_type;
-    $headers = [
-        'HTTP/1.1 200 OK',
-        'Pragma: public',
-        'Content-Type: ' . $fileType,
-        'Content-Type: application/force-download'
-    ];
-
-    return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==

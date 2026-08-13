@@ -5,6 +5,7 @@ use Pensoft\Media\Models\Flyers;
 use Pensoft\Media\Models\Videos;
 use Pensoft\Media\Models\Newsletters;
 use Pensoft\Media\Models\Pressreleases;
+use Pensoft\Media\Models\Documents;
 
 function onStart(){
     $this['hasBrandKit'] = MediaLogos::where('parent_id', null)->exists();
@@ -12,6 +13,8 @@ function onStart(){
     $this['hasVideos'] = Videos::where('pensoft_media_videos.parent_id', null)->exists();
     $this['hasNewsletters'] = Newsletters::exists();
     $this['hasPressReleases'] = Pressreleases::where('parent_id', null)->exists();
+    // Policy briefs are stored as Media center > Documents records.
+    $this['hasPolicyBriefs'] = Documents::exists();
 }
 ?>
 ==
@@ -30,5 +33,8 @@ function onStart(){
     {% endif %}
     {% if hasPressReleases %}
         <a href="/press-releases" class="media-sub-nav-item{% if active == 'press-releases' %} active{% endif %}"{% if active == 'press-releases' %} aria-current="page"{% endif %}>Press releases</a>
+    {% endif %}
+    {% if hasPolicyBriefs %}
+        <a href="/policy-briefs" class="media-sub-nav-item{% if active == 'policy-briefs' %} active{% endif %}"{% if active == 'policy-briefs' %} aria-current="page"{% endif %}>Policy briefs</a>
     {% endif %}
 </nav>

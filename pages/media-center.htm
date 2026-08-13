@@ -16,6 +16,7 @@ use Pensoft\Media\Models\Flyers;
 use Pensoft\Media\Models\Videos;
 use Pensoft\Media\Models\Newsletters;
 use Pensoft\Media\Models\Pressreleases;
+use Pensoft\Media\Models\Documents;
 
 function onStart(){
     $this['hasBrandKit'] = MediaLogos::where('parent_id', null)->exists();
@@ -23,18 +24,26 @@ function onStart(){
     $this['hasVideos'] = Videos::where('pensoft_media_videos.parent_id', null)->exists();
     $this['hasNewsletters'] = Newsletters::exists();
     $this['hasPressReleases'] = Pressreleases::where('parent_id', null)->exists();
+    // Policy briefs are stored as Media center > Documents records.
+    $this['hasPolicyBriefs'] = Documents::exists();
 }
 ?>
 ==
 
 {% component 'siteSearchInclude' %}
 
+{# Sections alternate text-left / image-left. Sections are conditionally
+   rendered, so the side is derived from how many have actually rendered
+   rather than hardcoded - otherwise hiding one collapses the zigzag. #}
+{% set sectionIndex = 0 %}
+
 {% if hasBrandKit %}
 {# ====================================================================
-   Section 1 - Brand Kit (text left, image right)
+   Section 1 - Brand Kit
    ==================================================================== #}
 <section class="media-section container-dynamic">
-    <div class="media-row">
+    {% set sectionIndex = sectionIndex + 1 %}
+    <div class="media-row{% if sectionIndex is even %} row-reverse{% endif %}">
         <div class="media-text" data-aos="fade-up" data-aos-duration="800">
             <h2 class="media-title">Brand kit</h2>
             <p class="media-description">
@@ -53,10 +62,11 @@ function onStart(){
 
 {% if hasMaterials %}
 {# ====================================================================
-   Section 2 - Project Materials (image left, text right)
+   Section 2 - Project Materials
    ==================================================================== #}
 <section class="media-section container-dynamic">
-    <div class="media-row row-reverse">
+    {% set sectionIndex = sectionIndex + 1 %}
+    <div class="media-row{% if sectionIndex is even %} row-reverse{% endif %}">
         <div class="media-text" data-aos="fade-up" data-aos-duration="800">
             <h2 class="media-title">Project materials</h2>
             <p class="media-description">
@@ -75,10 +85,11 @@ function onStart(){
 
 {% if hasVideos %}
 {# ====================================================================
-   Section 3 - Videos (text left, image right)
+   Section 3 - Videos
    ==================================================================== #}
 <section class="media-section container-dynamic">
-    <div class="media-row">
+    {% set sectionIndex = sectionIndex + 1 %}
+    <div class="media-row{% if sectionIndex is even %} row-reverse{% endif %}">
         <div class="media-text" data-aos="fade-up" data-aos-duration="800">
             <h2 class="media-title">Videos</h2>
             <p class="media-description">
@@ -97,10 +108,11 @@ function onStart(){
 
 {% if hasNewsletters %}
 {# ====================================================================
-   Section 4 - Newsletters (image left, text right)
+   Section 4 - Newsletters
    ==================================================================== #}
 <section class="media-section container-dynamic">
-    <div class="media-row row-reverse">
+    {% set sectionIndex = sectionIndex + 1 %}
+    <div class="media-row{% if sectionIndex is even %} row-reverse{% endif %}">
         <div class="media-text" data-aos="fade-up" data-aos-duration="800">
             <h2 class="media-title">Newsletters</h2>
             <p class="media-description">
@@ -119,10 +131,11 @@ function onStart(){
 
 {% if hasPressReleases %}
 {# ====================================================================
-   Section 5 - Press Releases (text left, image right)
+   Section 5 - Press Releases
    ==================================================================== #}
 <section class="media-section container-dynamic">
-    <div class="media-row">
+    {% set sectionIndex = sectionIndex + 1 %}
+    <div class="media-row{% if sectionIndex is even %} row-reverse{% endif %}">
         <div class="media-text" data-aos="fade-up" data-aos-duration="800">
             <h2 class="media-title">Press releases</h2>
             <p class="media-description">
@@ -133,6 +146,29 @@ function onStart(){
         <div class="media-image" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
             <div class="media-image-card press-releases-card">
                 <img src="{{ 'assets/images/press-releases.png'|theme }}" alt="COAST-SCAPES press releases" class="media-card-img">
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if hasPolicyBriefs %}
+{# ====================================================================
+   Section 6 - Policy Briefs
+   ==================================================================== #}
+<section class="media-section container-dynamic">
+    {% set sectionIndex = sectionIndex + 1 %}
+    <div class="media-row{% if sectionIndex is even %} row-reverse{% endif %}">
+        <div class="media-text" data-aos="fade-up" data-aos-duration="800">
+            <h2 class="media-title">Policy briefs</h2>
+            <p class="media-description">
+                Explore concise policy briefs that translate COAST-SCAPES research into practical recommendations for decision-makers working on coastal and marine governance.
+            </p>
+            <a href="/policy-briefs" class="btn-cta-dark">View policy briefs</a>
+        </div>
+        <div class="media-image" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+            <div class="media-image-card policy-briefs-card">
+                <img src="{{ 'policy-briefs.png'|media }}" alt="COAST-SCAPES policy briefs" class="media-card-img">
             </div>
         </div>
     </div>

@@ -16,6 +16,9 @@ use Pensoft\Media\Models\Newsletters;
 // Downloads happen through the plain <a href> links below, which point straight at
 // the stored file. No POST handler and no ?download= proxy: both were unreferenced,
 // and the proxy served any system_files record by id to anonymous visitors.
+// The links carry the original file name in a #file_name= fragment so Matomo's link
+// tracking reports it instead of the hashed disk name (same convention as the
+// library plugin's add_file_name option). The fragment never reaches the server.
 function onStart(){
     $this['newslettersList'] = Newsletters::orderBy('sort_order', 'asc')->get();
 }
@@ -47,7 +50,7 @@ function onStart(){
                     {% if record.url %}
                         <a href="{{ record.url }}" class="btn-cta-dark" target="_blank" rel="noopener noreferrer">Read newsletter</a>
                     {% elseif record.file %}
-                        <a href="{{ record.file.getPath() }}" class="btn-cta-dark" target="_blank" rel="noopener noreferrer">Read newsletter</a>
+                        <a href="{{ record.file.getPath() }}#file_name={{ record.file.file_name|url_encode }}" class="btn-cta-dark" target="_blank" rel="noopener noreferrer">Read newsletter</a>
                     {% endif %}
                 </div>
             {% endfor %}

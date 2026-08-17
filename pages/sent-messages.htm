@@ -84,7 +84,8 @@ function onStart(){
                     <ul>
                         {% for attachment in record.attachments %}
                         <li>
-                            <a href="{{ attachment.path }}" target="_blank">{{ attachment.file_name }}</a>
+                            {# #file_name= keeps the original name in the URL Matomo logs, not the hashed disk name #}
+                            <a href="{{ attachment.path }}#file_name={{ attachment.file_name|url_encode }}" target="_blank">{{ attachment.file_name }}</a>
                         </li>
                         {% endfor %}
                     </ul>

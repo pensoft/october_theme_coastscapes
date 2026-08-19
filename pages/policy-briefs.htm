@@ -11,14 +11,16 @@ robot_follow = "follow"
 
 ==
 <?php
-use Pensoft\Media\Models\Documents;
+use Pensoft\Media\Models\Presentations;
 
-// The download links below point straight at the stored file and carry the original
-// file name in a #file_name= fragment, so Matomo's link tracking reports it instead
-// of the hashed disk name (same convention as the library plugin's add_file_name
-// option). The fragment never reaches the server.
+// Policy briefs are Media center > Presentations records.
+// Downloads happen through the plain <a href> links below, which point straight at
+// the stored file - no POST handler and no ?download= proxy (same as project-materials).
+// The links carry the original file name in a #file_name= fragment so Matomo's link
+// tracking reports it instead of the hashed disk name (same convention as the
+// library plugin's add_file_name option). The fragment never reaches the server.
 function onStart(){
-    $this['policyBriefsList'] = Documents::orderBy('sort_order')->orderBy('id')->get();
+    $this['policyBriefsList'] = Presentations::orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
 }
 ?>
 ==
@@ -41,18 +43,19 @@ function onStart(){
             {% for record in records %}
                 <div class="material-card">
                     <div class="material-preview">
-                        {% if record.image %}
-                            <img src="{{ record.image.getPath() }}" alt="{{ record.title }}" class="material-preview-image">
+                        {% if record.presentation_image %}
+                            <img src="{{ record.presentation_image.getPath() }}" alt="{{ record.name }}" class="material-preview-image">
                         {% endif %}
                     </div>
-                    <span class="material-name">{{ record.title }}</span>
                     {% if record.file %}
-                        <a href="{{ record.file.getPath() }}#file_name={{ record.file.file_name|url_encode }}" class="btn-material-download" target="_blank" rel="noopener noreferrer" aria-label="Download {{ record.title }}">
-                            <span>Download</span>
+                        <a href="{{ record.file.getPath() }}#file_name={{ record.file.file_name|url_encode }}" class="btn-material-download" target="_blank" rel="noopener noreferrer">
+                            <span>{{ record.name }}</span>
                             <span class="btn-download-circle">
                                 <img src="{{ 'assets/images/arrow-down.svg'|theme }}" alt="">
                             </span>
                         </a>
+                    {% else %}
+                        <span class="material-name">{{ record.name }}</span>
                     {% endif %}
                 </div>
             {% endfor %}

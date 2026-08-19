@@ -16,7 +16,7 @@ use Pensoft\Media\Models\Flyers;
 use Pensoft\Media\Models\Videos;
 use Pensoft\Media\Models\Newsletters;
 use Pensoft\Media\Models\Pressreleases;
-use Pensoft\Media\Models\Documents;
+use Pensoft\Media\Models\Presentations;
 
 function onStart(){
     $this['hasBrandKit'] = MediaLogos::where('parent_id', null)->exists();
@@ -24,8 +24,11 @@ function onStart(){
     $this['hasVideos'] = Videos::where('pensoft_media_videos.parent_id', null)->exists();
     $this['hasNewsletters'] = Newsletters::exists();
     $this['hasPressReleases'] = Pressreleases::where('parent_id', null)->exists();
-    // Policy briefs are stored as Media center > Documents records.
-    $this['hasPolicyBriefs'] = Documents::exists();
+    // Policy briefs are Media center > Presentations records. There is no dedicated
+    // theme illustration for this card, so it borrows the first brief's own cover.
+    $firstBrief = Presentations::orderBy('sort_order')->orderBy('id')->first();
+    $this['hasPolicyBriefs'] = (bool) $firstBrief;
+    $this['policyBriefCover'] = $firstBrief ? $firstBrief->presentation_image : null;
 }
 ?>
 ==
@@ -168,7 +171,9 @@ function onStart(){
         </div>
         <div class="media-image" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
             <div class="media-image-card policy-briefs-card">
-                <img src="{{ 'policy-briefs.png'|media }}" alt="COAST-SCAPES policy briefs" class="media-card-img">
+                {% if policyBriefCover %}
+                    <img src="{{ policyBriefCover.getPath() }}" alt="COAST-SCAPES policy briefs" class="media-card-img">
+                {% endif %}
             </div>
         </div>
     </div>
